@@ -3,3 +3,4 @@ Dryer tobacco
 #req
 tobacco_in, tobacco_out
 #text
+This bot stockpile and collect cured tobacco leaves from herbalist tables and put fresh leaves for drying.
