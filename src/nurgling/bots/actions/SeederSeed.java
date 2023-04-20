@@ -30,7 +30,10 @@ public class SeederSeed implements Action {
         if (gui.getInventory().getWItems(in.items).size() < 2) {
             if (!gui.hand.isEmpty())
                 NUtils.transferToInventory();
-            new TakeFromBarrels(in.outArea, gui.getInventory().getFreeSpace(), in.items).run(gui);
+            if(new TakeFromBarrels(in.outArea, gui.getInventory().getFreeSpace(), in.items).run(gui).type != Results.Types.SUCCESS){
+                new TakeMaxFromPile(in.outArea).run(gui);
+                NUtils.waitEvent(() -> !gui.getInventory().getWItems(in.items).isEmpty(), 50);
+            }
             if (gui.getInventory().getWItems(in.items).size() < 2)
                 return false;
         }
