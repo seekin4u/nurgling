@@ -21,7 +21,9 @@ public class HarvestSeedAction implements Action {
         NArea input = Finder.findNearestMark ( harvest_area );
 
         ArrayList<Gob> plants = Finder.findObjectsInArea ( crop, input );
-        Gob barrel = Finder.findObjectInArea ( new NAlias("barrel"),2000,input );
+        ArrayList<Gob> barrels = Finder.findObjectsInArea(new NAlias("barrel"), input);
+        Gob barrel = barrels.get(0);
+        //TODO: взять бочки, найти из них пустую или слегка пустую, полные выписать. Щас выбор ближайшей
         new OpenBarrelAndTransfer ( 9000,  crop, harvest_area, barrel ).run ( gui );
         if ( !gui.getInventory ().getWItems( crop ).isEmpty () ) {
             new TransferToTrough ( crop ).run ( gui );
@@ -36,10 +38,14 @@ public class HarvestSeedAction implements Action {
                             if ( new OpenBarrelAndTransfer ( 9000, crop,
                                     harvest_area,barrel )
                                     .run ( gui ).type == Results.Types.FULL ) {
-                                isFull = true;
+                                barrels.remove(barrel);
+                                barrel = barrels.get(0);
+                                /// Когда заполнили все бочки
+                                if(barrels.isEmpty()){
+                                    isFull = true;
+                                }
                             }
-                        }
-                        if ( !gui.getInventory ().getWItems( crop ).isEmpty () ) {
+                        } else if ( !gui.getInventory ().getWItems( crop ).isEmpty () ) {
                             new TransferToTrough ( crop ).run ( gui );
                         }
                     }
