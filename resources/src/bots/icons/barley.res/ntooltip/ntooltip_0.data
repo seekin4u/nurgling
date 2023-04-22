@@ -1,0 +1,6 @@
+#name
+Barley farmer
+#req
+barley, straw
+#text
+Harvest barley in `barley` area. Gather straw to `straw` area to stockpiles.
