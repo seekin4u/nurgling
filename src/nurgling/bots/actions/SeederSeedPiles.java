@@ -1,15 +1,19 @@
 package nurgling.bots.actions;
 
-import haven.*;
-
-import nurgling.*;
+import haven.Coord;
+import haven.Coord2d;
+import haven.MCache;
+import haven.Resource;
+import nurgling.NGameUI;
+import nurgling.NUtils;
+import nurgling.PathFinder;
 import nurgling.bots.tools.HarvestOut;
 import nurgling.tools.Finder;
 import nurgling.tools.NArea;
 
 import java.util.ArrayList;
 
-public class SeederSeed implements Action {
+public class SeederSeedPiles implements Action {
 
 
     class SeedArea extends NArea{
@@ -30,10 +34,10 @@ public class SeederSeed implements Action {
         if (gui.getInventory().getWItems(in.items).size() < 2) {
             if (!gui.hand.isEmpty())
                 NUtils.transferToInventory();
-            if(new TakeFromBarrels(in.outArea, gui.getInventory().getFreeSpace(), in.items).run(gui).type != Results.Types.SUCCESS){
-                new TakeMaxFromPile(in.outArea).run(gui);
-                NUtils.waitEvent(() -> !gui.getInventory().getWItems(in.items).isEmpty(), 50);
-            }
+                while(!(gui.getInventory().getFreeSpace() <= 2)){
+                    new TakeMaxFromPile(in.fromArea).run(gui);
+                    NUtils.waitEvent(() -> !gui.getInventory().getWItems(in.items).isEmpty(), 50);
+                }
             if (gui.getInventory().getWItems(in.items).size() < 2)
                 return false;
         }
@@ -114,13 +118,16 @@ public class SeederSeed implements Action {
             }
         }
 
-        if (!gui.hand.isEmpty())
+        if (!gui.hand.isEmpty()){
             NUtils.transferToInventory();
+            NUtils.drop();
+        }
+        new TransferToTrough(in.items, true);
         new TransferToBarrel(in.outArea, in.items).run(gui);
         return new Results(Results.Types.SUCCESS);
     }
 
-    public SeederSeed(
+    public SeederSeedPiles(
             HarvestOut in
     ) {
         this.in = in;
