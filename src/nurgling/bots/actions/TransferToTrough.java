@@ -16,9 +16,13 @@ public class TransferToTrough implements Action {
             throws InterruptedException {
         
         while ( !gui.getInventory ().getWItems( items ).isEmpty () ) {
-            
+
             Gob gob = Finder
-                    .findObjectInArea ( new NAlias( "trough" ), 2000, Finder.findNearestMark ( AreasID.swill) );
+                .findObjectInArea(new NAlias("trough"), 2000, Finder.findNearestMark(AreasID.swill));
+
+            if(closest)
+                gob = Finder.findObject(new NAlias("trough"));
+
             
             
             new PathFinder( gui, gob ).run ();
@@ -68,6 +72,15 @@ public class TransferToTrough implements Action {
     ) {
         this.items = items;
     }
+
+    public TransferToTrough(
+            NAlias items,
+            boolean closest
+    ){
+        this.items = items;
+        this.closest = closest;
+    }
     
     NAlias items;
+    boolean closest = false;
 }
