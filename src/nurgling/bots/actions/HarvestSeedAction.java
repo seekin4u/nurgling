@@ -22,6 +22,9 @@ public class HarvestSeedAction implements Action {
 
         ArrayList<Gob> plants = Finder.findObjectsInArea ( crop, input );
         ArrayList<Gob> barrels = Finder.findObjectsInArea(new NAlias("barrel"), input);
+        if(barrels.size() == 0){
+            return new Results ( Results.Types.NO_BARREL );
+        }
         Gob barrel = barrels.get(0);
         //TODO: взять бочки, найти из них пустую или слегка пустую, полные выписать. Щас выбор ближайшей
         new OpenBarrelAndTransfer ( 9000,  crop, harvest_area, barrel ).run ( gui );
