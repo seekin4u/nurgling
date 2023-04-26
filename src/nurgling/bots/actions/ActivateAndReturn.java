@@ -3,10 +3,13 @@ package nurgling.bots.actions;
 import haven.*;
 import haven.render.RenderTree;
 import nurgling.*;
+import nurgling.NUtils.*;
 import nurgling.tools.Finder;
 
 import java.awt.*;
 import java.util.ArrayList;
+
+import static nurgling.NUtils.waitEvent;
 
 public class ActivateAndReturn implements Action {
     private Gob objectToActivate;
@@ -19,17 +22,19 @@ public class ActivateAndReturn implements Action {
 
         while (true) {
             if(CheckForFriend(gui)){
-                Open();
+                waitEvent(()->Open(), 100);
                 Return(gui);
                 Thread.sleep(10000);
-                Close();
+                waitEvent(()->Close(), 100);
                 Return(gui);
             }
-
             Thread.sleep(5000);
         }
     }
-
+    private boolean DistanceToFriend(){
+        ArrayList<Gob> friend = Finder.findAllinDistance(new NAlias("borka"), 5000);
+        return true;
+    }
     private boolean CheckForFriend(NGameUI gui){
         //objects in area!
         ArrayList<Gob> gobs = Finder.findObjects(new NAlias("borka"));
@@ -39,15 +44,18 @@ public class ActivateAndReturn implements Action {
                 Color color;
 
                 if (group == 0 || group == -1 && gob.getattr(NGobHealth.class) == null) {
-                    color = Color.WHITE;
                     //держим ворота закрытыми
                     return false;
                 } else if (KinInfo.getGroup(gob) == 2) {
-                    color = Color.RED;
                     //держим ворота закрытыми
                     return false;
                 } else if(KinInfo.getGroup(gob) == 1){
                     //проверяем на зеленый цвет, открываем.
+                    synchronized ( NUtils.getGameUI().ui.sess.glob.oc ){
+                        double dist = NUtils.getGameUI().map.player ().rc.dist ( gob.rc );
+                        if (dist > 5000) return false;
+                    }
+
                     return true;
                 }
             }
@@ -57,49 +65,32 @@ public class ActivateAndReturn implements Action {
     private void Return(NGameUI gui) throws InterruptedException {
         Coord2d start = Finder.findObject(new NAlias("runestone")).rc;
         PathFinder pf = new PathFinder ( gui, start );
-        pf.run ();//go to runestone
+        pf.run ();
     }
-    private void Open(){
+    private boolean Open(){
         objectToActivate = Finder.findObject(name);
         if(objectToActivate == null){
             //return new Results ( Results.Types.NO_WORKSTATION );
-            return;
+            return false;
         }
         long att = objectToActivate.getModelAttribute();//closed attr=2
         if(att==2){
             NUtils.activate(objectToActivate);
         }
+        return true;
     }
 
-    private void Close(){
+    private boolean Close(){
         objectToActivate = Finder.findObject(name);
         if(objectToActivate == null){
             //return new Results ( Results.Types.NO_WORKSTATION );
-            return;
+            return false;
         }
             long att = objectToActivate.getModelAttribute();//closed attr=2
         if(att==1){
             NUtils.activate(objectToActivate);
         }
-
-    }
-    private void Activate(){
-        objectToActivate = Finder.findObject(name);
-        if(objectToActivate == null){
-            //return new Results ( Results.Types.NO_WORKSTATION );
-            return;
-        }
-        long att = objectToActivate.getModelAttribute();//closed attr=2
-        ChatUI.Channel chat = NUtils.getGameUI().chat.chat.sel;
-        if (chat.getClass().getName().contains("Area")){
-            ((ChatUI.EntryChannel) chat).send("Att:" + att);
-            ((ChatUI.EntryChannel) chat).send("-----------");
-        }
-        NUtils.activate(objectToActivate);
-        att = objectToActivate.getModelAttribute(); //opened attr=1
-        if (chat.getClass().getName().contains("Area")){
-            ((ChatUI.EntryChannel) chat).send("Att:" + att);
-        }
+        return true;
     }
     public ActivateAndReturn(
             NAlias name
