@@ -1873,6 +1873,7 @@ public class OptWnd extends Window {
 				l.addWidget(new Cows());
 				l.addWidget(new Pigs());
 				l.addWidget(new Horses());
+				l.addWidget(new DiscordWebhook());
 
 				for(Widget w: settings)
 					w.hide();
