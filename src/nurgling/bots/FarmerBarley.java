@@ -4,6 +4,7 @@ package nurgling.bots;
 import nurgling.NAlias;
 import nurgling.NGameUI;
 import nurgling.bots.actions.CollectItemsToPile;
+import nurgling.bots.actions.CollectItemsToTrough;
 import nurgling.bots.actions.HarvestSeedAction;
 import nurgling.bots.actions.SeederSeed;
 import nurgling.bots.tools.HarvestOut;
@@ -22,8 +23,11 @@ public class FarmerBarley extends Bot {
         win_sz.y = 100;
         
         runActions.add ( new HarvestSeedAction(new NAlias("Barley"), AreasID.barley , true));
-        runActions.add ( new CollectItemsToPile(AreasID.straw, AreasID.barley, new NAlias("straw")));
-        runActions.add ( new SeederSeed(new HarvestOut( new NAlias( "barley" ), AreasID.barley )) );
+        //TODO: CollectItemsToTrough перевести на работу с зоной внутри AreasID.barley, т.е. искать подзону straw (с цистерной)
+        // внутри зоны barley
+        runActions.add ( new CollectItemsToTrough(AreasID.barley,new NAlias("straw")));
+        //runActions.add ( new CollectItemsToPile(AreasID.straw, AreasID.barley, new NAlias("straw")));
+        //runActions.add ( new SeederSeed(new HarvestOut( new NAlias( "barley" ), AreasID.barley )) );
         
     }
     
