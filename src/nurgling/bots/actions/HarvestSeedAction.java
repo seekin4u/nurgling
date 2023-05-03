@@ -26,12 +26,11 @@ public class HarvestSeedAction implements Action {
             return new Results ( Results.Types.NO_BARREL );
         }
         Gob barrel = barrels.get(0);
-        //TODO: взять бочки, найти из них пустую или слегка пустую, полные выписать. Щас выбор ближайшей
         new OpenBarrelAndTransfer ( 9000,  crop, harvest_area, barrel ).run ( gui );
         if ( !gui.getInventory ().getWItems( crop ).isEmpty () ) {
             new TransferToTrough ( crop ).run ( gui );
         }
-        boolean isFull=false;
+        boolean isFull = false;
         /// Выкапываем урожай
         while ( !Finder.findCropsInArea ( crop, input, isMaxStage ).isEmpty () ) {
             Gob plant = Finder.findCropInArea ( crop, 3000, input, isMaxStage );
@@ -49,9 +48,10 @@ public class HarvestSeedAction implements Action {
                                 }
                             }
                         } else if ( !gui.getInventory ().getWItems( crop ).isEmpty () ) {
-                            new TransferToTrough ( crop ).run ( gui );
+                            new TransferToTrough ( crop, true).run ( gui );
                         }
                     }
+                    //todo: Hunger check!
                     if ( NUtils.getStamina() <= 0.3 ) {
                         new Drink ( 0.9, false ).run ( gui );
                     }
@@ -70,7 +70,7 @@ public class HarvestSeedAction implements Action {
                         .run ( gui ).type == Results.Types.FULL ) {
                 }
             }
-            new TransferToTrough(crop).run(gui);
+            new TransferToTrough(crop, true).run(gui);
 
         }
         return new Results ( Results.Types.SUCCESS );
