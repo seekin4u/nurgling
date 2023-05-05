@@ -1315,6 +1315,10 @@ public class NUtils {
         return stam.a;
     }
 
+    public static double getEnergy() {
+        IMeter.Meter njr = getGameUI().getmeter ( "njr", 0 );
+        return njr.a;// double [0.0;1.0]
+    }
     public static int getEqupmentId () {
         int id = 0;
         /// Проверяем все зарегистрированные виджеты
