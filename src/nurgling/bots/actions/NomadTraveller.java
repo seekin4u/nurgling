@@ -21,7 +21,7 @@ public class NomadTraveller implements Action {
     @Override
     public Results run(NGameUI gui)
             throws InterruptedException {
-         marks.clear();
+        marks.clear();
 
         URL url = NUtils.class.getProtectionDomain ().getCodeSource ().getLocation ();
         if(url != null) {
@@ -31,15 +31,10 @@ public class NomadTraveller implements Action {
                         gui.msg("NomadTraveller/nomadPath:[" + NConfiguration.getInstance().nomadPath + "]");
                     else{
                         gui.msg("NomadTraveller/Botmod is !null but nomadPath is emtpy.");
-                        return new Results(Results.Types.FAIL);
                     }
                 }else{
                     if(path.length()>0)
                         gui.msg("NomadTraveller/nomadPath:[" + path + "]");
-                    else{
-                        gui.msg("NomadTraveller/nomadPath is empty. Abort.");
-                        return new Results(Results.Types.FAIL);
-                    }
                 }
                 DataInputStream in =
                         new DataInputStream( new FileInputStream ((NConfiguration.botmod!=null)?NConfiguration.botmod.nomad:path ));
@@ -54,11 +49,14 @@ public class NomadTraveller implements Action {
                     }
                 }
             } catch (FileNotFoundException e) {
+                gui.msg("No such file was found!");
                 e.printStackTrace();
+                return new Results(Results.Types.FAIL);
             }
             gui.msg("File is loaded");
         }
 
+        //TODO: energy and water check;
 
         Coord2d shift = (mark_area!=null)?Finder.findObjectInArea(anchors, 3000, mark_area).rc:Finder.findObject(anchors).rc;
         for (Coord2d coord : marks) {
