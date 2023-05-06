@@ -91,7 +91,7 @@ public class NomadTraveller implements Action {
         this.distance = distance;
     }
 
-    int distance = 100;
+    int distance = 110;
     String path;
     ArrayList<Coord2d> marks = new ArrayList<>();
     NArea mark_area = null;
