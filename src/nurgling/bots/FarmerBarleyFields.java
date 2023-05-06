@@ -19,24 +19,23 @@ public class FarmerBarleyFields extends Bot {
         win_sz.y = 100;
 
         runActions.add(new ReturnerNoLogout());
-        runActions.add(new NomadTraveller("./first_field.dat"));
+        runActions.add(new NomadTraveller("./first_field.dat", 22));
+        runActions.add ( new HarvestSeedAction(new NAlias("Barley"), AreasID.barley , true));
+        runActions.add ( new CollectItemsToSwill(AreasID.barley,new NAlias("straw")));
 
         runActions.add(new ReturnerNoLogout());
-        runActions.add(new NomadTraveller("./second_field.dat"));
-
-        runActions.add(new ReturnerNoLogout());
-        runActions.add(new NomadTraveller("./third_field.dat"));
+        runActions.add(new NomadTraveller("./second_field.dat", 22));
+        runActions.add ( new HarvestSeedAction(new NAlias("Barley"), AreasID.barley , true));
+        runActions.add ( new CollectItemsToSwill(AreasID.barley,new NAlias("straw")));
 
         /*runActions.add(new ReturnerNoLogout());
-        runActions.add(new NomadTraveller("./fourth_field.dat"));
+        runActions.add(new NomadTraveller("./third_field.dat", 22));
 
         runActions.add(new ReturnerNoLogout());
-        runActions.add(new NomadTraveller("./fifth_field.dat"));*/
+        runActions.add(new NomadTraveller("./fourth_field.dat", 22));
 
-        //runActions.add ( new HarvestSeedAction(new NAlias("Barley"), AreasID.barley , true));
-
-        //runActions.add ( new TransferToTrough(new NAlias("Straw")) );
-        //runActions.add ( new CollectItemsToTrough(AreasID.barley,new NAlias("straw")));
+        runActions.add(new ReturnerNoLogout());
+        runActions.add(new NomadTraveller("./fifth_field.dat", 22));*/
 
         
     }
@@ -50,7 +49,4 @@ public class FarmerBarleyFields extends Bot {
     public void endAction () {
         super.endAction ();
     }
-    
-    HarvestOut seed;
-    ArrayList<HarvestOut> harvestOuts = new ArrayList<> ();
 }
