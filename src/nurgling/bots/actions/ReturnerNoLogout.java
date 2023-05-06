@@ -15,6 +15,7 @@ public class ReturnerNoLogout implements Action {
             NUtils.waitEvent(() -> NUtils.getProg() >= 0, 200);
             NUtils.waitEvent(() -> NUtils.getProg() < 0, 10000);
             NUtils.waitEvent(() -> NUtils.getGob(NUtils.getGameUI().map.player().id) != null, 2000);
+            Thread.sleep(2000);
         }
         else
         {
