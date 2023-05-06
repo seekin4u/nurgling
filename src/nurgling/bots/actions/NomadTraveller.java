@@ -58,7 +58,10 @@ public class NomadTraveller implements Action {
 
         //TODO: energy and water check;
 
-        Coord2d shift = (mark_area!=null)?Finder.findObjectInArea(anchors, 3000, mark_area).rc:Finder.findObject(anchors).rc;
+        //ПРИВЯЗКА К ХФУ
+        Gob pow = Finder.findObject(new NAlias("pow"));
+        Coord2d shift = (mark_area!=null)?
+                Finder.findObjectInArea(anchors, 3000, mark_area).rc : Finder.findObject(new NAlias("pow")).rc;
         for (Coord2d coord : marks) {
             Coord2d pos = coord.add(shift);
             Coord poscoord = pos.div(MCache.tilesz).floor();
@@ -83,7 +86,12 @@ public class NomadTraveller implements Action {
     public NomadTraveller(String path) {
         this.path = path;
     }
+    public NomadTraveller(String path, int distance){
+        this.path = path;
+        this.distance = distance;
+    }
 
+    int distance = 100;
     String path;
     ArrayList<Coord2d> marks = new ArrayList<>();
     NArea mark_area = null;
