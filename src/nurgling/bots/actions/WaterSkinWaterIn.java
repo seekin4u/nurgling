@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 
 public class WaterSkinWaterIn implements Action {
-    private NArea water_in;
 
     private boolean allFull(NGameUI gui) throws InterruptedException {
         WItem wbelt = Finder.findDressedItem ( new NAlias ("belt") );
@@ -35,7 +34,7 @@ public class WaterSkinWaterIn implements Action {
     public Results run ( NGameUI gui )
             throws InterruptedException {
         while (!allFull(gui)) {
-            Gob gob = Finder.findObjectInArea(new NAlias("barrel", "cistern"), 1000, water_in);
+            Gob gob = Finder.findObject(new NAlias("barrel", "cistern"));//Finder.findObjectInArea(new NAlias("barrel", "cistern"), 1000, water_in);
 
             if (gob == null) {
                 return new Results(Results.Types.NO_CONTAINER);
@@ -76,7 +75,6 @@ public class WaterSkinWaterIn implements Action {
         return new Results(Results.Types.SUCCESS);
     }
 
-    public WaterSkinWaterIn(NArea water_in) {
-        this.water_in = water_in;
+    public WaterSkinWaterIn() {
     }
 }
