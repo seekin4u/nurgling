@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static haven.MCache.tilesz;
 import static nurgling.NUtils.getGameUI;
@@ -59,6 +60,8 @@ public class NomadCollector implements Action {
         if(leashedAnimal){
             NUtils.waitEvent(()->NUtils.getGob(leashed.id)!=null,5000);
         }
+
+        ArrayList<Gob> targetCount = new ArrayList<Gob>();
         Coord2d shift = gob.rc;
         for(Coord2d coord : marks){
             Coord2d pos =  coord.add ( shift );
@@ -93,10 +96,12 @@ public class NomadCollector implements Action {
                 }
             }
             ArrayList<Gob> targets = Finder.findObjects(name);
-            NUtils.sendToChat("Palace of Pleasure", "Я нашел трюфелей: "+targets.size());
             if(!targets.isEmpty() && leashedAnimal){
+                targets.stream().forEachOrdered(targetCount::add);
+                gui.msg(targets.size() + " added to " + targetCount.size());
+
                 boolean pigNear = false;
-                leashed =NUtils.getGob(leashed.id);
+                leashed = NUtils.getGob(leashed.id);
                 for(Gob truf: targets)
                 {
                     if(truf.rc.dist(leashed.rc)<11) {
@@ -113,6 +118,8 @@ public class NomadCollector implements Action {
                     break;
             }
         }
+        if(!targetCount.isEmpty())
+            NUtils.sendToChat("Hog Riders", "Я нашел " + targetCount.size() + " трюфелей. Я молодец.");
         return new Results ( Results.Types.SUCCESS );
     }
 
