@@ -20,18 +20,18 @@ public class FarmerBarleyFields extends Bot {
 
         runActions.add(new ReturnerNoLogout());
         runActions.add(new NomadTraveller("./first_field.dat", 22));
-        runActions.add ( new HarvestSeedAction(new NAlias("Barley"), AreasID.barley , true));
-        runActions.add ( new CollectItemsToSwill(AreasID.barley,new NAlias("straw")));
+        runActions.add(new HarvestSeedAction(new NAlias("Barley"), AreasID.barley , true));
+        runActions.add(new CollectItemsToSwill(AreasID.barley,new NAlias("straw")));
 
         runActions.add(new ReturnerNoLogout());
         runActions.add(new NomadTraveller("./second_field.dat", 22));
-        runActions.add ( new HarvestSeedAction(new NAlias("Barley"), AreasID.barley , true));
-        runActions.add ( new CollectItemsToSwill(AreasID.barley,new NAlias("straw")));
+        runActions.add(new HarvestSeedAction(new NAlias("Barley"), AreasID.barley , true));
+        runActions.add(new CollectItemsToSwill(AreasID.barley,new NAlias("straw")));
 
         runActions.add(new ReturnerNoLogout());
         runActions.add(new NomadTraveller("./third_field.dat", 22));
-        runActions.add ( new HarvestSeedAction(new NAlias("Barley"), AreasID.barley , true));
-        runActions.add ( new CollectItemsToSwill(AreasID.barley,new NAlias("straw")));
+        runActions.add(new HarvestSeedAction(new NAlias("Barley"), AreasID.barley , true));
+        runActions.add(new CollectItemsToSwill(AreasID.barley,new NAlias("straw")));
         /*runActions.add(new ReturnerNoLogout());
         runActions.add(new NomadTraveller("./third_field.dat", 22));
 
