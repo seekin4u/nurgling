@@ -18,8 +18,9 @@ public class TruffleCollect implements Action {
             throws InterruptedException {
         Thread.sleep(5000);
         NUtils.transferToInventory();
-        if(new LeashAnimal(new NAlias("pig")).run(gui).type== Results.Types.FAIL)
+        if(new LeashAnimal(new NAlias("pig")).run(gui).type == Results.Types.FAIL)
             return new Results ( Results.Types.NO_PIG );
+        Thread.sleep(500);
         new NomadCollector(new NAlias("truffle"),"./pig.dat", true, Finder.findObject(new NAlias("pig"))).run(gui);
 
         Gob hitch = Finder.findObject(new NAlias("hitching"));

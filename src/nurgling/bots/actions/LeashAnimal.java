@@ -23,11 +23,17 @@ public class LeashAnimal implements Action {
                 rope = gui.vhand.item;
 
         new TakeToHand(gui.getInventory().getItem(new NAlias("rope"))).run(gui);
+
         NUtils.activateItem(gob);
+        Thread.sleep(500);
         GItem finalRope = gui.vhand.item;
-        NUtils.waitEvent(()-> finalRope!= null && (((NGItem) finalRope).status&READY)==READY &&  finalRope.info()!=null && ((NGItem) finalRope).getInfo(Leashed.class)!=null,50);
-        NUtils.transferToInventory();
-        NUtils.waitEvent(()->gui.getInventory().getItem(new NAlias("rope"), Leashed.class)!=null,20);
+        NUtils.waitEvent(()-> finalRope != null && (((NGItem) finalRope).status&READY)==READY &&  finalRope.info()!=null && ((NGItem) finalRope).getInfo(Leashed.class) != null ,500);
+        if(finalRope != null) gui.msg("Final rope !== null");
+        if((((NGItem) finalRope).status&READY)==READY) gui.msg("Final rope status = READY");
+        if(((NGItem) finalRope).getInfo(Leashed.class) != null) gui.msg("getInfo.Leashed.class != null");
+
+        NUtils.waitEvent(() -> NUtils.transferToInventory(), 500);
+        NUtils.waitEvent(()->gui.getInventory().getItem(new NAlias("rope"), Leashed.class)!=null,500);
         if(gui.getInventory().getItem(new NAlias("rope"), Leashed.class)!=null)
             return new Results ( Results.Types.SUCCESS );
         else
