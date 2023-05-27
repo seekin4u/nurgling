@@ -1,0 +1,6 @@
+#name
+Barley Fields farmer
+#req
+barley, straw
+#text
+Harvest barley in `barley` area. Gather straw to `straw` area to stockpiles. Need `first_field.dat`, `second_field.dat` and `third_field.dat` to work.
