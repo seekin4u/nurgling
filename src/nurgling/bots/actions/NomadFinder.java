@@ -97,6 +97,7 @@ public class NomadFinder implements Action {
                         return new Results(Results.Types.FULL);
                     }
                 }
+                //here IF for picking up floatsam
             }while(gui.map.player().rc.dist(finalPos) >= 5);
 
         }

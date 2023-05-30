@@ -61,7 +61,7 @@ public class NomadTraveller implements Action {
         //ПРИВЯЗКА К ХФУ
         Gob pow = Finder.findObject(new NAlias("pow"));
         Coord2d shift = (mark_area!=null)?
-                Finder.findObjectInArea(anchors, 3000, mark_area).rc : Finder.findObject(new NAlias("pow")).rc;
+                Finder.findObjectInArea(anchors, 3000, mark_area).rc : Finder.findObject(new NAlias("milestone-wood")).rc;
         for (Coord2d coord : marks) {
             Coord2d pos = coord.add(shift);
             Coord poscoord = pos.div(MCache.tilesz).floor();
