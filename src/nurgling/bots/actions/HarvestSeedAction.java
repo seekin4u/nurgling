@@ -21,6 +21,11 @@ public class HarvestSeedAction implements Action {
         NArea input = Finder.findNearestMark ( harvest_area );
 
         ArrayList<Gob> plants = Finder.findObjectsInArea ( crop, input );
+        if(plants.size() == 0){
+            gui.msg("Nothing to farm. Moving along.");
+            return new Results ( Results.Types.SUCCESS);
+        }
+        
         ArrayList<Gob> barrels = Finder.findObjectsInArea(new NAlias("barrel"), input);
         if(barrels.size() == 0){
             return new Results ( Results.Types.NO_BARREL );
