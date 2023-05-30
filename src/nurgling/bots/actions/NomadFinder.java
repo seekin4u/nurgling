@@ -3,6 +3,7 @@ package nurgling.bots.actions;
 import haven.*;
 
 import nurgling.*;
+import nurgling.bots.settings.DiscordWebhookWrap;
 import nurgling.tools.Finder;
 import nurgling.tools.NArea;
 
@@ -78,6 +79,7 @@ public class NomadFinder implements Action {
                             if (chan.chan.name().equals(NConfiguration.getInstance().village)) {
                                 gui.chat.chat.select(chan.chan);
                                 gui.chat.chat.sel.wdgmsg("msg", "I found : " + name + "\040" + "!");
+                                DiscordWebhookWrap.Push("I have found OrcaWhale! <@196302145706786816>");
                             }
                         }
                         if(NConfiguration.getInstance().alarmGreyseal)
@@ -106,9 +108,15 @@ public class NomadFinder implements Action {
         this.mark_area = mark_area;
     }
 
+    public NomadFinder(String nomadPath){
+        this.nomadPath = nomadPath;
+    }
+
     public NomadFinder() {
     }
 
     ArrayList<Coord2d> marks = new ArrayList<>();
     NArea mark_area = null;
+
+    String nomadPath = null;
 }

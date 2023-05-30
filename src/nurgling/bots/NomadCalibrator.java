@@ -4,6 +4,7 @@ import haven.Button;
 import haven.Coord;
 import haven.Coord2d;
 
+import nurgling.NConfiguration;
 import nurgling.NGameUI;
 import nurgling.NUtils;
 import nurgling.bots.actions.NomadCalibration;
@@ -97,14 +98,14 @@ public class NomadCalibrator extends Bot {
 
         DataOutputStream out = null;
         try {
-
+            URL url = NUtils.class.getProtectionDomain ().getCodeSource ().getLocation();
             out = new DataOutputStream(new FileOutputStream(path ));
             for (Coord2d coord2d: coords) {
                 out.writeInt((int) coord2d.x);
                 out.writeInt((int) coord2d.y);
             }
             out.close();
-            gameUI.msg("writePath:" + path);
+            gameUI.msg("writePath:" + url + path);
 
         } catch (IOException e) {
             e.printStackTrace();
