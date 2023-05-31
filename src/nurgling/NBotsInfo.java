@@ -203,6 +203,8 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
                     "bots/icons/flax" ) );
             layouts.get ( 5 ).add ( new NButton ( "Barley", new FarmerBarley (  gui ),
                     "bots/icons/barley" ) );
+            layouts.get ( 5 ).add ( new NButton ( "FieldsFarmer", new FarmerBarleyFields ( gui ),
+                    "bots/icons/barleyFields") );
             layouts.get ( 5 ).add ( new NButton ( "Pigs", new Pigs ( gui ),
                     "bots/icons/pigs" ) );
             layouts.get ( 5 ).add ( new NButton ( "Ochs", new Cows ( gui ),
@@ -333,10 +335,9 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
                     "bots/icons/fillwaterskin"  ) );
             layouts.get ( 5000 ).add ( new NButton ( "DreamHarvester", new DreamHarvester ( gui ),
                     "bots/icons/dreamer"  ) );
-            layouts.get ( 5000 ).add ( new NButton ( "GateBot", new GateBot ( gui ), "bots/icons/testbot") );
-            layouts.get ( 5000 ).add ( new NButton ( "CrossBot", new CrossBot ( gui ), "bots/icons/testbot") );
-            layouts.get ( 5000 ).add ( new NButton ( "FieldsFarmer", new FarmerBarleyFields ( gui ), "bots/icons/barleyFields") );
-            layouts.get ( 5000 ).add ( new NButton ( "FinderBot", new FinderBot ( gui ), "bots/icons/testbot") );
+            layouts.get ( 5000 ).add ( new NButton ( "GateBot", new GateBot ( gui ), "bots/icons/fenceBot") );
+            layouts.get ( 5000 ).add ( new NButton ( "CrossBot", new CrossBot ( gui ), "bots/icons/crossBot") );
+            layouts.get ( 5000 ).add ( new NButton ( "FinderBot", new FinderBot ( gui ), "bots/icons/fish1") );
 
 //            layouts.get ( 5000 ).add ( new NButton ( "Sort and Transfer Trash", new SortAndTransferTrash ( gui ),
 //                    Special.getPath () + "/icons/trash.png" ) );
