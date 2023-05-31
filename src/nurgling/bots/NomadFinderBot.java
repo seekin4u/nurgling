@@ -16,7 +16,7 @@ public class NomadFinderBot extends Bot {
         win_title = "GobFinder";
         win_sz.y = 100;
         runActions.add ( new NomadFinder(  ) );
-        runActions.add ( new MonitorGob(  ) );
+        //runActions.add ( new MonitorGob(  ) );
         runActions.add ( new Returner( true ) );
 
     }

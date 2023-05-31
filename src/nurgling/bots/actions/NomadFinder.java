@@ -26,9 +26,13 @@ public class NomadFinder implements Action {
          marks.clear();
 
          try {
-             gui.msg(NConfiguration.getInstance().nomadPath);
+             if(!NConfiguration.getInstance().nomadPath.isEmpty()){
+                 gui.msg(NConfiguration.getInstance().nomadPath);
+             }
                  DataInputStream in =
-                         new DataInputStream(new FileInputStream(NConfiguration.botmod.nomad));
+                         new DataInputStream(new FileInputStream(!NConfiguration.getInstance().nomadPath.isEmpty()?
+                                                                  NConfiguration.getInstance().nomadPath :
+                                                                  nomadPath));
 
                  while (true) {
                          try {
@@ -78,8 +82,9 @@ public class NomadFinder implements Action {
                         for (ChatUI.Selector.DarkChannel chan : gui.chat.chat.chansel.chls) {
                             if (chan.chan.name().equals(NConfiguration.getInstance().village)) {
                                 gui.chat.chat.select(chan.chan);
-                                gui.chat.chat.sel.wdgmsg("msg", "I found : " + name + "\040" + "!");
+                                //gui.chat.chat.sel.wdgmsg("msg", "");
                                 DiscordWebhookWrap.Push("I have found OrcaWhale! <@196302145706786816>");
+                                Thread.sleep(2000);
                             }
                         }
                         if(NConfiguration.getInstance().alarmGreyseal)
@@ -98,6 +103,18 @@ public class NomadFinder implements Action {
                     }
                 }
                 //here IF for picking up floatsam
+                Gob floatsam = Finder.findObject(new NAlias("floatsam"));
+                if(floatsam != null){
+                    PathFinder pf = new PathFinder ( gui, floatsam.rc );
+                    pf.setWithAlarm ( true );
+                    pf.run ();
+                    new SelectFlowerAction ( floatsam, "Pick" , SelectFlowerAction.Types.Gob).run ( gui );
+                    NUtils.waitEvent(()->NUtils.getGob(floatsam.id)==null, 1000);
+                    Thread.sleep(1000);
+                    pf = new PathFinder ( gui, pos );
+                    pf.setWithAlarm ( true );
+                    pf.run ();
+                }
             }while(gui.map.player().rc.dist(finalPos) >= 5);
 
         }

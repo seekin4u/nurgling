@@ -15,8 +15,10 @@ public class FinderBot extends Bot {
         super ( gameUI );
         win_title = "Finder bot";
         win_sz.y = 100;
-        runActions.add(new NomadTraveller("./fish1.dat"));
-        runActions.add(new MonitorGob());
+        //заменить травелера на  того который тревелит и смотрит за орками 2 в 1
+        runActions.add(new NomadFinder("./fish1.dat"));
+
+        runActions.add(new Returner(true));//return if nothing found
 
     }
     

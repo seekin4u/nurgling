@@ -16,7 +16,7 @@ public class MonitorGob implements Action {
     @Override
     public Results run(NGameUI gui) throws InterruptedException {
         while(true){
-            Thread.sleep(1000);
+            Thread.sleep(500);
             if (NUtils.alarmOrcalot()) {
                 Gob target;
                 target = Finder.findObject(new NAlias(new ArrayList<>(Arrays.asList("/orca", "/spermwhale")), new ArrayList<>(Arrays.asList("beef", "skeleton"))));
@@ -28,6 +28,7 @@ public class MonitorGob implements Action {
                             gui.chat.chat.select(chan.chan);
                             gui.chat.chat.sel.wdgmsg("msg", "I found : " + name + "\040" + "!");
                             DiscordWebhookWrap.Push("I have found OrcaWhale! <@196302145706786816>");
+                            Thread.sleep(5000);
                         }
                     }
 
