@@ -11,7 +11,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static haven.MCache.tilesz;
 import static haven.OCache.posres;
@@ -33,8 +32,9 @@ public class NomadTraveller implements Action {
                         gui.msg("NomadTraveller/Botmod is !null but nomadPath is emtpy.");
                     }
                 }else{
-                    if(path.length()>0)
-                        gui.msg("NomadTraveller/nomadPath:[" + path + "]");
+                    if(path.length()>0){
+                        gui.msg("NomadTraveller/nomadPath:[" + java.nio.file.Paths.get(path).toAbsolutePath() + "]");
+                    }
                 }
                 DataInputStream in =
                         new DataInputStream( new FileInputStream ((NConfiguration.botmod!=null)?NConfiguration.botmod.nomad:path ));
@@ -61,7 +61,7 @@ public class NomadTraveller implements Action {
         //ПРИВЯЗКА К ХФУ
         Gob pow = Finder.findObject(new NAlias("pow"));
         Coord2d shift = (mark_area!=null)?
-                Finder.findObjectInArea(anchors, 3000, mark_area).rc : Finder.findObject(new NAlias("milestone-wood")).rc;
+                Finder.findObjectInArea(anchors, 3000, mark_area).rc : Finder.findObject(anchors).rc;
         for (Coord2d coord : marks) {
             Coord2d pos = coord.add(shift);
             Coord poscoord = pos.div(MCache.tilesz).floor();
