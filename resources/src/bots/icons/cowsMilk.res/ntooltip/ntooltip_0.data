@@ -1,0 +1,6 @@
+#name
+Cows milker
+#req
+cows, milk(inside cows)
+#text
+Bot tries to milk the cows inside of `cows` area. Finds barrel and a cistern inside of `milk` area and do the job.

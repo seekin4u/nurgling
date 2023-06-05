@@ -209,6 +209,8 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
                     "bots/icons/pigs" ) );
             layouts.get ( 5 ).add ( new NButton ( "Ochs", new Cows ( gui ),
                     "bots/icons/cows" ) );
+            layouts.get ( 5 ).add ( new NButton ( "Ochs", new CowsMilk ( gui ),
+                    "bots/icons/cowsMilk" ) );
             layouts.get ( 5 ).add ( new NButton ( "Sheeps", new Sheeps ( gui ),
                     "bots/icons/sheeps" ) );
             layouts.get ( 5 ).add ( new NButton ( "Goats", new Goats ( gui ),
