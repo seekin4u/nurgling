@@ -340,6 +340,7 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
             layouts.get ( 5000 ).add ( new NButton ( "GateBot", new GateBot ( gui ), "bots/icons/fenceBot") );
             layouts.get ( 5000 ).add ( new NButton ( "CrossBot", new CrossBot ( gui ), "bots/icons/crossBot") );
             layouts.get ( 5000 ).add ( new NButton ( "FinderBot", new FinderBot ( gui ), "bots/icons/fish1") );
+            layouts.get ( 5000 ).add ( new NButton ( "FillTreeplanter", new FillTreeplanter ( gui ),"bots/icons/fillwaterskin"  ) );
 
 //            layouts.get ( 5000 ).add ( new NButton ( "Sort and Transfer Trash", new SortAndTransferTrash ( gui ),
 //                    Special.getPath () + "/icons/trash.png" ) );
