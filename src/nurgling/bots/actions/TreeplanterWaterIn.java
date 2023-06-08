@@ -44,7 +44,7 @@ public class TreeplanterWaterIn implements Action {
     public Results run ( NGameUI gui )
             throws InterruptedException {
         while(!allFull(gui)) {
-            Gob gob = Finder.findObject(new NAlias("barrel", "cistern"));//Finder.findObjectInArea(new NAlias("barrel", "cistern"), 1000, water_in);
+            Gob gob = Finder.findObject(new NAlias("barrel", "cistern"));
 
             if (gob == null) {
                 return new Results(Results.Types.NO_CONTAINER);
@@ -55,8 +55,10 @@ public class TreeplanterWaterIn implements Action {
                     NUtils.waitEvent(() -> gui.hand.isEmpty(), 50);
                 }
                 if (!hasWater(item)) {
-                    new TakeToHand(item).run(gui);
-                    NUtils.waitEvent(() -> !gui.hand.isEmpty(), 50);
+                    NUtils.takeItemToHand(item);
+                    NUtils.waitEvent(()->!gui.hand.isEmpty() , 100);
+                    //new TakeToHand(item).run(gui);
+                    //NUtils.waitEvent(() -> !gui.hand.isEmpty(), 50);
                     NUtils.activateItem(gob);
                     NUtils.waitEvent(() -> hasWater(item), 50);
                 }
