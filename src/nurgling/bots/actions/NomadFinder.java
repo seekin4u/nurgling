@@ -25,61 +25,47 @@ public class NomadFinder implements Action {
             throws InterruptedException {
          marks.clear();
 
-         try {
-             if(!NConfiguration.getInstance().nomadPath.isEmpty()){
-                 gui.msg(NConfiguration.getInstance().nomadPath);
-             }
-                 DataInputStream in =
-                         new DataInputStream(new FileInputStream(!NConfiguration.getInstance().nomadPath.isEmpty()?
-                                                                  NConfiguration.getInstance().nomadPath :
-                                                                  nomadPath));
-
-                 while (true) {
-                         try {
-                                 if (!(in.available() > 0))
-                                     break;
-                                 marks.add(new Coord2d(in.readInt(), in.readInt()));
-                             } catch (IOException e) {
+        try {
+            if(!NConfiguration.getInstance().nomadPath.isEmpty()){
+                gui.msg(NConfiguration.getInstance().nomadPath);
+            }
+                DataInputStream in =
+                     new DataInputStream(new FileInputStream(!NConfiguration.getInstance().nomadPath.isEmpty()?
+                                                             NConfiguration.getInstance().nomadPath :
+                                                             nomadPath));
+                while (true) {
+                     try {
+                          if (!(in.available() > 0))
+                               break;
+                               marks.add(new Coord2d(in.readInt(), in.readInt()));
+                     } catch (IOException e) {
                                  break;
-                             }
-                     }
-             } catch (FileNotFoundException e) {
-                 e.printStackTrace();
-             }
+                         }
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         Gob ship = Finder.findObject(new NAlias("snekkja", "knarr"));
-         if(((GobHealth)ship.getattr(GobHealth.class)).hp <=0.25) {
-             for (ChatUI.Selector.DarkChannel chan : gui.chat.chat.chansel.chls) {
-                 if (chan.chan.name().equals(NConfiguration.getInstance().village)) {
-                    gui.chat.chat.select(chan.chan);
-                    gui.chat.chat.sel.wdgmsg("msg", "Please fix my ship!");
-                    return new Results(Results.Types.NO_WORKSTATION);
-                    }
-                 }
-
-             Thread.sleep(2000);
-         }
         Coord2d shift = (mark_area!=null)?Finder.findObjectInArea(anchors, 3000, mark_area).rc:Finder.findObject(anchors).rc;
         for (Coord2d coord : marks) {
+            //fix the ship
+            if(((GobHealth)ship.getattr(GobHealth.class)).hp <=0.15) {
+                for (ChatUI.Selector.DarkChannel chan : gui.chat.chat.chansel.chls) {
+                    if (chan.chan.name().equals(NConfiguration.getInstance().village)) {
+                        gui.chat.chat.select(chan.chan);
+                        DiscordWebhookWrap.Push("Fix the ship! <@196302145706786816>");
+                        return new Results(Results.Types.NO_WORKSTATION);
+                    }
+                }
+
+                Thread.sleep(2000);
+            }
             Coord2d pos = coord.add(shift);
             Coord poscoord = pos.div(MCache.tilesz).floor();
             pos = new Coord2d((poscoord).x * tilesz.x + tilesz.x / 2, (poscoord).y * tilesz.y + tilesz.y / 2);
             gui.map.wdgmsg("click", Coord.z, pos.floor(posres), 1, 0);
             Coord2d finalPos = pos;
             do {
-                //fix the ship
-                /*Gob ship = Finder.findObject(new NAlias(new ArrayList<>(Arrays.asList("/knarr", "/snekkja" )), new ArrayList<>(Arrays.asList("beef", "skeleton"))));
-                if(((GobHealth)ship.getattr(GobHealth.class)).hp <=0.25) {
-                    while (true) {
-                        for (ChatUI.Selector.DarkChannel chan : gui.chat.chat.chansel.chls) {
-                            if (chan.chan.name().equals(NConfiguration.getInstance().village)) {
-                                gui.chat.chat.select(chan.chan);
-                                gui.chat.chat.sel.wdgmsg("msg", "Please fix my ship!");
-                                return new Results(Results.Types.NO_WORKSTATION);
-                            }
-                        }
-                        Thread.sleep(2000);
-                    }
-                }*/
                 NUtils.waitEvent(() -> gui.map.player().rc.dist(finalPos) < 5, 10);
                 if(gui.map.player().rc.dist(finalPos) >= 5)
                     gui.map.wdgmsg("click", Coord.z, pos.floor(posres), 1, 0);
@@ -116,17 +102,16 @@ public class NomadFinder implements Action {
                     }
                 }
                 //here IF for picking up floatsam
-                Gob floatsam = Finder.findObject(new NAlias("floatsam"));
+                Gob floatsam = Finder.findObject(new NAlias("flotsam"));
                 if(floatsam != null){
-                    PathFinder pf = new PathFinder ( gui, floatsam.rc );
-                    pf.setWithAlarm ( true );
-                    pf.run ();
+                    PathFinder pf = new PathFinder(gui, floatsam.rc);
+                    pf.setWithAlarm(true);
+                    pf.run();
                     new SelectFlowerAction ( floatsam, "Pick" , SelectFlowerAction.Types.Gob).run ( gui );
                     NUtils.waitEvent(()->NUtils.getGob(floatsam.id)==null, 1000);
-                    Thread.sleep(1000);
-                    pf = new PathFinder ( gui, pos );
-                    pf.setWithAlarm ( true );
-                    pf.run ();
+                    //go back anyway
+                    pf = new PathFinder(gui, pos);
+                    pf.run();
                 }
             }while(gui.map.player().rc.dist(finalPos) >= 5);
 
