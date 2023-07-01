@@ -2,6 +2,7 @@ package nurgling;
 
 import haven.*;
 import haven.res.lib.itemtex.ItemTex;
+import nurgling.bots.settings.QuestWebhookWrap;
 import nurgling.json.JSONArray;
 import nurgling.json.JSONObject;
 import nurgling.json.parser.JSONParser;
@@ -106,12 +107,22 @@ public class NQuestsStats extends Window {
 
     }
 
+    public static String getPname(){
+        NGameUI a = NUtils.getGameUI();
+        return a.buddies.getpname();
+    }
     public static void checkReward(String name) {
         final String mark = "increased the local";
         final String mark_wand = "Additionally,";
         final String lp = "learning";
         final String exp = "experien";
         final String ye = "You earned";
+        final String from = "from";
+        final String gaveitem = "gave you";
+        final String qualityby = " by ";
+        String questgiver = "", lpearned = "", expearned = "", localquality = "", localqualityadditional = "",
+                localqualityby = "", item = "";
+        //TODO: catch items
         if (name.contains(mark))
         {
             String qname = null;
@@ -120,26 +131,56 @@ public class NQuestsStats extends Window {
                 if(!statHashMap.containsKey(qname)) {
                     statHashMap.put(qname,new QuesterStat());
                 }
+                localqualityadditional = name.substring(name.indexOf(mark) + mark.length()+1,name.indexOf("quality")-1);
+                localqualityby = name.substring(name.indexOf(qualityby) + qualityby.length(), name.length()-1);
+
 
             }else if (name.contains(mark)){
                 qname = name.substring(0,name.indexOf(mark)-1);
                 if(!statHashMap.containsKey(qname)) {
                     statHashMap.put(qname,new QuesterStat());
                 }
+                localquality = name.substring(name.indexOf(mark) + mark.length()+1,name.indexOf("quality")-1);
+
             }
             if(qname!=null){
                 statHashMap.get(qname).upped.add(name.substring(name.indexOf(mark) + mark.length()+1,name.indexOf("quality")-1));
+                questgiver = qname;
+
             }
             write();
         }
         else if (name.contains(lp))
         {
             lp_count += Integer.parseInt(name.substring(name.indexOf(ye) + ye.length()+1,name.indexOf(lp)-1));
+            lpearned = name.substring(name.indexOf(ye) + ye.length()+1,name.indexOf(lp)-1);
+            questgiver = name.substring(name.indexOf(from) + from.length()+1,name.length()-1);
 
         }
         else if (name.contains(exp))
         {
             exp_count += (Integer.parseInt(name.substring(name.indexOf(ye) + ye.length()+1,name.indexOf(exp)-1)));
+            expearned = name.substring(name.indexOf(ye) + ye.length()+1,name.indexOf(exp)-1);
+            questgiver = name.substring(name.indexOf(from) + from.length()+1,name.length()-1);
+            //You esrned 1234 learning points from Laugot.
+        }
+        else if (name.contains(gaveitem)){
+            if(!name.contains("quest")){
+                questgiver = name.substring(0,name.indexOf(gaveitem)-1);
+                item = name.substring(name.indexOf(gaveitem) + gaveitem.length()+1, name.length()-1);
+                //Wychgundis /gave you a/ Gilding Rock.
+            }
+        }
+
+        if(!questgiver.isEmpty() || !lpearned.isEmpty() || !expearned.isEmpty() || !localquality.isEmpty()
+                || !localqualityby.isEmpty() || !item.isEmpty())
+        {
+            try {
+                new QuestWebhookWrap(getPname(), questgiver, lpearned, expearned,
+                        localquality, localqualityadditional, localqualityby, item);
+            } catch (InterruptedException e) {
+                //throw new RuntimeException(e);
+            }
         }
     }
     public static void write() {

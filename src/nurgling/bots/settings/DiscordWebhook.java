@@ -9,7 +9,7 @@ import nurgling.tools.AreasID;
 
 import java.io.IOException;
 
-public class DiscordWebhook extends Settings {
+public class    DiscordWebhook extends Settings {
     TextEntry discordWebhookUrl;
     TextEntry discordWebhookUsername;
     TextEntry discordWebhookIcon;

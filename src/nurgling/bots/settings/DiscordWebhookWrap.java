@@ -1,7 +1,6 @@
 package nurgling.bots.settings;
 
 import nurgling.NConfiguration;
-
 import java.io.IOException;
 
 public class DiscordWebhookWrap extends Settings {

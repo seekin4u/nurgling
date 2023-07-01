@@ -523,6 +523,10 @@ public class BuddyWnd extends Widget implements Iterable<BuddyWnd.Buddy> {
 	pname.commit();
     }
 
+	public String getpname(){
+		return pname.text();
+	}
+
     private void setcmp(Comparator<Buddy> cmp) {
 	bcmp = cmp;
 	String val = "";
