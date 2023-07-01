@@ -105,7 +105,8 @@ public class NomadCalibrator extends Bot {
                 out.writeInt((int) coord2d.y);
             }
             out.close();
-            gameUI.msg("writePath:" + url + path);
+            gameUI.msg("URL:" + url + " Path:" + path);
+            gameUI.msg("NIO: " + java.nio.file.Paths.get(path).toAbsolutePath());
 
         } catch (IOException e) {
             e.printStackTrace();
