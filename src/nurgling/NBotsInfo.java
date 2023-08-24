@@ -203,7 +203,11 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
                     "bots/icons/flax" ) );
             layouts.get ( 5 ).add ( new NButton ( "Barley", new FarmerBarley (  gui ),
                     "bots/icons/barley" ) );
-            layouts.get ( 5 ).add ( new NButton ( "FieldsFarmer", new FarmerBarleyFields ( gui ),
+            layouts.get ( 5 ).add ( new NButton ( "FieldsBarleyFarmer", new FarmerBarleyFields ( gui ),
+                    "bots/icons/barleyFields") );
+            layouts.get ( 5 ).add ( new NButton ( "Wheat", new FarmerWheat (  gui ),
+                    "bots/icons/barley" ) );
+            layouts.get ( 5 ).add ( new NButton ( "FieldsWheatFarmer", new FarmerWheatFields ( gui ),
                     "bots/icons/barleyFields") );
             layouts.get ( 5 ).add ( new NButton ( "Pigs", new Pigs ( gui ),
                     "bots/icons/pigs" ) );
