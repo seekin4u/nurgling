@@ -60,6 +60,8 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
                     "bots/icons/bough" ) );
             layouts.get ( 0 ).add ( new NButton ( "Leaf Collection", new LeafCollector( gui ),
                     "bots/icons/leaf" ) );
+            layouts.get ( 0 ).add ( new NButton ( "Leaf Placer", new LeafCollector2( gui ),
+                    "bots/icons/leaf" ) );
             layouts.get ( 0 ).add ( new NButton ( "Nuts Collection", new NutsCollector ( gui ), "bots/icons/nuts" ) );
             layouts.get ( 0 ).add ( new NButton ( "Fruits Collection", new FruitCollector ( gui ), "bots/icons/fruit" ) );
             layouts.get ( 0 ).add ( new NButton ( "Chipper", new Chipper ( gui ), "bots/icons/chip" ) );
@@ -195,6 +197,8 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
 //
 //
             layouts.put ( 5, new Layout ( this, "bots/icons/farming" ) );
+            layouts.get ( 5 ).add ( new NButton ( "Pumpkin", new FarmerPumpkin (  gui ),
+                    "bots/icons/pumpkin" ) );
             layouts.get ( 5 ).add ( new NButton ( "Carrot", new FarmerCarrot (  gui ),
                     "bots/icons/carrot" ) );
             layouts.get ( 5 ).add ( new NButton ( "Carrot Tuber", new FarmerCarrotTuber (  gui ),
@@ -253,6 +257,7 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
             layouts.get ( 6 ).add ( new NButton ( "Barrel", new BuildBarrels( gui ), "bots/icons/barrel" ) );
             layouts.get ( 6 ).add ( new NButton ( "CheeseR", new BuildCheaseRack( gui ), "bots/icons/cheeser" ) );
             layouts.get ( 6 ).add ( new NButton ( "TunningT", new BuildTTube( gui ), "bots/icons/tanningb" ) );
+            layouts.get ( 6 ).add ( new NButton ( "BuildHTable", new BuildHTable( gui ), "bots/icons/tanningb" ) );
             layouts.get ( 6 ).add ( new NButton ( "WChest", new BuildWChest( gui ), "bots/icons/chest" ) );
             layouts.get ( 6 ).add ( new NButton ( "DSign", new BuildSign( gui ), "bots/icons/dsign" ) );
             layouts.get ( 6 ).add ( new NButton ( "BuildBeackon", new BuildBeacon( gui ), "bots/icons/beacon" ) );

@@ -18,7 +18,13 @@ public class TransferToPileFromContainer implements Action {
             in = Finder.findObjectsInArea ( iname, Finder.findNearestMark ( input ) );
         }
         else {
-            in = Finder.findObjects ( iname );
+            if ( inp != null ) {
+                in = Finder.findObjectsInArea ( iname, inp  );
+            }
+            else {
+                in = Finder.findObjects ( iname );
+            }
+
         }
         for ( Gob gob : in ) {
             if(!gob.isTag(NGob.Tags.free) || gob.isTag(NGob.Tags.dframe) ) {
@@ -93,7 +99,23 @@ public class TransferToPileFromContainer implements Action {
         this.input = null;
         this.cap = cap;
     }
-    
+
+    public TransferToPileFromContainer (
+            NAlias iname,
+            NAlias oname,
+            NAlias items,
+            NArea input,
+            NArea output,
+            String cap
+    ) {
+        this.iname = iname;
+        this.oname = oname;
+        this.items = items;
+        this.out = output;
+        this.inp = input;
+        this.input = null;
+        this.cap = cap;
+    }
     NAlias iname;
     NAlias oname;
     NAlias items;
@@ -102,4 +124,5 @@ public class TransferToPileFromContainer implements Action {
     String cap;
 
     NArea out = null;
+    NArea inp = null;
 }

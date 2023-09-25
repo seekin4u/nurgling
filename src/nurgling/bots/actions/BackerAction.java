@@ -23,6 +23,7 @@ public class BackerAction implements Action {
             throws InterruptedException {
         int totalOven = Finder.findObjects(new NAlias("oven")).size();
         /// Ждем пока смелтеры не потухнут
+        ArrayList<Gob> oven = new ArrayList<>();
         while ( true ) {
             new WaitAction ( () -> {
                 for ( Gob gob : Finder.findObjects ( new NAlias ( "oven" ) ) ) {
@@ -41,20 +42,22 @@ public class BackerAction implements Action {
                     new TransferFromContainerToContainer ( backed, gob, "Oven", new NAlias ( "oven" ), AreasID.backed ).run ( gui );
                 }
                 /// Загружаем новыми булками
-                new TransferFromContainerToContainer ( new NAlias ( "dough" ), AreasID.unbacked, gob, "Oven", new NAlias ( "oven" ) ).run ( gui );
+                new TakeFromContainers(new NAlias("chest"), new NAlias(new ArrayList<>(Arrays.asList("dough"))), 8, AreasID.unbacked, "Chest").run(gui);
                 /// Проверяем есть ли булки
                 new PathFinder ( gui, gob ).run ();
                 new OpenTargetContainer ( gob, "Oven" ).run ( gui );
+                new TransferToContainerIfPossible(new NAlias("dough"), "Oven").run(gui);
                 if ( gui.getInventory ( "Oven" ).getAll ().isEmpty () )
                 /// Если нет, то выходим
                 {
                     return new Results(Results.Types.NO_ITEMS);
                 }
+                oven.add(gob);
                 /// Заполняем овны палочками с пайлов
-                new FillFuelFromPiles ( 4, new NAlias ( "branch" ), new NAlias ( "oven" ), new NAlias ( "branch" ),
-                        AreasID.branch ).run ( gui );
+                new FillFuelFromPiles ( 4, new NAlias ( "branch" ), oven, new NAlias ( "branch" ), AreasID.branch, 0 ).run ( gui );
+                oven.clear();
                 /// Поджигаем
-                new LightGob ( new NAlias ( "oven" ), 4 ).run ( gui );
+                new LightGob (4, gob).run ( gui );
             }
             Thread.sleep ( 10 );
         }

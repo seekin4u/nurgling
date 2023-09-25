@@ -23,7 +23,12 @@ public class TakeMaxFromContainer implements Action {
                 if (qMode) {
                     items = gui.getInventory(cap).getWItems(names, q, isMore);
                 } else {
-                    items = gui.getInventory(cap).getWItems(names);
+                    if (resname) {
+                        items = gui.getInventory(cap).getWItems(names);
+                    } else {
+                        items = gui.getInventory(cap).getGItems(names);
+                    }
+
                 }
 
                 /// Переносим предметы в инвентарь
@@ -63,10 +68,20 @@ public class TakeMaxFromContainer implements Action {
         this.q = q;
         qMode = true;
     }
-    
+
+    public TakeMaxFromContainer(
+            String cap,
+            NAlias names,
+            boolean resname
+    ) {
+        this.cap = cap;
+        this.names = names;
+        this.resname = resname;
+    }
     String cap;
     NAlias names;
     double q;
     boolean qMode = false;
     boolean isMore = false;
+    boolean resname = true;
 }

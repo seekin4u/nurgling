@@ -229,6 +229,7 @@ public class NGob {
     }
 
     protected void updateMovingInfo(GAttrib a, GAttrib prev) {
+        if(true) return;
         boolean me = isTag(Tags.player);
         if (NUtils.getGameUI() != null && NUtils.getGameUI().map != null) {
             if (prev instanceof Moving) {
@@ -308,6 +309,7 @@ public class NGob {
     }
 
     public static void updateMarked() {
+        if(true) return;
         if (NUtils.getGameUI() != null) {
             Gob player;
             if ((player = NOCache.getgob(Tags.player)) != null) {
@@ -353,6 +355,7 @@ public class NGob {
     }
 
     public static void updateMods(Gob gob, List<Composited.MD> mods) {
+        if(true) return;
         if (gob.isReady) {
             if (gob.isTag(Tags.kritter)) {
                 if (gob.isTag(Tags.sheep) || gob.isTag(Tags.goat)) {
@@ -376,6 +379,7 @@ public class NGob {
     }
 
     public static void updateLays(Gob gob) {
+        if(true) return;
         if (gob.isReady) {
             Composite comp = gob.getattr(Composite.class);
             if (comp != null) {
@@ -391,6 +395,7 @@ public class NGob {
     }
 
     public static void updatePoses(Gob gob, Collection<ResData> tposes) {
+        if(true) return;
         if (gob.isReady) {
             if (gob.isTag(Tags.kritter)) {
                 if (tposes != null) {
@@ -416,6 +421,7 @@ public class NGob {
     protected boolean isReady = false;
 
     public static void updateRes(Gob gob) {
+
         if (gob.getres() != null && NUtils.getGameUI()!=null) {
             gob.isReady = true;
             String name = gob.getResName();
@@ -571,6 +577,7 @@ public class NGob {
 
 
     protected static void updateCustom(Gob gob) {
+        //if(true) return;
         if (gob.status != Status.updated) {
             if (gob.status == Status.undefined) {
                 updateRes(gob);

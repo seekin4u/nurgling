@@ -1557,6 +1557,24 @@ public class NUtils {
     }
 
 
+//    public static boolean transferItem(
+//            NInventory inv,
+//            GItem item,
+//            NInventory targetinv
+//    )
+//            throws InterruptedException {
+//        if (item != null && item.sz!=null) {
+//            int space = targetinv.getNumberFreeCoord(item);
+//            if(space>0)
+//            {
+//                item.wdgmsg("transfer", item.sz, 1);
+//                waitEvent(() -> targetinv.getNumberFreeCoord(item)!=space, 5000,100);
+//            }
+//            return targetinv.getNumberFreeCoord(item)!=space;
+//        }
+//        return false;
+//    }
+
     public static boolean transferItem(
             NInventory inv,
             GItem item,

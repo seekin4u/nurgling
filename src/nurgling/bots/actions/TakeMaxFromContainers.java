@@ -31,6 +31,24 @@ public class TakeMaxFromContainers implements Action {
         this.isMax = true;
     }
 
+    public TakeMaxFromContainers(NAlias items, Object o, ArrayList<InContainer> inContainers, boolean resname) {
+        this.items = items;
+        if(o instanceof NArea){
+            inArea = (NArea) o;
+        }
+        else if (o instanceof NAlias)
+        {
+            inName = (NAlias) o;
+        }
+        else
+        {
+            inId = (AreasID) o;
+        }
+        this.inContainers = inContainers;
+        this.isMax = true;
+        this.resname = resname;
+    }
+
     @Override
     public Results run ( NGameUI gui )
             throws InterruptedException {
@@ -65,8 +83,13 @@ public class TakeMaxFromContainers implements Action {
                 String cap = NUtils.getContainerType(in.gob).cap;
                 if (!NUtils.checkName(cap, "Stockpile")) {
                     if (new OpenTargetContainer(in.gob, cap).run(gui).type == Results.Types.SUCCESS) {
-
-                        ArrayList<GItem> witems = gui.getInventory(cap).getWItems(items);
+                        ArrayList<GItem> witems;
+                        if (resname) {
+                            witems = gui.getInventory(cap).getWItems(items);
+                        } else {
+                            witems = gui.getInventory(cap).getGItems(items);
+                        }
+//                        ArrayList<GItem> witems = gui.getInventory(cap).getWItems(items);
                         for(GItem item : witems) {
                             if (!NUtils.transferItem(gui.getInventory(cap), item, gui.getInventory())) {
                                 return new Results(Results.Types.SUCCESS);
@@ -92,4 +115,5 @@ public class TakeMaxFromContainers implements Action {
     int needed;
 
     boolean isMax = false;
+    boolean resname = true;
 }
