@@ -17,7 +17,7 @@ public class AllToPile extends Bot {
 
     public AllToPile(NGameUI gameUI ) {
         super ( gameUI );
-        win_title = "Собираем2 Collect items to pile";
+        win_title = "Collect items to pile";
         win_sz.y = UI.scale(100);
 
         runActions.add ( new AllToPiles(pile_area,intput_area,items));
