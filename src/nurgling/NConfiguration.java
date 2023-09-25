@@ -85,6 +85,12 @@ public class NConfiguration {
     public boolean invert_hor = false;
     public boolean invert_ver = false;
     public String baseurl =" https://raw.githubusercontent.com/Katodiy/nurgling-release/master/ver";
+    public boolean flatsurface = false;
+    public boolean nextflatsurface = false;
+    public boolean showCSprite = false;
+
+    public boolean nextshowCSprite = false;
+    public boolean minesup = false;
 
     public static void saveButtons(String name, NGameUI.NButtonBeltSlot[] custom) {
         String key = NUtils.getUI().sessInfo.username +"/" + NUtils.getUI().sessInfo.characterInfo.chrid;
@@ -119,6 +125,12 @@ public class NConfiguration {
         {
             quickActions.add(item.text.texts);
         }
+    }
+
+    public Tiler getRidge() {
+        if(ridge==null)
+            ridge = customTileRes.get("ridge").tfac().create(7001, customTileRes.get("ridge"));
+        return ridge;
     }
 
     public static class PickingAction{
@@ -389,12 +401,30 @@ public class NConfiguration {
     }
     public Farmer farmer = null;
 
+    public HashMap<String, Tileset> customTileRes = new HashMap<String, Tileset>();
+    private Tiler ridge;
+    void initCustomTileRes()
+    {
+        Resource.local().loadwait("tiles/ridge-tex");
+        customTileRes.put("ridge", Resource.local().loadwait("tiles/ridge").layer(Tileset.class));
+    }
+
 
     NConfiguration () {
         AreasID.init ();
         NHitBox.init();
+        initCustomTileRes();
         iconsettings.put("mm/wheelbarrow",new GobIcon.Setting(new Resource.Spec(Resource.local(),"mm/wheelbarrow"),true,true,false,false));
         iconsettings.put("mm/anvil",new GobIcon.Setting(new Resource.Spec(Resource.local(),"mm/anvil"),true,true,false,false));
+        iconsettings.put("mm/dugout",new GobIcon.Setting(new Resource.Spec(Resource.local(),"mm/dugout"),true,true,false,false));
+        iconsettings.put("mm/knarr",new GobIcon.Setting(new Resource.Spec(Resource.local(),"mm/knarr"),true,true,false,false));
+        iconsettings.put("mm/snekkja",new GobIcon.Setting(new Resource.Spec(Resource.local(),"mm/snekkja"),true,true,false,false));
+        iconsettings.put("mm/rowboat",new GobIcon.Setting(new Resource.Spec(Resource.local(),"mm/rowboat"),true,true,false,false));
+        iconsettings.put("mm/horse",new GobIcon.Setting(new Resource.Spec(Resource.local(),"mm/horse"),true,true,false,false));
+        iconsettings.put("mm/milestones",new GobIcon.Setting(new Resource.Spec(Resource.local(),"mm/milestones"),true,true,false,false));
+        iconsettings.put("mm/milestonese",new GobIcon.Setting(new Resource.Spec(Resource.local(),"mm/milestonese"),true,true,false,false));
+        iconsettings.put("mm/milestonew",new GobIcon.Setting(new Resource.Spec(Resource.local(),"mm/milestonew"),true,true,false,false));
+        iconsettings.put("mm/milestonewe",new GobIcon.Setting(new Resource.Spec(Resource.local(),"mm/milestonewe"),true,true,false,false));
         iconsettings.put("mm/truffle",new GobIcon.Setting(new Resource.Spec(Resource.local(),"mm/truffle"),true,true,false,false));
         iconsettings.put("mm/claim",new GobIcon.Setting(new Resource.Spec(Resource.local(),"mm/claim"),true,true,false,false));
         iconsettings.put("mm/gem",new GobIcon.Setting(new Resource.Spec(Resource.local(),"mm/gem"),true,true,false,false));
@@ -802,6 +832,7 @@ public class NConfiguration {
         }
         obj.put("colors",colorsarr);
         obj.put("isGrid",isGrid);
+        obj.put("minesup",minesup);
         obj.put("isShowGild", Slotted.show);
         obj.put("isShowVar",NFoodInfo.show);
         obj.put("isShowStackQ", Stack.show);
@@ -809,6 +840,8 @@ public class NConfiguration {
         obj.put("enablePfBoundingBoxes",enablePfBoundingBoxes);
         obj.put("showBB",showBB);
         obj.put("hideNature",hideNature);
+        obj.put("flatsurface",nextflatsurface);
+        obj.put("showCSprite",nextshowCSprite);
         obj.put("invert_ver",invert_ver);
         obj.put("invert_hor",invert_hor);
         obj.put("enableCollectFoodInfo",collectFoodInfo);
@@ -1210,6 +1243,14 @@ public class NConfiguration {
             if ( jsonObject.get ( "hideNature" ) != null ) {
                 hideNature = (boolean)jsonObject.get ( "hideNature" );
             }
+            if ( jsonObject.get ( "flatsurface" ) != null ) {
+                flatsurface = (boolean)jsonObject.get ( "flatsurface" );
+                nextflatsurface = flatsurface;
+            }
+            if ( jsonObject.get ( "showCSprite" ) != null ) {
+                showCSprite = (boolean)jsonObject.get ( "showCSprite" );
+                nextshowCSprite = showCSprite;
+            }
             if ( jsonObject.get ( "invert_ver" ) != null ) {
                 invert_ver = (boolean)jsonObject.get ( "invert_ver" );
             }
@@ -1298,7 +1339,9 @@ public class NConfiguration {
                 NFoodInfo.show = ( Boolean ) jsonObject.get ( "isShowVar" );
             if(jsonObject.get ( "isShowStackQ" )!=null)
                 Stack.show = ( Boolean ) jsonObject.get ( "isShowStackQ" );
-
+            if(jsonObject.get ( "minesup" )!=null) {
+                minesup = (Boolean) jsonObject.get("minesup");
+            }
             if(jsonObject.get ( "isGrid" )!=null)
                 isGrid = ( Boolean ) jsonObject.get ( "isGrid" );
             JSONArray pathCategories = ( JSONArray ) jsonObject.get ( "pathCategories" );

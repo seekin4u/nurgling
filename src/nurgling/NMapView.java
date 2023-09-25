@@ -12,14 +12,16 @@ import nurgling.tools.NArea;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static haven.MCache.tilesz;
 import static haven.OCache.posres;
 
 public class NMapView extends MapView {
-    public static Coord2d rc1 = new Coord2d ();
-    public static Coord2d rc2 = new Coord2d ();
-    public boolean isAreaSelectorEnable = false;
+    public Coord2d rc1 = new Coord2d();
+    public Coord2d rc2 = new Coord2d();
+    public AtomicBoolean isAreaSelectorEnable = new AtomicBoolean(false);
+    public AtomicBoolean isGobSelectorEnable = new AtomicBoolean(false);
     public static final KeyBinding kb_checkClay = KeyBinding.get ( "checkClay", KeyMatch.forchar ( 'w', KeyMatch.C ) );
     public static final KeyBinding kb_checkWater = KeyBinding.get ( "checkWater", KeyMatch.forchar ( 'Y',KeyMatch.C ) );
     public static final KeyBinding kb_feedclower = KeyBinding.get ( "feedClover", KeyMatch.forchar ( 'U',
@@ -27,12 +29,17 @@ public class NMapView extends MapView {
     public static final KeyBinding kb_light = KeyBinding.get ( "light", KeyMatch.forchar ( 'H', KeyMatch.C ) );
     public static final KeyBinding kb_give = KeyBinding.get ( "giveS", KeyMatch.forchar ( 'Q', KeyMatch.C) );
     public static final KeyBinding kb_quick_action = KeyBinding.get ( "kb_quick_action", KeyMatch.forchar ( 'Q', 0) );
-    private boolean n_selection = false;
+    private AtomicBoolean n_selection = new AtomicBoolean(false);
     private boolean withpf = false;
+
+    private NSelector nselection = null;
+
+    private final Map<MCache.OverlayInfo, Overlay> custom_ols = new HashMap<>();
 
     public NMapView(Coord sz, Glob glob, Coord2d cc, long plgob) {
         super(sz, glob, cc, plgob);
         basic.add(((NOCache)glob.oc).paths);
+        olsinf.put("minesup", new NOverlayInfo(Resource.remote().loadwait("map/overlay/minesup-o").flayer(MCache.ResOverlay.class),false));
         ItemTex.tryLoad();
     }
 
@@ -102,79 +109,103 @@ public class NMapView extends MapView {
         return (super.tooltip(c, prev));
     }
 
+    private Gob checkedGob = null;
+    public Gob getSelectedGob() {
+        return checkedGob;
+    }
+
+    public void resetSelectedGob(){
+        checkedGob = null;
+    }
+
+    void getGob(Coord c) {
+        new Hittest(c) {
+            @Override
+            protected void hit(Coord pc, Coord2d mc, ClickData inf) {
+                if (inf != null) {
+                    Gob gob = Gob.from(inf.ci);
+                    if (gob != null) {
+                        checkedGob = gob;
+                    }
+                    isGobSelectorEnable.set(false);
+                }
+            }
+        }.run();
+    }
+
     void inspect(Coord c) {
         new Hittest(c) {
             @Override
             protected void hit(Coord pc, Coord2d mc, ClickData inf) {
-                    ttip.clear();
-                    if (inf != null) {
-                        Gob gob = Gob.from(inf.ci);
-                        if (gob != null) {
-                            ttip.put("gob", gob.getResName());
+                ttip.clear();
+                if (inf != null) {
+                    Gob gob = Gob.from(inf.ci);
+                    if (gob != null) {
+                        ttip.put("gob", gob.getResName());
 
-                            ttip.put("rc" , gob.rc.toString());
-                            if(!gob.ols.isEmpty()) {
-                                StringBuilder ols = new StringBuilder();
-                                boolean isPrinted = false;
-                                for (Gob.Overlay ol : gob.ols) {
-                                    if (ol.spr != null) {
-                                        isPrinted = true;
-                                        String res = ol.spr.getClass().toString();
-                                        if(!res.contains("$"))
-                                            ols.append(res + " ");
-                                    }
-                                }
-                                if(isPrinted)
-                                    ttip.put("ols", ols.toString());
-                            }
-
-
-                            ttip.put("id", String.valueOf(gob.id));
-                            if (!gob.tags.isEmpty()) {
-                                StringBuilder tags = new StringBuilder();
-                                Iterator<NGob.Tags> tag = gob.tags.iterator();
-                                while (tag.hasNext()) {
-                                    tags.append(tag.next().toString());
-                                    if (tag.hasNext())
-                                        tags.append(", ");
-                                }
-                                ttip.put("tags", tags.toString());
-                                if(!gob.properties.isEmpty()){
-                                    for(NProperties prop: gob.properties){
-                                        if(prop instanceof NProperties.Container){
-                                            NProperties.Container cont = (NProperties.Container) prop;
-                                            StringBuilder cont_str = new StringBuilder();
-                                            cont_str.append(String.format("Cap: %s Free: %d Full %d",cont.cap, cont.free, cont.full));
-                                            ttip.put("cont", cont_str.toString());
-                                        }
-                                    }
+                        ttip.put("rc" , gob.rc.toString());
+                        if(!gob.ols.isEmpty()) {
+                            StringBuilder ols = new StringBuilder();
+                            boolean isPrinted = false;
+                            for (Gob.Overlay ol : gob.ols) {
+                                if (ol.spr != null) {
+                                    isPrinted = true;
+                                    String res = ol.spr.getClass().toString();
+                                    if(!res.contains("$"))
+                                        ols.append(res + " ");
                                 }
                             }
-                            ttip.put("status", gob.status.toString());
-                            if (NGob.getModelAttribute(gob)!=-1) {
-                                ttip.put("marker", String.valueOf(NGob.getModelAttribute(gob)));
-                            }
-
-                            if(gob.getattr(Drawable.class)!=null && gob.getattr(Drawable.class) instanceof Composite && ((Composite)gob.getattr(Drawable.class)).oldposes!=null)
-                            {
-                                StringBuilder poses = new StringBuilder();
-                                Iterator<ResData> pose = ((Composite)gob.getattr(Drawable.class)).oldposes.iterator();
-                                while (pose.hasNext()) {
-                                    poses.append(pose.next().res.get().name);
-                                    if (pose.hasNext())
-                                        poses.append(", ");
-                                }
-                                ttip.put("poses", poses.toString());
-                            }
-
+                            if(isPrinted)
+                                ttip.put("ols", ols.toString());
                         }
+
+
+                        ttip.put("id", String.valueOf(gob.id));
+                        if (!gob.tags.isEmpty()) {
+                            StringBuilder tags = new StringBuilder();
+                            Iterator<NGob.Tags> tag = gob.tags.iterator();
+                            while (tag.hasNext()) {
+                                tags.append(tag.next().toString());
+                                if (tag.hasNext())
+                                    tags.append(", ");
+                            }
+                            ttip.put("tags", tags.toString());
+                            if(!gob.properties.isEmpty()){
+                                for(NProperties prop: gob.properties){
+                                    if(prop instanceof NProperties.Container){
+                                        NProperties.Container cont = (NProperties.Container) prop;
+                                        StringBuilder cont_str = new StringBuilder();
+                                        cont_str.append(String.format("Cap: %s Free: %d Full %d",cont.cap, cont.free, cont.full));
+                                        ttip.put("cont", cont_str.toString());
+                                    }
+                                }
+                            }
+                        }
+                        ttip.put("status", gob.status.toString());
+                        if (NGob.getModelAttribute(gob)!=-1) {
+                            ttip.put("marker", String.valueOf(NGob.getModelAttribute(gob)));
+                        }
+
+                        if(gob.getattr(Drawable.class)!=null && gob.getattr(Drawable.class) instanceof Composite && ((Composite)gob.getattr(Drawable.class)).oldposes!=null)
+                        {
+                            StringBuilder poses = new StringBuilder();
+                            Iterator<ResData> pose = ((Composite)gob.getattr(Drawable.class)).oldposes.iterator();
+                            while (pose.hasNext()) {
+                                poses.append(pose.next().res.get().name);
+                                if (pose.hasNext())
+                                    poses.append(", ");
+                            }
+                            ttip.put("poses", poses.toString());
+                        }
+
                     }
-                    MCache mCache = ui.sess.glob.map;
-                    int tile = mCache.gettile(mc.div(tilesz).floor());
-                    Resource res = mCache.tilesetr(tile);
-                    if (res != null) {
-                        ttip.put("tile", res.name);
-                    }
+                }
+                MCache mCache = ui.sess.glob.map;
+                int tile = mCache.gettile(mc.div(tilesz).floor());
+                Resource res = mCache.tilesetr(tile);
+                if (res != null) {
+                    ttip.put("tile", res.name);
+                }
             }
 
             @Override
@@ -188,16 +219,21 @@ public class NMapView extends MapView {
             Coord c,
             int button
     ) {
-        if ( isAreaSelectorEnable ) {
-            if ( selection == null ) {
-                selection = new NSelector ();
-                n_selection = true;
+        if(isGobSelectorEnable.get())
+        {
+            getGob(c);
+            return false;
+        }
+        else if ( isAreaSelectorEnable.get() ) {
+            if ( nselection == null ) {
+                nselection = new NSelector ();
+                n_selection.set(true);
             }
         }
-        else if ( selection != null && n_selection ) {
+        else if ( nselection != null && n_selection.get() ) {
             destroySelector();
-            n_selection = false;
-            isAreaSelectorEnable = false;
+            n_selection.set(false);
+            isAreaSelectorEnable.set(false);
         }
         else if ( withpf ) {
             parent.setfocus ( this );
@@ -227,9 +263,9 @@ public class NMapView extends MapView {
     }
 
     public void destroySelector() {
-        if(selection!=null) {
-            selection.destroy();
-            selection = null;
+        if(nselection!=null) {
+            nselection.destroy();
+            nselection = null;
         }
     }
 
@@ -286,7 +322,6 @@ public class NMapView extends MapView {
     }
 
     public void click(Gob gob, int button, Coord mouse) {
-//        if(button == 3) {NFlowerMenu.lastGob(gob);}
         Coord mc = gob.rc.floor(posres);
         click(gob.rc, button, mouse, mc, button, ui.modflags(), 0, (int) gob.id, mc, 0, -1);
     }
@@ -303,7 +338,7 @@ public class NMapView extends MapView {
                 send = NUtils.getGameUI().pathQueue.add(mc);
             } else {
                 if(NUtils.isIdleCurs())
-                   NUtils.getGameUI().pathQueue.start(mc);
+                    NUtils.getGameUI().pathQueue.start(mc);
             }
         }
         if(button == 3){
@@ -370,25 +405,7 @@ public class NMapView extends MapView {
 
 
     public NArea getSelection () {
-        Coord2d min = new Coord2d ();
-        Coord2d max = new Coord2d ();
-        if ( rc1.x < rc2.x ) {
-            min.x = rc1.x;
-            max.x = rc2.x;
-        }
-        else {
-            min.x = rc2.x;
-            max.x = rc1.x;
-        }
-        if ( rc1.y < rc2.y ) {
-            min.y = rc1.y;
-            max.y = rc2.y;
-        }
-        else {
-            min.y = rc2.y;
-            max.y = rc1.y;
-        }
-        return new NArea ( min, max );
+        return new NArea ( new Coord2d(Math.min(rc1.x, rc2.x),Math.min(rc1.y, rc2.y)), new Coord2d(Math.max(rc1.x, rc2.x),Math.max(rc1.y, rc2.y)) );
     }
 
     public class NSelector extends Selector {
@@ -420,11 +437,13 @@ public class NMapView extends MapView {
                 Coord mc,
                 int button
         ) {
-            if ( isAreaSelectorEnable ) {
+            if ( isAreaSelectorEnable.get() ) {
+                ol.destroy ();
+                mgrab.remove ();
                 Coord sc_fix = mc.div ( MCache.tilesz2 );
-
                 rc2.x = sc_fix.x * tilesz.x;
                 rc2.y = sc_fix.y * tilesz.y;
+
                 if ( mc.x > sc.x * tilesz.x ) {
                     rc2.x += tilesz.x;
                 }
@@ -437,13 +456,11 @@ public class NMapView extends MapView {
                 else {
                     rc1.y += tilesz.y;
                 }
-                isAreaSelectorEnable = false;
+                isAreaSelectorEnable.set(false);
             }
             return super.mmouseup ( mc, button );
         }
     }
-    Thread th = null;
-    
     public class NClick extends Click {
 
         public NClick (
@@ -477,4 +494,81 @@ public class NMapView extends MapView {
         }
     }
 
+    class NOverlayInfo
+    {
+        public MCache.OverlayInfo id;
+        boolean needUpdate = false;
+
+        public NOverlayInfo(MCache.OverlayInfo flayer, boolean b) {
+            this.id = flayer;
+            this.needUpdate = b;
+        }
+
+        HashMap<Long, ArrayList<NOverlayMap.History>> gobs = new HashMap<>();
+    }
+
+    public HashMap<String, NOverlayInfo> olsinf = new HashMap<>();
+
+    @Override
+    protected void oltick() {
+        if (terrain.area != null) {
+            for (NOverlayInfo olinf : olsinf.values()) {
+                if ((olinf.needUpdate || olinf.gobs.isEmpty()) && custom_ols.get(olinf.id) != null) {
+                    synchronized (NUtils.getGameUI().getMap().glob.map.grids) {
+                        for (MCache.Grid grid : NUtils.getGameUI().getMap().glob.map.grids.values()) {
+                            for (int i = 0; i < grid.cuts.length; i++) {
+                                try {
+                                    MapMesh mesh = (grid.cuts[i].mesh != null) ? grid.cuts[i].mesh : grid.cuts[i].dmesh.get();
+                                    if (mesh == null)
+                                        return;
+                                    grid.cuts[i].ols.put(olinf.id, mesh.makeol(olinf.id));
+                                    grid.cuts[i].olols.put(olinf.id, mesh.makeolol(olinf.id));
+                                } catch (Loading l) {
+                                    l.boostprio(2);
+                                }
+                            }
+                        }
+                        olinf.needUpdate = false;
+                    }
+                }
+                Overlay ol = custom_ols.get(olinf.id);
+                if (ol == null) {
+                    try {
+                        basic.add(ol = new Overlay(olinf.id));
+                        custom_ols.put(olinf.id, ol);
+                    } catch (Loading l) {
+                        l.boostprio(2);
+                        continue;
+                    }
+                }
+            }
+        }
+        super.oltick();
+        if (terrain.area != null)
+            for (NOverlayInfo olinf : olsinf.values())
+                for (Iterator<Map.Entry<Long, ArrayList<NOverlayMap.History>>> iter = olinf.gobs.entrySet().iterator(); iter.hasNext(); ) {
+                    Map.Entry<Long, ArrayList<NOverlayMap.History>> item = iter.next();
+                    Long gobid = item.getKey();
+                    if (NUtils.getGob(gobid) == null && placing == null || (gobid==-1 && NUtils.getGob(gobid)!=null)) {
+                        for (NOverlayMap.History h : olinf.gobs.get(gobid)) {
+                            for (int i = 0; i < h.g.ols.length; i++) {
+                                if (h.g.ols[i].get().layer(MCache.ResOverlay.class) == olinf.id) {
+                                    h.g.ol[i][h.t.x + (h.t.y * MCache.cmaps.x)] = false;
+                                }
+                            }
+                        }
+                        iter.remove();
+                        olinf.needUpdate = true;
+                    }
+                }
+    }
+
+    public void setStatus(MCache.OverlayInfo id, boolean status){
+        for(NOverlayInfo inf: olsinf.values()){
+            if(inf.id == id){
+                inf.needUpdate = status;
+                return;
+            }
+        }
+    }
 }
