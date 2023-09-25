@@ -20,7 +20,7 @@ public class BuildHTable extends Bot {
 
     public BuildHTable(NGameUI gameUI ) {
         super ( gameUI );
-        win_title = "BuildTTube";
+        win_title = "BuildHTable";
         win_sz.y = 125;
         
         CraftCommand command = new CraftCommand();
@@ -58,7 +58,7 @@ public class BuildHTable extends Bot {
         window.add ( new Button ( window.buttons_size, "Building area" ) {
             @Override
             public void click () {
-                gameUI.getMap ().isAreaSelectorEnable = true;
+                gameUI.getMap ().isAreaSelectorEnable.set(true);
                 if ( !m_selection_start.get () ) {
                     m_selection_start.set ( true );
                     new Thread ( new AreaSelecter( gameUI, _start, m_selection_start, build_area ),
@@ -70,7 +70,7 @@ public class BuildHTable extends Bot {
         window.add ( new Button ( window.buttons_size, "Boards/logs" ) {
             @Override
             public void click () {
-                gameUI.getMap ().isAreaSelectorEnable = true;
+                gameUI.getMap ().isAreaSelectorEnable.set(true);
                 if ( !m_selection_start.get () ) {
                     m_selection_start.set ( true );
                     new Thread ( new AreaSelecter ( gameUI, _zone1, m_selection_start, board_area ),
@@ -82,7 +82,7 @@ public class BuildHTable extends Bot {
         window.add ( new Button ( window.buttons_size, "Blocks/logs" ) {
             @Override
             public void click () {
-                gameUI.getMap ().isAreaSelectorEnable = true;
+                gameUI.getMap ().isAreaSelectorEnable.set(true);
                 if ( !m_selection_start.get () ) {
                     m_selection_start.set ( true );
                     new Thread ( new AreaSelecter ( gameUI, _zone2, m_selection_start, block_area ),
@@ -94,7 +94,7 @@ public class BuildHTable extends Bot {
         window.add ( new Button ( window.buttons_size, "Fibres" ) {
             @Override
             public void click () {
-                gameUI.getMap ().isAreaSelectorEnable = true;
+                gameUI.getMap ().isAreaSelectorEnable.set(true);
                 if ( !m_selection_start.get () ) {
                     m_selection_start.set ( true );
                     new Thread ( new AreaSelecter ( gameUI, _zone3, m_selection_start, fibres_area ),
