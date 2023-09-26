@@ -1068,6 +1068,15 @@ public class NUtils {
         return false;
     }
 
+    public static boolean isContent(GItem item, String name)
+            throws InterruptedException {
+        String value = getContent(item);
+        if (value != null)
+            if (value.toLowerCase().contains(name)) {
+                return true;
+            }
+        return false;
+    }
     public static String getContent(
             GItem item
     )  {

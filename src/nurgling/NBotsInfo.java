@@ -132,6 +132,9 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
                     "bots/icons/cloth" ) );
             layouts.get ( 3 ).add ( new NButton ( "Craft Tarsticks", new TarSticker ( gui ),
                     "bots/icons/tarsticks" ) );
+
+            layouts.get ( 3 ).add ( new NButton ( "Tea Maker", new teaMaker ( gui ),
+                    "bots/icons/teaMaker"  ) );
 //            layouts.get ( 3 ).add ( new NButton ( "Bone Glue", new nurgler.bots.crafting.BoneGlue (  gui ),
 //                    Special.getPath () + "/icons/boneglue.png" ) );
 //            layouts.get ( 3 ).add ( new NButton ( "Harden Leather", new HardenLeatherMaker (  gui ),
@@ -257,7 +260,7 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
             layouts.get ( 6 ).add ( new NButton ( "Barrel", new BuildBarrels( gui ), "bots/icons/barrel" ) );
             layouts.get ( 6 ).add ( new NButton ( "CheeseR", new BuildCheaseRack( gui ), "bots/icons/cheeser" ) );
             layouts.get ( 6 ).add ( new NButton ( "TunningT", new BuildTTube( gui ), "bots/icons/tanningb" ) );
-            layouts.get ( 6 ).add ( new NButton ( "BuildHTable", new BuildHTable( gui ), "bots/icons/tanningb" ) );
+            layouts.get ( 6 ).add ( new NButton ( "BuildHTable", new BuildHTable( gui ), "bots/icons/tanningb2" ) );
             layouts.get ( 6 ).add ( new NButton ( "WChest", new BuildWChest( gui ), "bots/icons/chest" ) );
             layouts.get ( 6 ).add ( new NButton ( "DSign", new BuildSign( gui ), "bots/icons/dsign" ) );
             layouts.get ( 6 ).add ( new NButton ( "BuildBeackon", new BuildBeacon( gui ), "bots/icons/beacon" ) );

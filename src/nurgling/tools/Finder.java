@@ -439,7 +439,21 @@ public class Finder {
         }
         return result;
     }
-    
+
+    public static Gob findNearestObjectToObject ( NAlias name , Gob sign) {
+        double length = 50000;
+        ArrayList<Gob> gobs = findObjects(name);
+        Gob result = null;
+        for ( Gob gob : gobs ) {
+            double dist = sign.rc.dist ( gob.rc );
+            /// Если расстояние минимально то оно и объект запоминаются
+            if ( dist < length ) {
+                length = dist;
+                result = gob;
+            }
+        }
+        return result;
+    }
     public static Gob findNearestObject (
             long ignored
     ) {
