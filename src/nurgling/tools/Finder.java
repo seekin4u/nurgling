@@ -5,10 +5,7 @@ import haven.res.lib.itemtex.ItemTex;
 import nurgling.*;
 import nurgling.NExceptions.NoFreeSpace;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Objects;
+import java.util.*;
 
 
 public class Finder {
@@ -1081,7 +1078,39 @@ public class Finder {
         }
         return result;
     }
-    
+
+
+    public static class FreeSpaceFinder {
+        public static Coord2d findFreeSpace(NArea zone, double objectSize) throws NoFreeSpace {
+            List<Gob> existingObjects = findObjectsInArea(zone);
+            for (double x = zone.begin.x + objectSize / 2; x <= zone.end.x - objectSize / 2; x++) {
+                for (double y = zone.begin.y + objectSize / 2; y <= zone.end.y - objectSize / 2; y++) {
+                    boolean isOccupied = false;
+
+                    for (Gob existingObject : existingObjects) {
+
+                        NHitBox gobHitBox = NHitBox.get ( existingObject, false );
+                        int distance = (int) Math.sqrt(
+                                Math.pow(x - gobHitBox.end.x, 2) +
+                                        Math.pow(y - gobHitBox.end.y, 2)
+                        );
+                        if (distance < (objectSize / 2 + (gobHitBox.radius))) {
+                            isOccupied = true;
+                            break;
+                        }
+                    }
+
+                    if (!isOccupied) {
+                        return new Coord2d(x, y);
+                    }
+                }
+            }
+            throw new NoFreeSpace (); // Если свободное место не найдено
+        }
+
+
+    }
+
     public static Coord2d findPlace (
             NHitBox hitBox,
             NArea area,

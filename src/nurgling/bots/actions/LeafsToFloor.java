@@ -1,5 +1,5 @@
 package nurgling.bots.actions;
-
+import java.util.ArrayList;
 import nurgling.NAlias;
 import nurgling.NGameUI;
 import nurgling.NHitBox;
@@ -13,6 +13,7 @@ public class LeafsToFloor implements Action {
     NAlias htable = new NAlias(new ArrayList<>(Arrays.asList("htable")),new ArrayList<>(Arrays.asList("tar")));
     @Override
     public Results run(NGameUI gui) throws InterruptedException {
+
         /// Забираем черные листья и переносим их в пайлы
         new TransferToPileFromContainer(htable, new NAlias("stockpile-leaf"),
                 new NAlias("tea-black"), AreasID.l_tea_black, AreasID.l_htable,"Herbalist Table").run(gui);
@@ -26,5 +27,6 @@ public class LeafsToFloor implements Action {
 
     public LeafsToFloor() {
     }
+
 
 }

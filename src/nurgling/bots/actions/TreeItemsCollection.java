@@ -7,6 +7,7 @@ import nurgling.*;
 import nurgling.tools.Finder;
 import nurgling.tools.NArea;
 
+//import nurgling.bots.actions.FindPlace;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +20,7 @@ public class TreeItemsCollection implements Action {
     public Results run ( NGameUI gui )
             throws InterruptedException {
 //        int th = NUtils.checkName("leaf", item_name) ? 3 : 2;
-        int th = 0;
+        int th = 10;
         ArrayList<Gob> gobs = Finder.findObjectsInArea(trees, tree);
         if (gui.getInventory().getNumberFreeCoord(gui.getInventory().getItem(item_name)) <=
                 1) {

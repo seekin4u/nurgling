@@ -98,7 +98,7 @@ public class TakeMaxFromContainers implements Action {
                         gui.getInventory(cap).parent.destroy();
                     }
                 } else {
-                    if (new TakeMaxFromPile(in.gob).run(gui).type == Results.Types.SUCCESS)
+                    if (new TakeMaxFromPile(in.gob, true).run(gui).type == Results.Types.SUCCESS)
                         return new Results(Results.Types.SUCCESS);
                 }
 

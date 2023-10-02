@@ -10,9 +10,9 @@ import nurgling.tools.NArea;
 import nurgling.tools.PileMaker;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TransferToPile implements Action {
-
 
     @Override
     public Results run ( NGameUI gui )
@@ -45,7 +45,7 @@ public class TransferToPile implements Action {
                     if (gob.getModelAttribute() != 31) {
                         target = gob;
                         PathFinder pf = new PathFinder(gui, target);
-                        pf.setHardMode(true);
+                        pf.setHardMode(false);
                         pf.run();
                         if (!gui.hand.isEmpty()) {
                             NUtils.activateItemToPile(gob);

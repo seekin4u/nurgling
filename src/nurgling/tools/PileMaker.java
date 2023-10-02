@@ -7,6 +7,7 @@ import nurgling.NExceptions.NoFreeSpace;
 
 
 import static haven.OCache.posres;
+import static nurgling.NUtils.checkName;
 
 public class PileMaker {
     NArea area;
@@ -55,8 +56,14 @@ public class PileMaker {
             throws InterruptedException, NoFreeSpace {
         double dx = (hitBox.end.x-hitBox.begin.x)/2.;
         double dy = (hitBox.end.y-hitBox.begin.y)/2.;
-        hitBox = new NHitBox(new Coord2d(-dx,-dy),new Coord2d(dx,dy));
-        Coord2d target_coord = Finder.findPlace ( hitBox, area, "" );
+        NHitBox hitBox2 = new NHitBox(new Coord2d(-dx,-dy),new Coord2d(dx,dy));
+        Coord2d target_coord;
+        target_coord = Finder.findPlace ( hitBox2, area, "" );
+//        if (checkName("stockpile-leaf", pile_name)){
+//            target_coord = Finder.FreeSpaceFinder.findFreeSpace(area, dx*2);
+//        } else  {
+//            target_coord = Finder.findPlace ( hitBox2, area, "" );
+//        }
         hitBox.correct ( target_coord, 0 );
         pathFinder = new PathFinder ( gameUI, target_coord );
         pathFinder.setPhantom ( target_coord, hitBox);

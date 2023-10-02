@@ -31,11 +31,15 @@ public class TakeMaxFromPile implements Action {
                 return new Results ( Results.Types.SUCCESS );
             }
             new PathFinder( gui, inPile ).run ();
-            new OpenTargetContainer ( inPile, "Stockpile" ).run ( gui );
-            while ( NUtils.takeItemFromPile () ) {
-                ;
+            if (fast){
+                NUtils.activate(inPile, 1, 1);
+                Thread.sleep(500);
+            } else {
+                new OpenTargetContainer ( inPile, "Stockpile" ).run ( gui );
+                while ( NUtils.takeItemFromPile () ) {
+                    ;
+                }
             }
-            
             if ( Finder.findObject ( inPile.id ) == null ) {
                 inPile = Finder.findObjectInArea ( new NAlias ( "stockpile" ), 1000, Finder.findNearestMark ( input ) );
             }
@@ -59,6 +63,10 @@ public class TakeMaxFromPile implements Action {
     public TakeMaxFromPile(Gob gob ) {
         this.inPile = gob;
     }
+    public TakeMaxFromPile(Gob gob , boolean fast) {
+        this.inPile = gob;
+        this.fast=true;
+    }
     
     public TakeMaxFromPile(NArea area ) {
         this.area = area;
@@ -67,4 +75,5 @@ public class TakeMaxFromPile implements Action {
     AreasID input;
     Gob inPile = null;
     NArea area = null;
+    boolean fast = false;
 }
