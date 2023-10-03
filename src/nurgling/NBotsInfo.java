@@ -134,9 +134,6 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
                     "bots/icons/cloth" ) );
             layouts.get ( 3 ).add ( new NButton ( "Craft Tarsticks", new TarSticker ( gui ),
                     "bots/icons/tarsticks" ) );
-
-            layouts.get ( 3 ).add ( new NButton ( "Tea Maker", new teaMaker ( gui ),
-                    "bots/icons/teaMaker"  ) );
 //            layouts.get ( 3 ).add ( new NButton ( "Bone Glue", new nurgler.bots.crafting.BoneGlue (  gui ),
 //                    Special.getPath () + "/icons/boneglue.png" ) );
 //            layouts.get ( 3 ).add ( new NButton ( "Harden Leather", new HardenLeatherMaker (  gui ),
@@ -292,6 +289,12 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
             layouts.get ( 7 ).add ( new NButton ( "TransferCellar", new TransferCheeseCellar (  gui ),
                     "bots/icons/transfercheese_cel" ) );
 
+            layouts.put ( 8, new Layout ( this, "bots/icons/factorio" ) );
+
+            layouts.get ( 8 ).add ( new NButton ( "Leaf Placer", new LeafCollector2( gui ),
+                    "bots/icons/leaf2" ) );
+            layouts.get ( 8 ).add ( new NButton ( "Tea Maker", new teaMaker ( gui ),
+                    "bots/icons/teaMaker"  ) );
             layouts.put ( 5000, new Layout ( this, "bots/icons/tools" ) );
             layouts.get ( 5000 ).add ( new NButton ( "TestBot", new TestBot ( gui ), "bots/icons/testbot") );
             layouts.get ( 5000 ).add ( new NButton ( "Timer",null,"bots/icons/timer"){

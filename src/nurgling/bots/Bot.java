@@ -40,6 +40,7 @@ public class Bot implements Runnable {
         thread = Thread.currentThread();
         /// Вызываем функцию инициализации бота
         window = gameUI.add(new NWindow(this, this.win_title, win_sz));
+        window.move(UI.scale(new Coord(400,400)));
         try {
             initAction();
             runAction();

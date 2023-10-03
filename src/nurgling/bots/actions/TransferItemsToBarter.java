@@ -85,6 +85,10 @@ public class TransferItemsToBarter implements Action {
                                         NUtils.checkName ( items.keys.get ( 0 ), new NAlias ( "bearhide" ) ) ) {
                                     alias = items;
                                 }
+                                else if ( NUtils.checkName ( "gfx/invobjs/rawmeats", alias ) &&
+                                        NUtils.checkName ( items.keys.get ( 0 ), new NAlias ( "meat" ) ) ) {
+                                    alias = items;
+                                }
                                 boolean isFind = false;
                                 for ( String keys : alias.keys ) {
                                     if ( NUtils.checkName ( keys, items ) ) {

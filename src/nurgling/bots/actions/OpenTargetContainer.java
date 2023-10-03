@@ -34,7 +34,7 @@ public class OpenTargetContainer implements Action {
             else
             {
                 if(!NUtils.isIt(gob, "consobj"))
-                    NUtils.waitEvent  ( ()->gui.getInventory ( cap )!=null,500 );
+                    NUtils.waitEvent  ( ()->gui.getInventory ( cap )!=null,1000 );
             }
             wnd = gui.getWindow ( cap );
             if ( wnd == null ) {

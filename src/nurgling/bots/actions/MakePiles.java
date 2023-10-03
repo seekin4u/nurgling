@@ -1,7 +1,13 @@
 package nurgling.bots.actions;
+import java.util.ArrayList;
 import java.util.List;
 
+import haven.Coord;
+import haven.GItem;
+import haven.WItem;
+import haven.Gob;
 import nurgling.*;
+import nurgling.tools.Finder;
 import nurgling.tools.NArea;
 
 import java.util.Arrays;
@@ -9,12 +15,36 @@ import java.util.Arrays;
 public class MakePiles implements Action {
     NAlias trees = new NAlias ( Arrays.asList ( "tree", "bushes" ),
             Arrays.asList ( "log", "block", "oldtrunk", "stump" ) );
-
+    NAlias kritter = new NAlias (  "kritter", "sheep"  );
     @Override
     public Results run ( NGameUI gui )
             throws InterruptedException {
-        new TransferToPile(piles, NHitBox.get(pile_name),
-                                        new NAlias(pile_name), item_name).run(gui);
+
+        Gob cauldron = Finder.findObject(new NAlias("knarr"));
+//        gui.msg("knarr");
+//        PathFinder pf = new PathFinder(gui, cauldron, true);
+//        pf.run();
+        if(NUtils.checkGobFlower(new NAlias("Cargo"), cauldron)) {
+            NFlowerMenu flowerMenu = NUtils.getFlowerMenu();
+            flowerMenu.select("Cargo");
+        }
+        NUtils.waitEvent(() -> NUtils.getFlowerMenu() == null, 3000);
+        NUtils.waitEvent ( ()-> gui.getInventory ( "Knarr" )!=null,4000 );
+        Thread.sleep(3000);
+        ArrayList<WItem> items = gui.getInventory ("Knarr" ).getAll();
+        for (WItem item:  items){
+            gui.msg("name: " + item.item.getres().name);
+//        GItem item = gui.getInventory ("Knarr" ).getItem ( kritter, 0 , gui.getInventory ( "Knarr" ).getFreeSpace ());
+        item.wdgmsg("iact", Coord.z, 0);}
+
+
+
+//        new TransferToPile(piles, NHitBox.get(pile_name),
+//                                        new NAlias(pile_name), item_name).run(gui);
+
+
+
+
 
 
 //        int th = NUtils.checkName("leaf", item_name) ? 3 : 2;

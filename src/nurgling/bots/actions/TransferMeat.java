@@ -10,13 +10,18 @@ import nurgling.bots.tools.Ingredient;
 import nurgling.tools.AreasID;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class TransferMeat implements Action {
     @Override
+
     public Results run ( NGameUI gui )
             throws InterruptedException {
         ArrayList<GItem> items = gui.getInventory().getWItems(new NAlias("meat"));
+
+        NAlias raw_meat = new NAlias ( new ArrayList<String> ( Arrays.asList ( "meat" ) ) );
+
         for(GItem item:  items){
             if(item.contents!=null) {
                 NUtils.destroyFCNbndl(item);
@@ -33,7 +38,8 @@ public class TransferMeat implements Action {
         }
 
 
-        new FillContainers(new NAlias("meat"), AreasID.raw_meat,new ArrayList<>()).run(gui);
+        new TransferItemsToBarter(AreasID.raw_meat, raw_meat, false).run(gui);
+//        new FillContainers(new NAlias("meat"), AreasID.raw_meat,new ArrayList<>()).run(gui);
 
         return new Results ( Results.Types.SUCCESS );
     }
