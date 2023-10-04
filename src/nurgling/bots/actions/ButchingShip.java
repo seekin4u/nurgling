@@ -3,10 +3,7 @@ package nurgling.bots.actions;
 import haven.Coord2d;
 import haven.GItem;
 import haven.Gob;
-import nurgling.NAlias;
-import nurgling.NGameUI;
-import nurgling.NUtils;
-import nurgling.PathFinder;
+import nurgling.*;
 import nurgling.bots.tools.Ingredient;
 import nurgling.tools.AreasID;
 import nurgling.tools.Finder;
@@ -34,8 +31,9 @@ public class ButchingShip implements Action {
         Coord2d placeTile = Finder.findNearestMark (AreasID.kritter).center;
         boolean CargoFull = true;
         while (NUtils.takeGobFromCargo(gui, ship, kritter)){
-            NUtils.place(placeTile);
-            Thread.sleep(2000);
+            new PlaceLifted(placeTile, NHitBox.get("bear"), kritter).run(gui);
+//            NUtils.place(placeTile);
+//            Thread.sleep(2000);
             ArrayList<Gob> gobs = Finder.findObjectsInArea(new NAlias("kritter"),
                     Finder.findNearestMark(AreasID.kritter));
 

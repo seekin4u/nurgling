@@ -24,17 +24,17 @@ public class PlaceLifted implements Action {
                     return new Results ( Results.Types.NO_WORKSTATION );
             }
             if ( coord == null ) {
-                if ( !withId ) {
-                    if(item!=null){
-                        coord = Finder.findPlace2 ( hitBox, (area==null)?Finder.findNearestMark ( area_id ):area, item.keys.get ( 0 ) );
-                    }else{
-                        coord = Finder.findPlace2 ( hitBox, (area==null)?Finder.findNearestMark ( area_id ):area, "" );
-                    }
-
-                }
-                else {
+//                if ( !withId ) {
+//                    if(item!=null){
+//                        coord = Finder.findPlace2 ( hitBox, (area==null)?Finder.findNearestMark ( area_id ):area, item.keys.get ( 0 ) );
+//                    }else{
+//                        coord = Finder.findPlace2 ( hitBox, (area==null)?Finder.findNearestMark ( area_id ):area, "" );
+//                    }
+//
+//                }
+//                else {
                     coord = Finder.findPlace ( hitBox, (area==null)?Finder.findNearestMark ( area_id ):area, "" );
-                }
+//                }
             }
             PathFinder pf = new PathFinder( gui, coord );
             pf.setPhantom ( coord, hitBox );

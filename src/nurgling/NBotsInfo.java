@@ -299,6 +299,8 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
                     "bots/icons/teaMaker"  ) );
             layouts.get ( 8 ).add ( new NButton ( "Butcher Ship", new ButcherShip ( gui ),
                     "bots/icons/butcher") );
+            layouts.get ( 8 ).add ( new NButton ( "Upload Ship", new UploadShip ( gui ),
+                    "bots/icons/butcher") );
             layouts.put ( 5000, new Layout ( this, "bots/icons/tools" ) );
             layouts.get ( 5000 ).add ( new NButton ( "TestBot", new TestBot ( gui ), "bots/icons/testbot") );
             layouts.get ( 5000 ).add ( new NButton ( "Timer",null,"bots/icons/timer"){

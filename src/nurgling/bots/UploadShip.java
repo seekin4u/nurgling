@@ -11,17 +11,17 @@ import nurgling.tools.NArea;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
-public class LeafCollector3 extends Bot {
+public class UploadShip extends Bot {
 
 
-    public LeafCollector3(NGameUI gameUI ) {
+    public UploadShip(NGameUI gameUI ) {
         super ( gameUI );
-        win_title = "Leaf Collector";
+        win_title = "Upload Ship Barrel";
         win_sz.y = 100;
-        
+        NAlias cargoGob = new NAlias (  "barrel"  );
         
         ///Добавление цикла в действия бота
-//        runActions.add ( new UploadShipAction( tree_area , pile_area, new NAlias("apple"),"stockpile-apple","Pick" ) );
+        runActions.add ( new UploadShipAction( upload_area , cargoGob,"barrel") );
     }
     
     
@@ -29,30 +29,18 @@ public class LeafCollector3 extends Bot {
     public void initAction ()
             throws InterruptedException { super.initAction();
         int y = 0;
-        window.add ( new Button ( window.buttons_size, "Trees with leafs" ) {
+        window.add ( new Button ( window.buttons_size, "Upload Zone" ) {
             @Override
             public void click () {
                 gameUI.getMap ().isAreaSelectorEnable.set(true);
                 if ( !m_selection_start.get () ) {
                     m_selection_start.set ( true );
-                    new Thread ( new AreaSelecter( gameUI, _start, m_selection_start, tree_area ),
+                    new Thread ( new AreaSelecter( gameUI, _start, m_selection_start, upload_area ),
                             "Cont Area Selecter" ).start ();
                 }
             }
         }, new Coord ( 0, y ) );
-        y+=25;
-        window.add ( new Button ( window.buttons_size, "Output piles" ) {
-            @Override
-            public void click () {
-                gameUI.getMap ().isAreaSelectorEnable.set(true);
-                if ( !m_selection_start.get () ) {
-                    m_selection_start.set ( true );
-                    new Thread ( new AreaSelecter ( gameUI, _zone, m_selection_start, pile_area ),
-                            "Cont Area Selecter" ).start ();
-                }
-            }
-        }, new Coord ( 0, y ) );
-        while ( !_start.get () || !_zone.get () ) {
+        while ( !_start.get () ) {
             Thread.sleep ( 100 );
         }
     }
@@ -60,14 +48,11 @@ public class LeafCollector3 extends Bot {
     @Override
     public void endAction () {
         _start.set ( false );
-        _zone.set ( false );
         m_selection_start.set ( false );
         super.endAction ();
     }
     
     private AtomicBoolean _start = new AtomicBoolean ( false );
-    private AtomicBoolean _zone = new AtomicBoolean ( false );
-    private NArea tree_area = new NArea ();
-    private NArea pile_area = new NArea ();
+    private NArea upload_area = new NArea ();
     private AtomicBoolean m_selection_start = new AtomicBoolean ( false );
 }
