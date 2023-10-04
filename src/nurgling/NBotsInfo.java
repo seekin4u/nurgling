@@ -195,6 +195,8 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
 //
 //
             layouts.put ( 5, new Layout ( this, "bots/icons/farming" ) );
+            layouts.get ( 5 ).add ( new NButton ( "Pumpkin", new FarmerPumpkin (  gui ),
+                    "bots/icons/pumpkin" ) );
             layouts.get ( 5 ).add ( new NButton ( "Carrot", new FarmerCarrot (  gui ),
                     "bots/icons/carrot" ) );
             layouts.get ( 5 ).add ( new NButton ( "Carrot Tuber", new FarmerCarrotTuber (  gui ),
@@ -213,8 +215,6 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
                     "bots/icons/pigs" ) );
             layouts.get ( 5 ).add ( new NButton ( "Ochs", new Cows ( gui ),
                     "bots/icons/cows" ) );
-            layouts.get ( 5 ).add ( new NButton ( "Ochs", new CowsMilk ( gui ),
-                    "bots/icons/cowsMilk" ) );
             layouts.get ( 5 ).add ( new NButton ( "Sheeps", new Sheeps ( gui ),
                     "bots/icons/sheeps" ) );
             layouts.get ( 5 ).add ( new NButton ( "Goats", new Goats ( gui ),
@@ -341,6 +341,8 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
                     "bots/icons/fillwaterskin"  ) );
             layouts.get ( 5000 ).add ( new NButton ( "DreamHarvester", new DreamHarvester ( gui ),
                     "bots/icons/dreamer"  ) );
+            layouts.get ( 5000 ).add ( new NButton ( "CollectAll", new AllToPile ( gui ),
+                    "bots/icons/collectitemstopiles"  ) );
             layouts.get ( 5000 ).add ( new NButton ( "GateBot", new GateBot ( gui ), "bots/icons/fenceBot") );
             layouts.get ( 5000 ).add ( new NButton ( "CrossBot", new CrossBot ( gui ), "bots/icons/crossBot") );
             layouts.get ( 5000 ).add ( new NButton ( "FinderBot", new FinderBot ( gui ), "bots/icons/fish1") );

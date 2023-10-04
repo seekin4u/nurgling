@@ -57,12 +57,9 @@ public class AnimalMilk<C extends Entry> implements Action {
         Thread.sleep(1000);
         count.set(count.get()+1);
         if(count.get()==4){
-            if(!barrel.isTag(NGob.Tags.free)){
-                new PathFinder(gui, cistern, PathFinder.Type.dyn).run();
-                NUtils.activate(cistern);
-                NUtils.waitEvent(()->barrel.isTag(NGob.Tags.free),50);
-            }
-            count.set(0);
+            new PathFinder(gui, cistern, PathFinder.Type.dyn).run();
+            NUtils.activate(cistern);
+            NUtils.waitEvent(()->barrel.isTag(NGob.Tags.free),50);
         }
         targets.remove(gob);
     }

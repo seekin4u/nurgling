@@ -31,6 +31,7 @@ import java.util.function.*;
 import java.lang.ref.*;
 import haven.render.*;
 import nurgling.NAlias;
+import nurgling.NConfiguration;
 import nurgling.NUtils;
 import nurgling.tools.AreasID;
 import nurgling.tools.Finder;
@@ -53,7 +54,7 @@ public class MCache implements MapSource {
     private Reference<Tiler>[] tiles = new Reference[16];
     private final Waitable.Queue gridwait = new Waitable.Queue();
     Map<Coord, Request> req = new HashMap<Coord, Request>();
-    Map<Coord, Grid> grids = new HashMap<Coord, Grid>();
+    public Map<Coord, Grid> grids = new HashMap<Coord, Grid>();
     Session sess;
     Set<Overlay> ols = new HashSet<Overlay>();
     public int olseq = 0, chseq = 0;
@@ -297,14 +298,14 @@ public class MCache implements MapSource {
 	public long id;
 	public int seq = -1;
 	private int olseq = -1;
-	private final Cut cuts[];
+	public final Cut[] cuts;
 	private Flavobjs[] fo = new Flavobjs[cutn.x * cutn.y];
 
-	private class Cut {
-	    MapMesh mesh;
-	    Defer.Future<MapMesh> dmesh;
-	    Map<OverlayInfo, RenderTree.Node> ols = new HashMap<>();
-	    Map<OverlayInfo, RenderTree.Node> olols = new HashMap<>();
+	public class Cut {
+	    public MapMesh mesh;
+	    public Defer.Future<MapMesh> dmesh;
+	    public Map<OverlayInfo, RenderTree.Node> ols = new HashMap<>();
+	    public Map<OverlayInfo, RenderTree.Node> olols = new HashMap<>();
 	}
 
 	private class Flavobj extends Gob {
@@ -708,6 +709,10 @@ public class MCache implements MapSource {
 		    }
 		}
 	    }
+		olids = Arrays.copyOf(olids, olids.length + 1);
+		ols = Arrays.copyOf(ols, ols.length + 1);
+		olids[olids.length-1] = Resource.remote().load("map/overlay/minesup-o");
+		ols[olids.length-1] = new boolean[cmaps.x * cmaps.y];
 	    this.ols = olids;
 	    this.ol = ols;
 	    fill_plots = null;
@@ -876,16 +881,24 @@ public class MCache implements MapSource {
     }
 
     public double getz(SurfaceID id, Coord2d pc) {
+	if(NConfiguration.getInstance().flatsurface)
+		return 0;
 	Coord tc = pc.floor(tilesz);
 	Grid g = getgridt(tc);
 	MapMesh cut = g.getcut(tc.sub(g.ul).div(cutsz));
 	Tiler t = tiler(g.gettile(tc.sub(g.ul)));
 	ZSurface surf = cut.getsurf(id, t);
+
 	return(surf.getz(pc));
     }
 
     public Coord3f getzp(SurfaceID id, Coord2d pc) {
-	return(Coord3f.of((float)pc.x, (float)pc.y, (float)getz(id, pc)));
+		if(NConfiguration.getInstance().flatsurface)
+		{
+			return(Coord3f.of((float)pc.x, (float)pc.y, 0));
+		}
+		else
+			return(Coord3f.of((float)pc.x, (float)pc.y, (float)getz(id, pc)));
     }
 
     public Coord3f getnorm(SurfaceID id, Coord2d pc) {

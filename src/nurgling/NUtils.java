@@ -837,6 +837,7 @@ public class NUtils {
     }
 
     static final HashMap<NGob.Tags,TexI> iHashMap = new HashMap<>();
+    static final HashMap<String,TexI> iStrMap = new HashMap<>();
     static final HashMap<String, String> iconMap = new HashMap<>();
     static final HashMap<Color,TexI> iCropMap = new HashMap<>();
     static final HashMap<Integer,TexI> iCropStageMap3 = new HashMap<>();
@@ -855,14 +856,45 @@ public class NUtils {
         iHashMap.put(NGob.Tags.angryhorse,new TexI(Resource.loadsimg("icon/angryhorse")));
         iHashMap.put(NGob.Tags.wool,new TexI(Resource.loadsimg("icon/wool")));
 
+        iStrMap.put("brokens", new TexI(Resource.loadsimg("icon/brokens")));
+        iStrMap.put("brokenm", new TexI(Resource.loadsimg("icon/brokenm")));
+        iStrMap.put("brokenh", new TexI(Resource.loadsimg("icon/brokenh")));
+        iStrMap.put("growth", new TexI(Resource.loadsimg("icon/growth")));
+        iStrMap.put("quality", new TexI(Resource.loadsimg("icon/quality")));
+        iStrMap.put("gred", new TexI(Resource.loadsimg("crop/gred")));
+        iStrMap.put("gbluebrown", new TexI(Resource.loadsimg("crop/gbluebrown")));
+        iStrMap.put("ggreen", new TexI(Resource.loadsimg("crop/ggreen")));
+        iStrMap.put("ggray", new TexI(Resource.loadsimg("crop/ggray")));
+        iStrMap.put("gblue", new TexI(Resource.loadsimg("crop/gblue")));
+        iStrMap.put("gbrown", new TexI(Resource.loadsimg("crop/gbrown")));
+
         iconMap.put("gfx/terobjs/vehicle/wheelbarrow","mm/wheelbarrow");
         Resource.loadimg("mm/wheelbarrow");
         iconMap.put("gfx/terobjs/items/truffle","mm/truffle");
         Resource.loadimg("mm/truffle");
         iconMap.put("gfx/terobjs/cauldron","mm/cauldron");
         Resource.loadimg("mm/cauldron");
+        iconMap.put("gfx/kritter/horse/stallion","mm/horse");
+        iconMap.put("gfx/kritter/horse/mare","mm/horse");
+        Resource.loadimg("mm/horse");
         iconMap.put("gfx/terobjs/anvil","mm/anvil");
         Resource.loadimg("mm/anvil");
+        iconMap.put("gfx/terobjs/vehicle/rowboat","mm/rowboat");
+        Resource.loadimg("mm/rowboat");
+        iconMap.put("gfx/terobjs/vehicle/knarr","mm/knarr");
+        Resource.loadimg("mm/knarr");
+        iconMap.put("gfx/terobjs/vehicle/snekkja","mm/snekkja");
+        Resource.loadimg("mm/snekkja");
+        iconMap.put("gfx/terobjs/vehicle/dugout","mm/dugout");
+        Resource.loadimg("mm/dugout");
+        iconMap.put("gfx/terobjs/road/milestone-stone-m","mm/milestones");
+        Resource.loadimg("mm/milestones");
+        iconMap.put("gfx/terobjs/road/milestone-stone-e","mm/milestonese");
+        Resource.loadimg("mm/milestonese");
+        iconMap.put("gfx/terobjs/road/milestone-wood-m","mm/milestonew");
+        Resource.loadimg("mm/milestonew");
+        iconMap.put("gfx/terobjs/road/milestone-wood-e","mm/milestonewe");
+        Resource.loadimg("mm/milestonewe");
         iconMap.put("gfx/terobjs/candelabrum","mm/candelabrum");
         Resource.loadimg("mm/candelabrum");
         iconMap.put("gfx/kritter/stalagoomba/stalagoomba","mm/stalagoomba");
@@ -901,6 +933,10 @@ public class NUtils {
     }
     public static TexI getTexI(NGob.Tags tag) {
         return iHashMap.get(tag);
+    }
+
+    public static TexI getTexI(String key) {
+        return iStrMap.get(key);
     }
     public static TexI getCropTexI(Color clr) {
         return iCropMap.get(clr);
@@ -1783,6 +1819,12 @@ public class NUtils {
                         -1);
     }
 
+
+    public static void activateItemAll(Gob gob) {
+        gameUI.map
+                .wdgmsg("itemact", Coord.z, gob.rc.floor(posres), 3, 0, (int) gob.id, gob.rc.floor(posres), 0,
+                        0);
+    }
     public static void activateItemToPile(Gob gob) {
         gameUI.map
                 .wdgmsg("itemact", Coord.z, gob.rc.floor(posres), 0, 0, (int) gob.id, gob.rc.floor(posres), 0,
@@ -2042,5 +2084,22 @@ public class NUtils {
             }
         }
         return null;
+    }
+
+    public static void showHideNature() {
+        synchronized (NUtils.getGameUI().ui.sess.glob.oc) {
+            if(!NConfiguration.getInstance().hideNature)
+                for (Gob gob : NUtils.getGameUI().ui.sess.glob.oc) {
+                    if (gob.isTag(NGob.Tags.tree) || gob.isTag(NGob.Tags.bumling) || gob.isTag(NGob.Tags.bush)) {
+                        gob.hideObject();
+                    }
+                }
+            else
+                for (Gob gob : NUtils.getGameUI().ui.sess.glob.oc) {
+                    if (gob.isTag(NGob.Tags.tree) || gob.isTag(NGob.Tags.bumling) || gob.isTag(NGob.Tags.bush)) {
+                        gob.showObject();
+                    }
+                }
+        }
     }
 }

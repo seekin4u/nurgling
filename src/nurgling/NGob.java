@@ -52,6 +52,7 @@ public class NGob {
         pig,
         goat,
         sheep,
+        selected,
         wool,
         transport,
         vehicle,
@@ -107,7 +108,7 @@ public class NGob {
         mammoth,
         orca,
         stoat,
-        rabbithutch, chickencoop, stalagoomba, kritter_is_ready, qbring, qrage, qwave, qlaugh, qgreet, qcompleted, quality, winter_stoat
+        rabbithutch, chickencoop, stalagoomba, kritter_is_ready, qbring, qrage, qwave, qlaugh, qgreet, qcompleted, quality, troll, spermwhale, looserock, winter_stoat
     }
 
     public final HashSet<Tags> tags = new HashSet<>();
@@ -425,13 +426,17 @@ public class NGob {
         if (gob.getres() != null && NUtils.getGameUI()!=null) {
             gob.isReady = true;
             String name = gob.getResName();
-            if (NUtils.checkName(name, new NAlias(new ArrayList<>(Arrays.asList("tree")), new ArrayList<>(Arrays.asList("log"))))) {
+            if (NUtils.checkName(name, new NAlias(new ArrayList<>(Arrays.asList("gfx/terobjs/tree")), new ArrayList<>(Arrays.asList("log"))))) {
                 gob.addTag(Tags.tree);
-            } else if (NUtils.checkName(name, "bumling")) {
+            } else if (NUtils.checkName(name, "gfx/terobjs/bumling")) {
                 gob.addTag(Tags.bumling);
-            } else if (NUtils.checkName(name, "bushes")) {
+            } else if (NUtils.checkName(name, "gfx/terobjs/bushes")) {
                 gob.addTag(Tags.bush);
-            } else if (NUtils.checkName(name, new NAlias(new ArrayList<>(Arrays.asList("kritter")),new ArrayList<>(Arrays.asList("beef", "skeleton"))))) {
+            }
+            else if (NUtils.checkName(name, "gfx/terobjs/looserock")) {
+                gob.addTag(Tags.looserock);
+            }
+            else if (NUtils.checkName(name, new NAlias(new ArrayList<>(Arrays.asList("kritter")),new ArrayList<>(Arrays.asList("beef", "skeleton"))))) {
                 gob.addTag(Tags.kritter);
                 if (NUtils.checkName(name, "greyseal"))
                     gob.addTag(Tags.greyseal);
@@ -445,6 +450,10 @@ public class NGob {
                     gob.addTag(Tags.mammoth);
                 else if (NUtils.checkName(name, "orca"))
                     gob.addTag(Tags.orca);
+                else if (NUtils.checkName(name, "spermwhale"))
+                    gob.addTag(Tags.spermwhale);
+                else if (NUtils.checkName(name, "troll"))
+                    gob.addTag(Tags.troll);
                 else if (NUtils.checkName(name, "stoat"))
                     gob.addTag(Tags.stoat);
                 if (NUtils.checkName(name, "horse")) {
@@ -640,7 +649,7 @@ public class NGob {
                 if (gob.status == Status.ready_for_update) {
                     if (gob.isTag(Tags.quality)) {
                         if (gob.quality != -1) {
-                            gob.addcustomol(new NObjectLabel(gob, String.format("Q: %d", gob.quality), new Color(120, 255, 255)));
+                            gob.addcustomol(new NObjectTexLabel(gob, String.format("%d", gob.quality), Color.WHITE, "quality", true));
                         }
                     }
                     if (gob.isTag(Tags.tree) || gob.isTag(Tags.bumling) || gob.isTag(Tags.quester)) {
@@ -654,12 +663,16 @@ public class NGob {
                     if (gob.isTag(Tags.highlighted)) {
                         gob.addcustomol(new NHighlightRing(gob));
                         gob.addcustomattr(new NGobHighlight(gob));
-
                     } else if ((gob.isTag(Tags.quest) && !gob.isTag(Tags.knocked)) /*|| (gob.getResName()!=null && gob.getResName().contains("woodensign"))*/) {
                         NAlarmManager.play(Tags.quest);
                         gob.addcustomol(new NNotifiedRing(gob, Color.CYAN, 30, 0.7f, gob.noteImg));
                     } else if (gob.isTag(Tags.notified)) {
                         gob.addcustomol(new NNotifiedRing(gob, Color.GREEN, 20, 0.7f, gob.noteImg));
+                    }
+                    if (gob.isTag(Tags.looserock))
+                    {
+                        NAlarmManager.play(Tags.looserock);
+                        gob.addcustomol(new NAreaRad(gob,  (float) 93.5f, new Color(192, 68, 0, 128), new Color(128, 88, 88, 255)));
                     }
                     if (gob.isTag(Tags.plant)) {
                         NProperties.Crop crop = gob.getCrop();
@@ -696,11 +709,33 @@ public class NGob {
                                 gob.addcustomol(new NAreaRange(gob, "minesup", 125, new Color(128, 128, 128, 128), new Color(0, 192, 192, 255)));
                             }
                         }
+                        if (gob.findol(NOverlayMap.class) == null) {
+                            if (NUtils.checkName(gob.getResName(), new NAlias(new ArrayList<>(Arrays.asList("natural"))))) {
+                                gob.addcustomol(new NOverlayMap(gob, "minesup", 93.5f));
+                            } else if (NUtils.checkName(gob.getResName(), new NAlias(new ArrayList<>(Arrays.asList("ladder", "minesupport", "towercap"))))) {
+                                if (gob.isTag(Tags.growth)) {
+                                    TreeScale ts = gob.getattr(TreeScale.class);
+                                    int scale = (int) Math.round(100 * (ts.scale - 0.1) / 0.9);
+                                    gob.addcustomol(new NOverlayMap(gob, "minesup", scale));
+                                } else {
+                                    gob.addcustomol(new NOverlayMap(gob, "minesup", 100));
+                                }
+                            } else if (NUtils.checkName(gob.getResName(), new NAlias("minebeam"))) {
+                                gob.addcustomol(new NOverlayMap(gob, "minesup", 150));
+                            } else if (NUtils.checkName(gob.getResName(), new NAlias("column"))) {
+                                gob.addcustomol(new NOverlayMap(gob, "minesup", 125));
+                            }
+                        }
+
                     } else if (gob.isTag(Tags.dframe)) {
                         gob.addcustomattr(new NDframeColor(gob));
                     } else if (gob.isTag(Tags.ttub)) {
                         gob.addcustomattr(new NTubColor(gob));
-                    } else if (gob.isTag(Tags.chickencoop) || gob.isTag(Tags.rabbithutch)) {
+                    }
+                    else if (gob.isTag(Tags.gardenpot)) {
+                        gob.addcustomol(new NGardenPotMarker(gob));
+                    }
+                    else if (gob.isTag(Tags.chickencoop) || gob.isTag(Tags.rabbithutch)) {
                         gob.addcustomattr(new NIncubatorColor(gob));
                     } else if (gob.isTag(Tags.cheeserack)) {
                         gob.addcustomattr(new NCheeseColor(gob));
@@ -713,6 +748,8 @@ public class NGob {
                         gob.addcustomol(new NAreaRange(gob, "beeskep", (float) NConfiguration.getInstance().rings.get("beeskep").size, new Color(0, 163, 192, 128), new Color(0, 192, 0, 255)));
                         gob.addcustomol(new NBeeMarker(gob));
                     } else if (gob.isTag(Tags.kritter)) {
+                        if (gob.isTag(Tags.selected))
+                            gob.addcustomol(new NDomesticRing(gob,Color.GREEN,7, 1.f));
                         if (gob.isTag(Tags.sheep) || gob.isTag(Tags.goat))
                             gob.addcustomol(new NWoolMarker(gob, 12));
                         if (gob.isTag(Tags.stalagoomba))
@@ -737,6 +774,10 @@ public class NGob {
                                 NAlarmManager.play(Tags.mammoth);
                             else if (gob.isTag(Tags.orca))
                                 NAlarmManager.play(Tags.orca);
+                            else if (gob.isTag(Tags.spermwhale))
+                                NAlarmManager.play(Tags.spermwhale);
+                            else if (gob.isTag(Tags.troll))
+                                NAlarmManager.play(Tags.troll);
                         }
 
                     } else if (gob.isTag(Tags.angryhorse)) {
@@ -752,7 +793,7 @@ public class NGob {
                     } else if (gob.isTag(Tags.bush)) {
                         scale = Math.round(100 * (ts.scale - 0.3) / 0.7);
                     }
-                    gob.addcustomol(new NObjectLabel(gob, String.format("%.0f %%", (float) scale), Color.WHITE));
+                    gob.addcustomol(new NObjectTexLabel(gob, String.format("%.0f %%", (float) scale), Color.WHITE, "growth"));
                 }
 
                 if (gob.isTag(Tags.iconsign)) {
