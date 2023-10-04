@@ -207,6 +207,8 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
                     "bots/icons/carrotTuber" ) );
             layouts.get ( 5 ).add ( new NButton ( "Flax", new FarmerFlax (  gui ),
                     "bots/icons/flax" ) );
+            layouts.get ( 5 ).add ( new NButton ( "Hemp", new FarmerHemp (  gui ),
+                    "bots/icons/flax" ) );
             layouts.get ( 5 ).add ( new NButton ( "Barley", new FarmerBarley (  gui ),
                     "bots/icons/barley" ) );
             layouts.get ( 5 ).add ( new NButton ( "FieldsBarleyFarmer", new FarmerBarleyFields ( gui ),
@@ -295,6 +297,8 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
                     "bots/icons/leaf2" ) );
             layouts.get ( 8 ).add ( new NButton ( "Tea Maker", new teaMaker ( gui ),
                     "bots/icons/teaMaker"  ) );
+            layouts.get ( 8 ).add ( new NButton ( "Butcher Ship", new ButcherShip ( gui ),
+                    "bots/icons/butcher") );
             layouts.put ( 5000, new Layout ( this, "bots/icons/tools" ) );
             layouts.get ( 5000 ).add ( new NButton ( "TestBot", new TestBot ( gui ), "bots/icons/testbot") );
             layouts.get ( 5000 ).add ( new NButton ( "Timer",null,"bots/icons/timer"){

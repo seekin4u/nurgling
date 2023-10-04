@@ -21,42 +21,29 @@ public class HarvestSeedAction implements Action {
         NArea input = Finder.findNearestMark ( harvest_area );
 
         ArrayList<Gob> plants = Finder.findObjectsInArea ( crop, input );
-        if(plants.size() == 0){
-            gui.msg("Nothing to farm. Moving along.");
-            return new Results ( Results.Types.SUCCESS);
-        }
-        
-        ArrayList<Gob> barrels = Finder.findObjectsInArea(new NAlias("barrel"), input);
-        if(barrels.size() == 0){
-            return new Results ( Results.Types.NO_BARREL );
-        }
-        Gob barrel = barrels.get(0);
-        new OpenBarrelAndTransfer ( 9000,  crop, harvest_area, barrel ).run ( gui );
-        if ( !gui.getInventory ().getWItems( crop ).isEmpty () ) {
-            new TransferToTrough ( crop ).run ( gui );
-        }
-        boolean isFull = false;
+        Gob barrel = Finder.findObjectInArea ( new NAlias("barrel"),2000,input );
+//        new OpenBarrelAndTransfer ( 9000,  crop, harvest_area, barrel ).run ( gui );
+//        if ( !gui.getInventory ().getWItems( crop ).isEmpty () ) {
+//            new TransferToTrough ( crop ).run ( gui );
+//        }
+        boolean isFull=false;
         /// Выкапываем урожай
         while ( !Finder.findCropsInArea ( crop, input, isMaxStage ).isEmpty () ) {
             Gob plant = Finder.findCropInArea ( crop, 3000, input, isMaxStage );
             if ( plant != null ) {
+                gui.msg("inv" + gui.getInventory().getFreeSpace ());
                     if ( gui.getInventory ().getFreeSpace () < 2 ) {
                         if(!isFull) {
                             if ( new OpenBarrelAndTransfer ( 9000, crop,
                                     harvest_area,barrel )
                                     .run ( gui ).type == Results.Types.FULL ) {
-                                barrels.remove(barrel);
-                                barrel = barrels.get(0);
-                                /// Когда заполнили все бочки
-                                if(barrels.isEmpty()){
-                                    isFull = true;
-                                }
+                                isFull = true;
                             }
-                        } else if ( !gui.getInventory ().getWItems( crop ).isEmpty () ) {
-                            new TransferToTrough ( crop, true).run ( gui );
+                        }
+                        if ( !gui.getInventory ().getWItems( crop ).isEmpty () ) {
+                            new TransferToTrough ( crop ).run ( gui );
                         }
                     }
-                    //todo: Hunger check!
                     if ( NUtils.getStamina() <= 0.3 ) {
                         new Drink ( 0.9, false ).run ( gui );
                     }
@@ -75,7 +62,7 @@ public class HarvestSeedAction implements Action {
                         .run ( gui ).type == Results.Types.FULL ) {
                 }
             }
-            new TransferToTrough(crop, true).run(gui);
+            new TransferToTrough(crop).run(gui);
 
         }
         return new Results ( Results.Types.SUCCESS );

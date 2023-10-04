@@ -1636,6 +1636,30 @@ public class NUtils {
         }
         return false;
     }
+    public static boolean takeGobFromCargo(GameUI gui, String winName, NAlias findName) throws InterruptedException {
+        Gob ship = Finder.findObject(new NAlias(winName));
+        if(NUtils.checkGobFlower(new NAlias("Cargo"), ship)) {
+            NFlowerMenu flowerMenu = NUtils.getFlowerMenu();
+            flowerMenu.select("Cargo");
+        }
+        NUtils.waitEvent(() -> NUtils.getFlowerMenu() == null, 5000);
+        Thread.sleep(500);
+        waitEvent ( ()-> NUtils.getGameUI().getWindow(winName)!=null,10000 );
+        for (Widget widgetL: NUtils.getGameUI().getWindow(winName).children()) {
+            if (NUtils.checkName(widgetL.toString(), "Widget")) {
+                for (Widget widgetS : widgetL.children()){
+                    if (NUtils.checkName(widgetS.toString(), "Img")) {
+                        gui.msg("name: " + ((Img)widgetS).img.toString());
+                        if (checkName(((Img)widgetS).img.toString(), findName)){
+                            widgetS.wdgmsg("click", Coord.z, 1, 0);
+                            waitEvent(()->!NUtils.isPose(gui.map.player(),new NAlias("banzai")),500);
+                            return true;
+                    }}
+                }
+            }
+        }
+        return false;
+    }
 
     static boolean findBundle() throws InterruptedException {
         for(GItem item : gameUI.getInventory().getWItems()) {

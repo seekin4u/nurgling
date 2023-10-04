@@ -2,10 +2,7 @@ package nurgling.bots.actions;
 import java.util.ArrayList;
 import java.util.List;
 
-import haven.Coord;
-import haven.GItem;
-import haven.WItem;
-import haven.Gob;
+import haven.*;
 import nurgling.*;
 import nurgling.tools.Finder;
 import nurgling.tools.NArea;
@@ -20,22 +17,11 @@ public class MakePiles implements Action {
     public Results run ( NGameUI gui )
             throws InterruptedException {
 
-        Gob cauldron = Finder.findObject(new NAlias("knarr"));
-//        gui.msg("knarr");
-//        PathFinder pf = new PathFinder(gui, cauldron, true);
-//        pf.run();
-        if(NUtils.checkGobFlower(new NAlias("Cargo"), cauldron)) {
-            NFlowerMenu flowerMenu = NUtils.getFlowerMenu();
-            flowerMenu.select("Cargo");
-        }
-        NUtils.waitEvent(() -> NUtils.getFlowerMenu() == null, 3000);
-        NUtils.waitEvent ( ()-> gui.getInventory ( "Knarr" )!=null,4000 );
-        Thread.sleep(3000);
-        ArrayList<WItem> items = gui.getInventory ("Knarr" ).getAll();
-        for (WItem item:  items){
-            gui.msg("name: " + item.item.getres().name);
-//        GItem item = gui.getInventory ("Knarr" ).getItem ( kritter, 0 , gui.getInventory ( "Knarr" ).getFreeSpace ());
-        item.wdgmsg("iact", Coord.z, 0);}
+
+
+
+//        NUtils.takeGobFromCargo(gui, "Knarr");
+
 
 
 

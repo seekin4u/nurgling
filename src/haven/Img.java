@@ -30,7 +30,7 @@ import java.awt.image.BufferedImage;
 
 public class Img extends Widget {
     public Indir<Resource> res;
-    private Tex img;
+    public Tex img;
     private BufferedImage rimg;
     public boolean hit = false, opaque = false;
 	
