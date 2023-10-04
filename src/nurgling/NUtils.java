@@ -1636,16 +1636,19 @@ public class NUtils {
         }
         return false;
     }
-    public static boolean takeGobFromCargo(GameUI gui, String winName, NAlias findName) throws InterruptedException {
-        Gob ship = Finder.findObject(new NAlias(winName));
+    public static boolean takeGobFromCargo(GameUI gui, NAlias winName, NAlias findName) throws InterruptedException {
+        Gob ship = Finder.findNearestObjectToObject (winName, gui.map.player());
         if(NUtils.checkGobFlower(new NAlias("Cargo"), ship)) {
             NFlowerMenu flowerMenu = NUtils.getFlowerMenu();
             flowerMenu.select("Cargo");
         }
+        //from res take name of gob
+        String nameShip = ship.getResName().substring(ship.getResName().lastIndexOf('/') + 1);
+
         NUtils.waitEvent(() -> NUtils.getFlowerMenu() == null, 5000);
         Thread.sleep(500);
-        waitEvent ( ()-> NUtils.getGameUI().getWindow(winName)!=null,10000 );
-        for (Widget widgetL: NUtils.getGameUI().getWindow(winName).children()) {
+        waitEvent ( ()-> NUtils.getGameUI().getWindow(nameShip)!=null,10000 );
+        for (Widget widgetL: NUtils.getGameUI().getWindow(nameShip).children()) {
             if (NUtils.checkName(widgetL.toString(), "Widget")) {
                 for (Widget widgetS : widgetL.children()){
                     if (NUtils.checkName(widgetS.toString(), "Img")) {

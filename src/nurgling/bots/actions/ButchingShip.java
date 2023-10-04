@@ -27,12 +27,13 @@ public class ButchingShip implements Action {
     public Results run(NGameUI gui)
             throws InterruptedException {
         NAlias kritter = new NAlias("fox", "bear", "badget", "deer");
+        NAlias ship = new NAlias("knarr", "snekkja");
         if (new Equip(new NAlias("butcherscleaver")).run(gui).type != Results.Types.SUCCESS)
             new Equip(new NAlias(tools, new ArrayList<String>())).run(gui);
 //        Coord2d player = gui.getMap().player().rc;
         Coord2d placeTile = Finder.findNearestMark (AreasID.kritter).center;
         boolean CargoFull = true;
-        while (NUtils.takeGobFromCargo(gui, "Knarr", kritter)){
+        while (NUtils.takeGobFromCargo(gui, ship, kritter)){
             NUtils.place(placeTile);
             Thread.sleep(2000);
             ArrayList<Gob> gobs = Finder.findObjectsInArea(new NAlias("kritter"),
@@ -51,10 +52,11 @@ public class ButchingShip implements Action {
                 NUtils.waitEvent(() -> !gui.getInventory().getWItems(hides).isEmpty(), 5);
                 new CollectFromGob("Break", gob).run(gui);
                 NUtils.waitEvent(() -> !gui.getInventory().getWItems(hides).isEmpty(), 5);
-                new TransferRawHides().run(gui);
+
 
                 /// Чистим
                 new CollectFromGob("Clean", gob, new NAlias("butch")).run(gui);
+                new TransferRawHides().run(gui);
                 new TransferTrash().run(gui);
 
                 new TransferIngredient("Suckling's Maw").run(gui);
