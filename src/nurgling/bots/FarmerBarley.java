@@ -3,8 +3,11 @@ package nurgling.bots;
 
 import nurgling.NAlias;
 import nurgling.NGameUI;
+import nurgling.bots.actions.CollectItemsToPile;
 import nurgling.bots.actions.CollectItemsToSwill;
 import nurgling.bots.actions.HarvestSeedAction;
+import nurgling.bots.actions.SeederSeed;
+import nurgling.bots.tools.HarvestOut;
 import nurgling.tools.AreasID;
 
 
@@ -18,7 +21,8 @@ public class FarmerBarley extends Bot {
         win_sz.y = 100;
         
         runActions.add ( new HarvestSeedAction(new NAlias("Barley"), AreasID.barley , true));
-        runActions.add ( new CollectItemsToSwill(AreasID.barley,new NAlias("straw")));
+        runActions.add ( new CollectItemsToPile(AreasID.straw, AreasID.barley,new NAlias("straw")));
+        runActions.add ( new SeederSeed(new HarvestOut( new NAlias( "barley" ), AreasID.barley )) );
 
     }
     

@@ -1,8 +1,7 @@
 package nurgling.bots.actions;
 
-import haven.Gob;
+import haven.*;
 
-import haven.MCache;
 import nurgling.*;
 import nurgling.tools.AreasID;
 import nurgling.tools.Finder;
@@ -56,8 +55,9 @@ public class CollectItemsToPile implements Action {
         
         /// Выполняем процедуру подбора для каждого элемента в массиве
         while ( !Finder.findObjectsInArea ( items, input ).isEmpty () ){
-            
-            if ( gui.getInventory ().getFreeSpace () <= 1 && !gui.getInventory ().getWItems().isEmpty () ) {
+            GItem it = gui.getInventory ().getItem(items);
+//            gui.msg("free: " + gui.getInventory().getNumberFreeCoord(it));
+            if ( (gui.getInventory ().getFreeSpace () <= 1 && !gui.getInventory ().getWItems().isEmpty ()) || gui.getInventory().getNumberFreeCoord(it)<=2) {
                 new TransferToPile ( output, NHitBox.getByName ( items.keys.get ( 0 ) ), items, items ).run ( gui );
             }
             

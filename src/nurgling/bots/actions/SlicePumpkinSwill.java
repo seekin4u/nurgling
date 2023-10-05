@@ -11,7 +11,7 @@ import nurgling.tools.Finder;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class SlicePumpkin implements Action{
+public class SlicePumpkinSwill implements Action{
     static NAlias pumpkin_name = new NAlias(new ArrayList<>(Arrays.asList("Pumpkin")),new ArrayList<>(Arrays.asList("Flesh", "seed", "Seed", "flesh", "plant")));
     @Override
     public Results run(NGameUI gui) throws InterruptedException {
@@ -28,7 +28,6 @@ public class SlicePumpkin implements Action{
                     NUtils.waitEvent(() -> gui.getInventory().getWItems(new NAlias("pumpkinflesh", "Pumpkin Flesh") ).size() != oldSize, 50);
                 }
                 new OpenBarrelAndTransfer ( 9000,  new NAlias(new ArrayList<>(Arrays.asList("pumpkin", "Pumpkin")),new ArrayList<>(Arrays.asList("flesh", "Flesh"))), AreasID.pumpkin, Finder.findObjectInArea ( new NAlias("barrel"),2000,Finder.findNearestMark(AreasID.pumpkin) ) ).run ( gui );
-//                new TransferToPile ( output, NHitBox.getByName ( items.keys.get ( 0 ) ), items, items ).run ( gui );
                 new TransferToTrough ( new NAlias("pumpkinflesh", "Pumpkin Flesh") ).run ( gui );
 
 

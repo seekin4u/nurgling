@@ -520,8 +520,12 @@ public class NInventory extends Inventory {
             int count = 0;
             Coord size = ((NGItem)item).sprSz();
             if (NUtils
-                    .isIt(item, new NAlias(new ArrayList<String>(Arrays.asList("pickaxe", "bough"))))) {
+                    .isIt(item, new NAlias(new ArrayList<String>(Arrays.asList("pickaxe", "bough", "leek"))))) {
                 size.y = 2;
+            }
+            if (NUtils
+                    .isIt(item, new NAlias(new ArrayList<String>(Arrays.asList("head"))))) {
+                size.x = 2;
             }
             for (int i = 0; i < isz.x; i++) {
                 for (int j = 0; j < isz.y; j++) {

@@ -201,16 +201,36 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
             layouts.put ( 5, new Layout ( this, "bots/icons/farming" ) );
             layouts.get ( 5 ).add ( new NButton ( "Pumpkin", new FarmerPumpkin (  gui ),
                     "bots/icons/pumpkin" ) );
+            layouts.get ( 5 ).add ( new NButton ( "PumpkinSwill", new FarmerPumpkinSwill (  gui ),
+                    "bots/icons/pumpkin" ) );
             layouts.get ( 5 ).add ( new NButton ( "Carrot", new FarmerCarrot (  gui ),
                     "bots/icons/carrot" ) );
             layouts.get ( 5 ).add ( new NButton ( "Carrot Tuber", new FarmerCarrotTuber (  gui ),
                     "bots/icons/carrotTuber" ) );
+            layouts.get ( 5 ).add ( new NButton ( "Turnip (seed)", new FarmerTurnipSeed (  gui ),
+                    "bots/icons/carrot" ) );
+            layouts.get ( 5 ).add ( new NButton ( "Turnip", new FarmerTurnip (  gui ),
+                    "bots/icons/carrotTuber" ) );
+            layouts.get ( 5 ).add ( new NButton ( "Red Onion", new FarmerRedOnion (  gui ),
+                    "bots/icons/carrotTuber" ) );
+            layouts.get ( 5 ).add ( new NButton ( "Yellow Onion", new FarmerYellowOnion (  gui ),
+                    "bots/icons/carrotTuber" ) );
+            layouts.get ( 5 ).add ( new NButton ( "Leek", new FarmerLeek (  gui ),
+                    "bots/icons/carrotTuber" ) );
             layouts.get ( 5 ).add ( new NButton ( "Flax", new FarmerFlax (  gui ),
                     "bots/icons/flax" ) );
             layouts.get ( 5 ).add ( new NButton ( "Hemp", new FarmerHemp (  gui ),
-                    "bots/icons/flax" ) );
+                    "bots/icons/hemp" ) );
             layouts.get ( 5 ).add ( new NButton ( "Barley", new FarmerBarley (  gui ),
                     "bots/icons/barley" ) );
+            layouts.get ( 5 ).add ( new NButton ( "Millet", new FarmerMillet (  gui ),
+                    "bots/icons/flax" ) );
+            layouts.get ( 5 ).add ( new NButton ( "Poppy", new FarmerPoppy (  gui ),
+                    "bots/icons/flax" ) );
+            layouts.get ( 5 ).add ( new NButton ( "Lettuce", new FarmerLettuce (  gui ),
+                    "bots/icons/flax" ) );
+            layouts.get ( 5 ).add ( new NButton ( "Grape", new FarmerGrape (  gui ),
+                    "bots/icons/flax" ) );
             layouts.get ( 5 ).add ( new NButton ( "FieldsBarleyFarmer", new FarmerBarleyFields ( gui ),
                     "bots/icons/barleyFields") );
             layouts.get ( 5 ).add ( new NButton ( "Wheat", new FarmerWheat (  gui ),

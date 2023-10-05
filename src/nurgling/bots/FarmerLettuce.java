@@ -1,0 +1,49 @@
+package nurgling.bots;
+
+
+import nurgling.NAlias;
+import nurgling.NGameUI;
+import nurgling.bots.actions.CollectItemsToPile;
+import nurgling.bots.actions.HarvestSeedAction;
+import nurgling.bots.actions.SeederSeed;
+import nurgling.bots.tools.HarvestOut;
+import nurgling.tools.AreasID;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+
+public class FarmerLettuce extends Bot {
+
+
+    public FarmerLettuce(NGameUI gameUI ) {
+        super ( gameUI );
+        win_title = "FarmerLettuce";
+        win_sz.y = 100;
+        /// Семена
+        AreasID field = AreasID.lettuce;
+        String seed = "lettuce";
+        /// Урожай
+        AreasID stockpile = AreasID.lettuce_head;
+        String cult = "head";
+
+        
+        runActions.add ( new HarvestSeedAction(new NAlias(new ArrayList<String>(Arrays.asList(seed)),new ArrayList<String>(Arrays.asList(cult))), field , true));
+        runActions.add ( new CollectItemsToPile(stockpile, field, new NAlias(cult)));
+        runActions.add ( new SeederSeed(new HarvestOut( new NAlias( seed ), field )) );
+        
+    }
+    
+    
+    @Override
+    public void initAction () {
+    }
+    
+    @Override
+    public void endAction () {
+        super.endAction ();
+    }
+    
+    HarvestOut seed;
+    ArrayList<HarvestOut> harvestOuts = new ArrayList<> ();
+}
