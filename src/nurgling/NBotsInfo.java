@@ -212,33 +212,33 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
             layouts.get ( 5 ).add ( new NButton ( "Turnip", new FarmerTurnip (  gui ),
                     "bots/icons/turnip" ) );
             layouts.get ( 5 ).add ( new NButton ( "Red Onion", new FarmerRedOnion (  gui ),
-                    "bots/icons/carrotTuber" ) );
+                    "bots/icons/ronion" ) );
             layouts.get ( 5 ).add ( new NButton ( "Yellow Onion", new FarmerYellowOnion (  gui ),
                     "bots/icons/yonion" ) );
             layouts.get ( 5 ).add ( new NButton ( "Leek", new FarmerLeek (  gui ),
                     "bots/icons/leek" ) );
-            layouts.get ( 5 ).add ( new NButton ( "Flax", new FarmerFlax (  gui ),
-                    "bots/icons/flax" ) );
             layouts.get ( 5 ).add ( new NButton ( "Tabacco", new FarmerTabacco (  gui ),
                     "bots/icons/pipeweed" ) );
+            layouts.get ( 5 ).add ( new NButton ( "Flax", new FarmerFlax (  gui ),
+                    "bots/icons/flax" ) );
             layouts.get ( 5 ).add ( new NButton ( "Hemp", new FarmerHemp (  gui ),
                     "bots/icons/hemp" ) );
             layouts.get ( 5 ).add ( new NButton ( "Barley", new FarmerBarley (  gui ),
-                    "bots/icons/barley" ) );
+                    "bots/icons/barleyL" ) );
             layouts.get ( 5 ).add ( new NButton ( "Millet", new FarmerMillet (  gui ),
                     "bots/icons/millet" ) );
+            layouts.get ( 5 ).add ( new NButton ( "Wheat", new FarmerWheat (  gui ),
+                    "bots/icons/wheat" ) );
             layouts.get ( 5 ).add ( new NButton ( "Poppy", new FarmerPoppy (  gui ),
                     "bots/icons/poppy" ) );
             layouts.get ( 5 ).add ( new NButton ( "Lettuce", new FarmerLettuce (  gui ),
                     "bots/icons/lettuce" ) );
             layouts.get ( 5 ).add ( new NButton ( "Grape", new FarmerGrape (  gui ),
                     "bots/icons/flax" ) );
-            layouts.get ( 5 ).add ( new NButton ( "FieldsBarleyFarmer", new FarmerBarleyFields ( gui ),
-                    "bots/icons/barleyFields") );
-            layouts.get ( 5 ).add ( new NButton ( "Wheat", new FarmerWheat (  gui ),
-                    "bots/icons/barley" ) );
-            layouts.get ( 5 ).add ( new NButton ( "FieldsWheatFarmer", new FarmerWheatFields ( gui ),
-                    "bots/icons/barleyFields") );
+//            layouts.get ( 5 ).add ( new NButton ( "FieldsBarleyFarmer", new FarmerBarleyFields ( gui ),
+//                    "bots/icons/barleyFields") );
+//            layouts.get ( 5 ).add ( new NButton ( "FieldsWheatFarmer", new FarmerWheatFields ( gui ),
+//                    "bots/icons/barleyFields") );
             layouts.get ( 5 ).add ( new NButton ( "Pigs", new Pigs ( gui ),
                     "bots/icons/pigs" ) );
             layouts.get ( 5 ).add ( new NButton ( "Ochs", new Cows ( gui ),
