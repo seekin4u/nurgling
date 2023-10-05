@@ -28,19 +28,19 @@ public class HarvestToPileAction implements Action {
                     NUtils.drop();
                     NUtils.waitEvent(() -> gui.hand.isEmpty(), 100);
                 }
-                if ( gui.getInventory ().getFreeSpace () < 5 ) {
+                if ( gui.getInventory ().getFreeSpace () < 7 ) {
                     new TransferToPile ( output, NHitBox.getByName ( items.keys.get ( 0 ) ), items, items ).run ( gui );
 //                    new DropFromInventory(crop).run(gui);
                 }
                 if ( NUtils.getStamina() <= 0.3 ) {
                     new Drink ( 0.9, false ).run ( gui );
                 }
-
-                PathFinder pf =  new PathFinder(gui, plant);
-//                pf.setTrellis(true);
-                pf.run ();
+                PathFinder pf = new PathFinder(gui, plant);
+                pf.setHardMode(true);
+                pf.setPhantom(NUtils.getTrellisCoord(plant.rc),NHitBox._default);
+                pf.run();
                 int size = gui.getInventory ().getFreeSpace ();
-                new SelectFlowerAction ( plant, "Harvest", SelectFlowerAction.Types.Gob ).run ( gui );
+                new SelectFlowerAction ( plant, "Harvest", SelectFlowerAction.Types.Gob , true).run ( gui );
                 NUtils.waitEvent ( () -> NUtils.getProg() < 0 && size != gui.getInventory ().getFreeSpace (), 60 );
             }
 

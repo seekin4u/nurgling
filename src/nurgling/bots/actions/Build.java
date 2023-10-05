@@ -246,7 +246,7 @@ public class Build implements Action {
                 pf.setHardMode ( true );
                 pf.run ();
                 new Drink ( 0.9, false ).run ( gui );
-                Thread.sleep ( 100 );
+                Thread.sleep ( 200 );
                 new OpenTargetContainer ( buildedObj, command.name ).run ( gui );
                 NUtils.buildCurrent ( command.name );
             }

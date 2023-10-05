@@ -12,7 +12,7 @@ public class CollectFromGob implements Action {
     public Results run ( NGameUI gui )
             throws InterruptedException {
         while( NUtils.checkGobFlower ( task, gob, 0 )) {
-            if(gob.rc.dist(gui.map.player().rc)> 22) {
+            if(gob.rc.dist(gui.map.player().rc)> MCache.tilesz2.x) {
                 PathFinder pf = new PathFinder(gui, gob);
                 pf.run();
             }

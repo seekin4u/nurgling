@@ -22,11 +22,11 @@ public class FarmerGrape extends Bot {
         win_sz.y = 100;
         /// Семена
         AreasID field = AreasID.wine;
-        String seed = "hops";
+        String seed = "wine";
 //        String seed = "wine";
         /// Урожай
         AreasID stockpile = AreasID.grapes;
-        String cult = "cones";
+        String cult = "grapes";
 
         
         runActions.add ( new HarvestToPileAction(new NAlias(seed), new NAlias(cult), field , stockpile,  true));
