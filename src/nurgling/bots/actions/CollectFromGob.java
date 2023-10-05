@@ -2,6 +2,7 @@ package nurgling.bots.actions;
 
 import haven.Gob;
 
+import haven.MCache;
 import nurgling.*;
 
 public class CollectFromGob implements Action {
@@ -11,7 +12,10 @@ public class CollectFromGob implements Action {
     public Results run ( NGameUI gui )
             throws InterruptedException {
         while( NUtils.checkGobFlower ( task, gob, 0 )) {
-            new PathFinder( gui,gob ).run ();
+            if(gob.rc.dist(gui.map.player().rc)> MCache.tilesz2.x) {
+                PathFinder pf = new PathFinder(gui, gob);
+                pf.run();
+            }
             NFlowerMenu fm = NUtils.getFlowerMenu();
             if(fm!=null) {
                 fm.select(task);

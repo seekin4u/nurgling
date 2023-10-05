@@ -23,7 +23,8 @@ public class ButchingShip implements Action {
     @Override
     public Results run(NGameUI gui)
             throws InterruptedException {
-        NAlias kritter = new NAlias("fox", "bear", "badget", "deer");
+        NAlias kritter = new NAlias("fox", "bear", "badger", "deer", "beaver", "raindeer", "lynx", "wolverine", "greyseal", "walrus", "moose", "wolf",
+                "boar", "roe_deer", "mouflon", "wildgoat", "wildhorse", "reddeer", "cattle", "aurochs");
         NAlias ship = new NAlias("knarr", "snekkja");
         if (new Equip(new NAlias("butcherscleaver")).run(gui).type != Results.Types.SUCCESS)
             new Equip(new NAlias(tools, new ArrayList<String>())).run(gui);
