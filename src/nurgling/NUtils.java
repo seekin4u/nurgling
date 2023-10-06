@@ -1638,15 +1638,15 @@ public class NUtils {
     }
     public static boolean takeGobFromCargo(NGameUI gui, NAlias winName, NAlias findName) throws InterruptedException {
         Gob ship = Finder.findNearestObjectToObject (winName, gui.map.player());
+        PathFinder pf = new PathFinder (gui, ship);
+        pf.setHardMode ( true );
+        pf.run ();
         if(NUtils.checkGobFlower(new NAlias("Cargo"), ship)) {
             NFlowerMenu flowerMenu = NUtils.getFlowerMenu();
             flowerMenu.select("Cargo");
         }
         //from res take name of gob
         String nameShip = ship.getResName().substring(ship.getResName().lastIndexOf('/') + 1);
-        PathFinder pf = new PathFinder (gui, ship);
-        pf.setHardMode ( true );
-        pf.run ();
         NUtils.waitEvent(() -> NUtils.getFlowerMenu() == null, 1000);
         Thread.sleep(200);
         waitEvent ( ()-> NUtils.getGameUI().getWindow(nameShip)!=null,2000 );
