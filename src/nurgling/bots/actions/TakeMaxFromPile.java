@@ -59,6 +59,10 @@ public class TakeMaxFromPile implements Action {
     public TakeMaxFromPile(AreasID input ) {
         this.input = input;
     }
+    public TakeMaxFromPile(AreasID input, boolean fast) {
+        this.input = input;
+        this.fast=true;
+    }
     
     public TakeMaxFromPile(Gob gob ) {
         this.inPile = gob;
@@ -71,7 +75,12 @@ public class TakeMaxFromPile implements Action {
     public TakeMaxFromPile(NArea area ) {
         this.area = area;
     }
-    
+
+    public TakeMaxFromPile(NArea area , boolean fast) {
+        this.area = area;
+        this.fast=true;
+    }
+
     AreasID input;
     Gob inPile = null;
     NArea area = null;

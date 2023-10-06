@@ -27,7 +27,8 @@ public class DropFromInventory implements Action {
         ArrayList<GItem> ditems = gui.getInventory("Inventory").getWItems(_name);
         if (ditems.size() != 0) {
             for ( GItem item : ditems ) {
-                NUtils.drop(item);
+                item.wdgmsg("drop", item.sz, 1);
+//                NUtils.drop(item);
             }
         }
         /// Возвращаем true Если предметы были найдены и сброшены

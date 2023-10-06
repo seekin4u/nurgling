@@ -19,6 +19,7 @@ public class CollectItemsToPile implements Action {
     AreasID out;
 
     NAlias items;
+    NAlias ignor;
     
     public CollectItemsToPile(
             NArea output,
@@ -39,8 +40,7 @@ public class CollectItemsToPile implements Action {
         this.in = input;
         this.items = items;
     }
-    
-    
+
     @Override
     public Results run ( NGameUI gui )
             throws InterruptedException {
@@ -51,14 +51,18 @@ public class CollectItemsToPile implements Action {
         {
             output = Finder.findNearestMark(out);
         }
-        NAlias collected_items = new NAlias(items.keys, new ArrayList<> ( Arrays.asList ( "stockpile" , "barrel") ));
-        
+        ArrayList ext = items.exceptions;
+        ext.add("stockpile");
+        ext.add("barrel");
+
+        NAlias collected_items = new NAlias(items.keys, ext);
+        NAlias itemsS = new NAlias(items.keys);
         /// Выполняем процедуру подбора для каждого элемента в массиве
-        while ( !Finder.findObjectsInArea ( items, input ).isEmpty () ){
-            GItem it = gui.getInventory ().getItem(items);
+        while ( !Finder.findObjectsInArea ( itemsS, input ).isEmpty () ){
+            GItem it = gui.getInventory ().getItem(itemsS);
 //            gui.msg("free: " + gui.getInventory().getNumberFreeCoord(it));
             if ( (gui.getInventory ().getFreeSpace () <= 1 && !gui.getInventory ().getWItems().isEmpty ()) || gui.getInventory().getNumberFreeCoord(it)<=2) {
-                new TransferToPile ( output, NHitBox.getByName ( items.keys.get ( 0 ) ), items, items ).run ( gui );
+                new TransferToPile ( output, NHitBox.getByName ( items.keys.get ( 0 ) ), itemsS, itemsS ).run ( gui );
             }
             
             Gob item = Finder.findObjectInArea ( collected_items, 2000, input );
@@ -73,7 +77,7 @@ public class CollectItemsToPile implements Action {
             NUtils.takeFromEarth ( item );
         }
        
-        new TransferToPile ( output, NHitBox.getByName ( items.keys.get ( 0 ) ), items, items ).run ( gui );
+        new TransferToPile ( output, NHitBox.getByName ( items.keys.get ( 0 ) ), itemsS, itemsS ).run ( gui );
         return new Results ( Results.Types.SUCCESS );
     }
     
