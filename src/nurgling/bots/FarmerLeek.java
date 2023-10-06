@@ -21,6 +21,7 @@ public class FarmerLeek extends Bot {
         win_sz.y = 100;
 
         runActions.add ( new HarvestDropAction(new NAlias("leek"), AreasID.leek , true));
+        runActions.add ( new nurgling.bots.actions.EquipTSacks () );
         runActions.add ( new CollectItemsToPile(AreasID.leek_bulb,AreasID.leek,new NAlias("leek")));
         runActions.add ( new SeederSeedPiles(new HarvestOut( new NAlias( "leek"), AreasID.leek, AreasID.leek_bulb )) );
         //runActions.add ( new HarvestSeedAction(new NAlias(new ArrayList<String>(Arrays.asList("flax", "Flax"))), AreasID.flax , true));

@@ -24,6 +24,7 @@ public class FarmerBeet extends Bot {
                                 new ArrayList<String>(Arrays.asList("leaves", "plants")));
 
         runActions.add ( new HarvestDropAction(beet, AreasID.beet , true));
+        runActions.add ( new nurgling.bots.actions.EquipTSacks () );
         runActions.add ( new CollectItemsToPile(AreasID.beet_bulb,AreasID.beet, beet));
         runActions.add ( new CollectItemsToPile(AreasID.beet_leafs,AreasID.beet,new NAlias("beetleaves")));
         runActions.add ( new SeederSeedPiles(new HarvestOut( new NAlias( "beet"), AreasID.beet, AreasID.beet_bulb )) );

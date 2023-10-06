@@ -4,6 +4,8 @@ import haven.Button;
 import haven.Coord;
 import nurgling.NAlias;
 import nurgling.NGameUI;
+import nurgling.bots.actions.NomadTraveller;
+import nurgling.bots.actions.ReturnerNoLogout;
 import nurgling.bots.actions.TreeItemsCollection2;
 import nurgling.tools.AreaSelecter;
 import nurgling.tools.NArea;
@@ -18,10 +20,12 @@ public class LeafCollector3 extends Bot {
         super ( gameUI );
         win_title = "Leaf Collector";
         win_sz.y = 100;
-        
-        
+
+
+//        runActions.add(new ReturnerNoLogout());
+        runActions.add(new NomadTraveller("./tt1.dat", 22));
         ///Добавление цикла в действия бота
-        runActions.add ( new TreeItemsCollection2( tree_area , pile_area, new NAlias("apple"),"stockpile-apple","Pick" ) );
+        //runActions.add ( new TreeItemsCollection2( tree_area , pile_area, new NAlias("apple"),"stockpile-apple","Pick" ) );
     }
     
     

@@ -410,7 +410,7 @@ public class NInventory extends Inventory {
      *
      * @return свободное место
      */
-    public int getFreeSpace() throws InterruptedException {
+    public int getFreeSpaceOld() throws InterruptedException {
         waitLoading();
         int freespace = 0;
         if(parent instanceof NGameUI || parent instanceof Window) {
@@ -552,8 +552,114 @@ public class NInventory extends Inventory {
             return isz.x * isz.y;
         }
     }
+    public int getMaxSlots() {
+        Coord c = new Coord();
+        int mo = 0;
+        int max = 0;
+        for (c.y = 0; c.y < isz.y; c.y++) {
+            for (c.x = 0; c.x < isz.x; c.x++) {
+                if (sqmask == null || !sqmask[mo++]) max++;
+            }
+        }
+        return (max);
+    }
+    public int getFreeSpace() {
+        int freespace = getMaxSlots();
+        for (Widget wdg = child; wdg != null; wdg = wdg.next) {
+            if (wdg instanceof WItem)
+                freespace -= (wdg.sz.x * wdg.sz.y) / (sqsz.x * sqsz.y);
+        }
+        return freespace;
+    }
+    // Ищет количество свободных мест в инвентаре для предмета заданного размера
+    public int getNumberFreeCoord(Coord size) throws InterruptedException {
+        int count = 0;
+        short[][] inventoryMatrix = containerMatrix();
 
-    public int getNumberFreeCoord(Coord target_size) throws InterruptedException {
+        int sizeX = size.x;
+        int sizeY = size.y;
+
+        for (int row = 0; row < inventoryMatrix.length - sizeX + 1; row++) {
+            for (int collumn = 0; collumn < inventoryMatrix[row].length - sizeY + 1; collumn++) {
+                boolean ok = true;
+                for (int x = 0; x < sizeX; x++) {
+                    for (int y = 0; y < sizeY; y++) {
+                        if (inventoryMatrix[row + x][collumn + y] != 0) {
+                            ok = false;
+                            break;
+                        }
+                    }
+                    if (!ok) {
+                        break;
+                    }
+                }
+                if (ok) {
+                    count++;
+                    for (int x = 0; x < sizeX; x++) {
+                        for (int y = 0; y < sizeY; y++) {
+                            inventoryMatrix[row + x][collumn + y] = 1;
+                        }
+                    }
+                }
+            }
+        }
+
+        return count;
+    }
+    // Создает матрицу инвентаря, где 0 - пусто, 1 - занято, 2 - несуществующая ячейка
+    public void printMatrixToChat(NGameUI gui, short[][] matrix) {
+        StringBuilder sb = new StringBuilder();
+        for (int row = 0; row < matrix.length; row++) {
+            for (int col = 0; col < matrix[row].length; col++) {
+                if (matrix[row][col] == 0) {
+                    sb.append("0 "); // Пустая ячейка
+                } else if (matrix[row][col] == 1) {
+                    sb.append("1 "); // Занятая ячейка
+                } else {
+                    sb.append("2 "); // Несуществующая ячейка
+                }
+            }
+            sb.append("\n"); // Переход на новую строку
+        }
+
+        gui.msg(sb.toString()); // Вывод в чат
+    }
+
+    public short[][] containerMatrix() throws InterruptedException {
+            short[][] ret = new short[isz.x][isz.y];
+            int mo = 0;
+
+            for (int y = 0; y < isz.y; y++) {
+                for (int x = 0; x < isz.x; x++) {
+                    if (sqmask == null || !sqmask[mo++]) {
+                        ret[x][y] = 0; // Пустая ячейка
+                    } else {
+                        ret[x][y] = 2; // Заблокированная ячейка
+                    }
+                }
+            }
+
+            for (WItem item : getAll()) {
+                Coord size = ((NGItem) item.item).sprSz();
+                int xSize = size.x;
+                int ySize = size.y;
+                int xLoc = item.c.div(33).x;
+                int yLoc = item.c.div(33).y;
+
+                for (int i = 0; i < xSize; i++) {
+                    for (int j = 0; j < ySize; j++) {
+                        if (xLoc + i < isz.x && yLoc + j < isz.y) {
+                            ret[xLoc + i][yLoc + j] = 1; // Занятая ячейка
+                        }
+                    }
+                }
+            }
+
+            return ret;
+        }
+
+
+    public int getNumberFreeCoordOld(Coord target_size) throws InterruptedException {
         waitLoading();
         int count = 0;
         /// Вычисляем свободные слоты в инвентаре

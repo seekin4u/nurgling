@@ -24,6 +24,7 @@ public class FarmerTabacco extends Bot {
         
         
         runActions.add ( new HarvestSeedAction(new NAlias(new ArrayList<String>(Arrays.asList("pipeweed")),new ArrayList<String>(Arrays.asList("tabacco"))), AreasID.tabacco , true));
+        runActions.add ( new nurgling.bots.actions.EquipTSacks () );
         runActions.add ( new CollectItemsToPile(AreasID.tabacco_leafs,AreasID.tabacco,new NAlias("tabacco")));
         runActions.add ( new SeederSeed(new HarvestOut( new NAlias( "pipeweed" ), AreasID.tabacco )) );
         

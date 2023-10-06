@@ -23,6 +23,7 @@ public class FarmerTurnipSeed extends Bot {
         
         //            runActions.add ( new Harvester ( harwest_id, type, paving ) );
         runActions.add ( new HarvestSeedAction(new NAlias("turnip", "Turnip"), AreasID.turnip, false ));
+        runActions.add ( new nurgling.bots.actions.EquipTSacks () );
         runActions.add ( new SeederSeed(new HarvestOut( new NAlias( "turnip" ), AreasID.turnip )) );
         
     }

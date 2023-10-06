@@ -24,6 +24,7 @@ public class FarmerCarrotTuber extends Bot {
         /// доливаем воды
 
         runActions.add ( new HarvestDropAction(new NAlias("Carrot"), AreasID.carrot , true));
+        runActions.add ( new nurgling.bots.actions.EquipTSacks () );
         runActions.add ( new CollectItemsToPile(AreasID.carrotTuber,AreasID.carrot,new NAlias("Carrot")));
         runActions.add ( new SeederSeedPiles(new HarvestOut( new NAlias( "Carrot"), AreasID.carrot, AreasID.carrotTuber )) );
         //runActions.add ( new HarvestSeedAction(new NAlias(new ArrayList<String>(Arrays.asList("flax", "Flax"))), AreasID.flax , true));

@@ -25,7 +25,7 @@ public class FarmerHope extends Bot {
         AreasID stockpile = AreasID.cones;
         String cult = "cones";
 
-        
+        runActions.add ( new nurgling.bots.actions.EquipTSacks () );
         runActions.add ( new HarvestToPileAction(new NAlias(seed), new NAlias(cult), field , stockpile,  true));
 
         

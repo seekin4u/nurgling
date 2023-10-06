@@ -3,10 +3,7 @@ package nurgling.bots;
 
 import nurgling.NAlias;
 import nurgling.NGameUI;
-import nurgling.bots.actions.CollectItemsToPile;
-import nurgling.bots.actions.HarvestSeedAction;
-import nurgling.bots.actions.SeederSeed;
-import nurgling.bots.actions.SlicePumpkin;
+import nurgling.bots.actions.*;
 import nurgling.bots.tools.HarvestOut;
 import nurgling.tools.AreasID;
 
@@ -23,7 +20,9 @@ public class FarmerPumpkin extends Bot {
         win_sz.y = 100;
 
         runActions.add(new HarvestSeedAction(new NAlias(new ArrayList<String>(Arrays.asList("pumpkin", "Pumpkin")), new ArrayList<String>(Arrays.asList("items/pumpkin", "pumpkinflesh"))), AreasID.pumpkin, true));
-        runActions.add ( new CollectItemsToPile(AreasID.pumpkin_head, AreasID.pumpkin, new NAlias("pumpkin")));
+        runActions.add ( new nurgling.bots.actions.EquipTSacks () );
+        runActions.add(new SlicePumpkinSwill(false));
+        runActions.add (new CollectItemsToPile(AreasID.pumpkin_head, AreasID.pumpkin, new NAlias("pumpkin")));
         runActions.add(new SeederSeed(new HarvestOut(new NAlias("pumpkin"), AreasID.pumpkin)));
 
     }

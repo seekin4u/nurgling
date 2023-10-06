@@ -21,6 +21,7 @@ public class FarmerBarley extends Bot {
         win_sz.y = 100;
         
         runActions.add ( new HarvestSeedAction(new NAlias("Barley"), AreasID.barley , true));
+        runActions.add ( new nurgling.bots.actions.EquipTSacks () );
         runActions.add ( new CollectItemsToPile(AreasID.straw, AreasID.barley,new NAlias("straw")));
         runActions.add ( new SeederSeed(new HarvestOut( new NAlias( "barley" ), AreasID.barley )) );
 

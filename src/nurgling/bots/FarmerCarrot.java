@@ -23,6 +23,7 @@ public class FarmerCarrot extends Bot {
         
         //            runActions.add ( new Harvester ( harwest_id, type, paving ) );
         runActions.add ( new HarvestSeedAction(new NAlias("carrot", "Carrot"), AreasID.carrot, false ));
+        runActions.add ( new nurgling.bots.actions.EquipTSacks () );
         runActions.add ( new SeederSeed(new HarvestOut( new NAlias( "carrot" ), AreasID.carrot )) );
         
     }

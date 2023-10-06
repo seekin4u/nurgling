@@ -24,6 +24,7 @@ public class FarmerMillet extends Bot {
         
         
         runActions.add ( new HarvestSeedAction(new NAlias(new ArrayList<String>(Arrays.asList("millet", "Millet")),new ArrayList<String>(Arrays.asList("straw"))), AreasID.millet , true));
+        runActions.add ( new nurgling.bots.actions.EquipTSacks () );
         runActions.add ( new CollectItemsToPile(AreasID.straw,AreasID.millet, new NAlias("straw")));
         runActions.add ( new SeederSeed(new HarvestOut( new NAlias( "millet" ), AreasID.millet )) );
         

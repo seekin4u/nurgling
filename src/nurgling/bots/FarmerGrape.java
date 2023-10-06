@@ -28,7 +28,7 @@ public class FarmerGrape extends Bot {
         AreasID stockpile = AreasID.grapes;
         String cult = "grapes";
 
-        
+        runActions.add ( new nurgling.bots.actions.EquipTSacks () );
         runActions.add ( new HarvestToPileAction(new NAlias(seed), new NAlias(cult), field , stockpile,  true));
 
         

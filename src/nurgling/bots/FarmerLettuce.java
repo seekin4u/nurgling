@@ -29,6 +29,7 @@ public class FarmerLettuce extends Bot {
 
         
         runActions.add ( new HarvestSeedAction(new NAlias(new ArrayList<String>(Arrays.asList(seed)),new ArrayList<String>(Arrays.asList(cult))), field , true));
+        runActions.add ( new nurgling.bots.actions.EquipTSacks () );
         runActions.add ( new CollectItemsToPile(stockpile, field, new NAlias(cult)));
         runActions.add ( new SeederSeed(new HarvestOut( new NAlias( seed ), field )) );
         

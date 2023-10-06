@@ -13,11 +13,19 @@ import java.util.Arrays;
 
 public class SlicePumpkinSwill implements Action{
     static NAlias pumpkin_name = new NAlias(new ArrayList<>(Arrays.asList("Pumpkin")),new ArrayList<>(Arrays.asList("Flesh", "seed", "Seed", "flesh", "plant")));
+
+    public SlicePumpkinSwill(boolean swill) {
+        this.swill = swill;
+    }
+    public SlicePumpkinSwill() {
+    }
     @Override
     public Results run(NGameUI gui) throws InterruptedException {
         while ( !Finder.findObjectsInArea ( new NAlias("pumpkin"), Finder.findNearestMark(AreasID.pumpkin)).isEmpty () ){
 
-            if ( gui.getInventory ().getNumberFreeCoord (new Coord(3,3)) == 0 && !gui.getInventory ().getWItems().isEmpty () ) {
+
+
+            if ( gui.getInventory ().getNumberFreeCoord(new Coord(3,3)) <= 1 && !gui.getInventory ().getWItems().isEmpty () ) {
                 while (gui.getInventory ().getItem ( pumpkin_name)!=null) {
                     GItem pumpkin = gui.getInventory().getItem(pumpkin_name);
                     if (pumpkin == null) {
@@ -28,7 +36,13 @@ public class SlicePumpkinSwill implements Action{
                     NUtils.waitEvent(() -> gui.getInventory().getWItems(new NAlias("pumpkinflesh", "Pumpkin Flesh") ).size() != oldSize, 50);
                 }
                 new OpenBarrelAndTransfer ( 9000,  new NAlias(new ArrayList<>(Arrays.asList("pumpkin", "Pumpkin")),new ArrayList<>(Arrays.asList("flesh", "Flesh"))), AreasID.pumpkin, Finder.findObjectInArea ( new NAlias("barrel"),2000,Finder.findNearestMark(AreasID.pumpkin) ) ).run ( gui );
-                new TransferToTrough ( new NAlias("pumpkinflesh", "Pumpkin Flesh") ).run ( gui );
+                if (swill) {
+                    new TransferToTrough ( new NAlias("pumpkinflesh", "Pumpkin Flesh") ).run ( gui );
+                }else {
+                    NAlias itemsS = new NAlias("pumpkinflesh", "Pumpkin Flesh");
+                    new TransferToPile (Finder.findNearestMark(AreasID.pumpkin_head), NHitBox.getByName ( itemsS.keys.get ( 0 ) ), itemsS, itemsS ).run ( gui );
+                }
+
 
 
             }
@@ -57,4 +71,5 @@ public class SlicePumpkinSwill implements Action{
         new TransferToTrough ( new NAlias("pumpkinflesh", "Pumpkin Flesh") ).run ( gui );
         return new Results(Results.Types.SUCCESS);
     }
+    boolean swill = true;
 }

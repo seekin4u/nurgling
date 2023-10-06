@@ -21,11 +21,9 @@ public class FarmerYellowOnion extends Bot {
         win_sz.y = 100;
 
         runActions.add ( new HarvestDropAction(new NAlias("yellowonion"), AreasID.y_onion , true));
+        runActions.add ( new nurgling.bots.actions.EquipTSacks () );
         runActions.add ( new CollectItemsToPile(AreasID.y_onion_bulb,AreasID.y_onion,new NAlias("yellowonion")));
         runActions.add ( new SeederSeedPiles(new HarvestOut( new NAlias( "yellowonion"), AreasID.y_onion, AreasID.y_onion_bulb )) );
-        //runActions.add ( new HarvestSeedAction(new NAlias(new ArrayList<String>(Arrays.asList("flax", "Flax"))), AreasID.flax , true));
-        //runActions.add ( new CollectItemsToPile(AreasID.flaxFibre,AreasID.flax,new NAlias("fibre")));
-        //runActions.add ( new SeederSeed(new HarvestOut( new NAlias( "flax" ), AreasID.flax )) );
         
     }
     

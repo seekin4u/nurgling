@@ -22,11 +22,9 @@ public class FarmerTurnip extends Bot {
         /// доливаем воды
 
         runActions.add ( new HarvestDropAction(new NAlias("turnip"), AreasID.turnip , true));
+        runActions.add ( new nurgling.bots.actions.EquipTSacks () );
         runActions.add ( new CollectItemsToPile(AreasID.turnip_tuber,AreasID.turnip,new NAlias("turnip")));
         runActions.add ( new SeederSeedPiles(new HarvestOut( new NAlias( "turnip"), AreasID.turnip, AreasID.turnip_tuber )) );
-        //runActions.add ( new HarvestSeedAction(new NAlias(new ArrayList<String>(Arrays.asList("flax", "Flax"))), AreasID.flax , true));
-        //runActions.add ( new CollectItemsToPile(AreasID.flaxFibre,AreasID.flax,new NAlias("fibre")));
-        //runActions.add ( new SeederSeed(new HarvestOut( new NAlias( "flax" ), AreasID.flax )) );
         
     }
     
