@@ -72,7 +72,7 @@ public class Fishing implements Action {
                 dropper.start();
             }
             if(!isSpining) {
-                new WaitAction(() -> NUtils.getProg() >= 0, 50).run(gui);
+                new WaitAction(() -> NUtils.getProg() >= 0, 100).run(gui);
             }else{
                 new SpiningAction().run(gui);
             }
