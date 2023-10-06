@@ -22,7 +22,7 @@ public class NomadTraveller implements Action {
             throws InterruptedException {
         marks.clear();
         gui.msg("max" +gui.getInventory ().getMaxSlots());
-        gui.msg("3x3 = " + gui.getInventory ().itemCountAtFreeSpace( new Coord (3,3)));
+//        gui.msg("3x3 = " + gui.getInventory ().itemCountAtFreeSpace( new Coord (3,3)));
         URL url = NUtils.class.getProtectionDomain ().getCodeSource ().getLocation ();
         if(url != null) {
             try {

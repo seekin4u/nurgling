@@ -56,7 +56,7 @@ public class TransferToBarrel implements Action {
                     new TakeToHand ( item ).run ( gui );
                 }
                 NUtils.waitEvent(()->!gui.hand.isEmpty (),200);
-                NUtils.activateItem ( gob );
+                NUtils.activateItem ( gob , true);
                 NUtils.waitEvent(()->gui.hand.isEmpty (),200);
                 if ( !gui.hand.isEmpty () ) {
                     full.add ( gob );

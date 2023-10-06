@@ -34,7 +34,7 @@ public class TransferToTrough implements Action {
                         }
                         int counter = 0;
                         while ( !gui.hand.isEmpty () && counter < 20 ) {
-                            NUtils.activateItem ( gob );
+                            NUtils.activateItem ( gob , true);
                             Thread.sleep ( 50 );
                             counter++;
                         }

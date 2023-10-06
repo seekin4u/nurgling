@@ -1522,7 +1522,7 @@ public class NUtils {
                         int freeSpace = ((NISBox) sp).getFreeSpace();
                         /// Передаем предмет и дожидаемся изменения пайла
                         int count = 0;
-                        wItem.wdgmsg("transfer", wItem.sz, 1);
+                        wItem.wdgmsg("transfer", wItem.sz, 2);
                         while (freeSpace == ((NISBox) sp).getFreeSpace() && count < 50) {
                             Thread.sleep(10);
                             count += 1;
@@ -1842,11 +1842,28 @@ public class NUtils {
                 .wdgmsg("itemact", Coord.z, gob.rc.floor(posres), 0, 0, (int) gob.id, gob.rc.floor(posres), 0,
                         -1);
     }
+    public static void activateItem(Gob gob, boolean fast) {
+        Coord grc = gob.rc.floor(posres);
+        if (fast){
+            gameUI.map.wdgmsg("itemact", Coord.z, grc, 3, 0, (int) gob.id, grc, 0, -1);
+        }else{
+            gameUI.map.wdgmsg("itemact", Coord.z, grc, 3, 0, (int) gob.id, grc, 0, -1);
+        }
+    }
+
 
     public static void activateItemToPile(Gob gob) {
         gameUI.map
                 .wdgmsg("itemact", Coord.z, gob.rc.floor(posres), 0, 0, (int) gob.id, gob.rc.floor(posres), 0,
                         0);
+    }
+    public static void activateItemToPile(Gob gob, boolean fast) {
+        Coord grc = gob.rc.floor(posres);
+        if (fast){
+            gameUI.map.wdgmsg("itemact", Coord.z, grc, 3, 0, (int) gob.id, grc, 0, 0);
+        }else{
+            gameUI.map.wdgmsg("itemact", Coord.z, grc, 3, 0, (int) gob.id, grc, 0, 0);
+        }
     }
 
     public static ContainerProp getContainerType(AreasID mark) {

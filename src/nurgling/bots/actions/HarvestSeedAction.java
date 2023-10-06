@@ -31,7 +31,6 @@ public class HarvestSeedAction implements Action {
         while ( !Finder.findCropsInArea ( crop, input, isMaxStage ).isEmpty () ) {
             Gob plant = Finder.findCropInArea ( crop, 3000, input, isMaxStage );
             if ( plant != null ) {
-                gui.msg("inv" + gui.getInventory().getFreeSpace ());
                     if ( gui.getInventory ().getFreeSpace () < 2 ) {
                         if(!isFull) {
                             if ( new OpenBarrelAndTransfer ( 9000, crop,

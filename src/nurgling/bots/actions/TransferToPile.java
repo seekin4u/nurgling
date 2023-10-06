@@ -48,7 +48,7 @@ public class TransferToPile implements Action {
                         pf.setHardMode(false);
                         pf.run();
                         if (!gui.hand.isEmpty()) {
-                            NUtils.activateItemToPile(gob);
+                            NUtils.activateItemToPile(gob, true);
                             NUtils.waitEvent(() -> NUtils.getGameUI().hand.isEmpty(), 50);
                             if (NOCache.getgob(gob).getModelAttribute() == 31)
                                 continue;
