@@ -1636,7 +1636,7 @@ public class NUtils {
         }
         return false;
     }
-    public static boolean takeGobFromCargo(GameUI gui, NAlias winName, NAlias findName) throws InterruptedException {
+    public static boolean takeGobFromCargo(NGameUI gui, NAlias winName, NAlias findName) throws InterruptedException {
         Gob ship = Finder.findNearestObjectToObject (winName, gui.map.player());
         if(NUtils.checkGobFlower(new NAlias("Cargo"), ship)) {
             NFlowerMenu flowerMenu = NUtils.getFlowerMenu();
@@ -1644,10 +1644,12 @@ public class NUtils {
         }
         //from res take name of gob
         String nameShip = ship.getResName().substring(ship.getResName().lastIndexOf('/') + 1);
-
-        NUtils.waitEvent(() -> NUtils.getFlowerMenu() == null, 5000);
-        Thread.sleep(500);
-        waitEvent ( ()-> NUtils.getGameUI().getWindow(nameShip)!=null,10000 );
+        PathFinder pf = new PathFinder (gui, ship);
+        pf.setHardMode ( true );
+        pf.run ();
+        NUtils.waitEvent(() -> NUtils.getFlowerMenu() == null, 1000);
+        Thread.sleep(200);
+        waitEvent ( ()-> NUtils.getGameUI().getWindow(nameShip)!=null,2000 );
         for (Widget widgetL: NUtils.getGameUI().getWindow(nameShip).children()) {
             if (NUtils.checkName(widgetL.toString(), "Widget")) {
                 for (Widget widgetS : widgetL.children()){
@@ -1881,7 +1883,7 @@ public class NUtils {
         }
         while (Finder.findObjectInArea(new NAlias("consobj"), 1000, area) == null);
 
-        waitEvent(()->gameUI.getWindow(name)!=null,50);
+        waitEvent(()->gameUI.getWindow(name)!=null,2000);
         spwnd = gameUI.getWindow(name);
 
 
@@ -1893,9 +1895,9 @@ public class NUtils {
                     Thread.sleep(100);
                 }
             }
-            waitEvent(()->getProg()>=0, 20);
+            waitEvent(()->getProg()>=0, 100);
             /// Ждем завершения крафта
-            waitEvent(()->getProg()<0, 1000);
+            waitEvent(()->getProg()<0, 5000);
             return true;
         }
         return false;
@@ -2019,7 +2021,7 @@ public class NUtils {
         do {
             gameUI.getMap()
                     .wdgmsg("place", coord.floor(posres), (int) Math.round(rotation * 32768 / Math.PI), 1, 0);
-            Thread.sleep(50);
+            Thread.sleep(1500);
         }
         while (Finder.findObjectInArea(new NAlias("consobj"), 1000, area) == null);
 

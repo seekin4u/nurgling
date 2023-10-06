@@ -32,7 +32,7 @@ public class ButchingShip implements Action {
         Coord2d placeTile = Finder.findNearestMark (AreasID.kritter).center;
         boolean CargoFull = true;
         while (NUtils.takeGobFromCargo(gui, ship, kritter)){
-            new PlaceLifted(placeTile, NHitBox.get("bear"), kritter).run(gui);
+            new PlaceLifted(placeTile, NHitBox.get("moose"), kritter).run(gui);
 //            NUtils.place(placeTile);
 //            Thread.sleep(2000);
             ArrayList<Gob> gobs = Finder.findObjectsInArea(new NAlias("kritter"),

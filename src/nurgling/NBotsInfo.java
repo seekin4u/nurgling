@@ -62,8 +62,6 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
                     "bots/icons/leaf" ) );
             layouts.get ( 0 ).add ( new NButton ( "Leaf Collection3", new LeafCollector3( gui ),
                     "bots/icons/leaf" ) );
-            layouts.get ( 0 ).add ( new NButton ( "Leaf Placer", new LeafCollector2( gui ),
-                    "bots/icons/leaf2" ) );
             layouts.get ( 0 ).add ( new NButton ( "Nuts Collection", new NutsCollector ( gui ), "bots/icons/nuts" ) );
             layouts.get ( 0 ).add ( new NButton ( "Fruits Collection", new FruitCollector ( gui ), "bots/icons/fruit" ) );
             layouts.get ( 0 ).add ( new NButton ( "Chipper", new Chipper ( gui ), "bots/icons/chip" ) );

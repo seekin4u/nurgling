@@ -4,7 +4,7 @@ import haven.Button;
 import haven.Coord;
 import nurgling.NAlias;
 import nurgling.NGameUI;
-import nurgling.bots.actions.UploadShipAction;
+import nurgling.bots.actions.TreeItemsCollection2;
 import nurgling.tools.AreaSelecter;
 import nurgling.tools.NArea;
 
@@ -21,7 +21,7 @@ public class LeafCollector3 extends Bot {
         
         
         ///Добавление цикла в действия бота
-//        runActions.add ( new UploadShipAction( tree_area , pile_area, new NAlias("apple"),"stockpile-apple","Pick" ) );
+        runActions.add ( new TreeItemsCollection2( tree_area , pile_area, new NAlias("apple"),"stockpile-apple","Pick" ) );
     }
     
     
