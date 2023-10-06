@@ -287,7 +287,7 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
             layouts.get ( 6 ).add ( new NButton ( "Barrel", new BuildBarrels( gui ), "bots/icons/barrel" ) );
             layouts.get ( 6 ).add ( new NButton ( "CheeseR", new BuildCheaseRack( gui ), "bots/icons/cheeser" ) );
             layouts.get ( 6 ).add ( new NButton ( "TunningT", new BuildTTube( gui ), "bots/icons/tanningb" ) );
-            layouts.get ( 6 ).add ( new NButton ( "BuildHTable", new BuildHTable( gui ), "bots/icons/tanningb2" ) );
+            layouts.get ( 6 ).add ( new NButton ( "BuildHTable", new BuildHTable( gui ), "bots/icons/htable" ) );
             layouts.get ( 6 ).add ( new NButton ( "WChest", new BuildWChest( gui ), "bots/icons/chest" ) );
             layouts.get ( 6 ).add ( new NButton ( "DSign", new BuildSign( gui ), "bots/icons/dsign" ) );
             layouts.get ( 6 ).add ( new NButton ( "BuildBeackon", new BuildBeacon( gui ), "bots/icons/beacon" ) );
@@ -325,8 +325,10 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
                     "bots/icons/teaMaker"  ) );
             layouts.get ( 8 ).add ( new NButton ( "Butcher Ship", new ButcherShip ( gui ),
                     "bots/icons/butcherShip") );
-            layouts.get ( 8 ).add ( new NButton ( "Upload Ship", new UploadShip ( gui ),
-                    "bots/icons/butcher") );
+            layouts.get ( 8 ).add ( new NButton ( "Download Ship", new DownloadShipCargo ( gui ),
+                    "bots/icons/downloadShip") );
+            layouts.get ( 8 ).add ( new NButton ( "Upload Ship", new UploadShipCargo ( gui ),
+                    "bots/icons/uploadShip") );
             layouts.put ( 5000, new Layout ( this, "bots/icons/tools" ) );
             layouts.get ( 5000 ).add ( new NButton ( "TestBot", new TestBot ( gui ), "bots/icons/testbot") );
             layouts.get ( 5000 ).add ( new NButton ( "Timer",null,"bots/icons/timer"){

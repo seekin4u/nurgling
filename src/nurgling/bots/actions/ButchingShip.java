@@ -28,13 +28,13 @@ public class ButchingShip implements Action {
         NAlias ship = new NAlias("knarr", "snekkja");
         if (new Equip(new NAlias("butcherscleaver")).run(gui).type != Results.Types.SUCCESS)
             new Equip(new NAlias(tools, new ArrayList<String>())).run(gui);
-//        Coord2d player = gui.getMap().player().rc;
         Coord2d placeTile = Finder.findNearestMark (AreasID.kritter).center;
         boolean CargoFull = true;
         while (NUtils.takeGobFromCargo(gui, ship, kritter)){
-            new PlaceLifted(placeTile, NHitBox.get("moose"), kritter).run(gui);
-//            NUtils.place(placeTile);
-//            Thread.sleep(2000);
+            Gob lifted = Finder.findLifted();
+            //from res take name of gob
+            //String nameShip = ship.getResName().substring(ship.getResName().lastIndexOf('/') + 1);
+            new PlaceLifted(placeTile, NHitBox.get(lifted.getResName()), new NAlias(lifted.getResName())).run(gui);
             ArrayList<Gob> gobs = Finder.findObjectsInArea(new NAlias("kritter"),
                     Finder.findNearestMark(AreasID.kritter));
 

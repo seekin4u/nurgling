@@ -1647,19 +1647,19 @@ public class NUtils {
         }
         //from res take name of gob
         String nameShip = ship.getResName().substring(ship.getResName().lastIndexOf('/') + 1);
-        NUtils.waitEvent(() -> NUtils.getFlowerMenu() == null, 1000);
-        Thread.sleep(200);
-        waitEvent ( ()-> NUtils.getGameUI().getWindow(nameShip)!=null,2000 );
+        NUtils.waitEvent(() -> NUtils.getFlowerMenu() == null, 500);
+        waitEvent ( ()-> NUtils.getGameUI().getWindow(nameShip)!=null,500 );
         for (Widget widgetL: NUtils.getGameUI().getWindow(nameShip).children()) {
             if (NUtils.checkName(widgetL.toString(), "Widget")) {
                 for (Widget widgetS : widgetL.children()){
                     if (NUtils.checkName(widgetS.toString(), "Img")) {
-                        gui.msg("name: " + ((Img)widgetS).img.toString());
                         if (checkName(((Img)widgetS).img.toString(), findName)){
                             widgetS.wdgmsg("click", Coord.z, 1, 0);
-                            waitEvent(()->!NUtils.isPose(gui.map.player(),new NAlias("banzai")),500);
+                            waitEvent(()->!NUtils.isPose(gui.map.player(),new NAlias("banzai")),1000);
                             return true;
-                    }}
+                        }
+                        gui.msg("name: " + ((Img)widgetS).img.toString());
+                    }
                 }
             }
         }
