@@ -21,7 +21,13 @@ public class NomadTraveller implements Action {
     public Results run(NGameUI gui)
             throws InterruptedException {
         marks.clear();
-        gui.msg("max" +gui.getInventory ().getMaxSlots());
+//        Gob barrel = Finder.findObject(new NAlias("barrel", "Barrel"));
+//////        gui.mapfile.markobj(barrel.id, barrel, "barrel");
+//        gui.msg("res" + barrel.getResName());
+////        gui.msg("res" + barrel.getattr(GobIcon.class).res.get().toString());
+//        gui.mapfile.markobj("wheelbarrow","barrel", barrel.rc);
+///////
+//        gui.msg("max" +gui.getInventory ().getMaxSlots());
 //        gui.msg("3x3 = " + gui.getInventory ().itemCountAtFreeSpace( new Coord (3,3)));
         URL url = NUtils.class.getProtectionDomain ().getCodeSource ().getLocation ();
         if(url != null) {

@@ -217,6 +217,8 @@ public class Gob extends NGob implements RenderTree.Node, Sprite.Owner, Skeleton
 	}
 
 	private float getz(Coord2d rc, double ra) {
+		if(NConfiguration.getInstance().flatsurface)
+			return 0;
 	    Coord2d[][] no = this.obst, ro = new Coord2d[no.length][];
 	    {
 		double s = Math.sin(ra), c = Math.cos(ra);
@@ -370,7 +372,8 @@ public class Gob extends NGob implements RenderTree.Node, Sprite.Owner, Skeleton
 				}
 
 			}
-			updateCustom(this);
+			if(NUtils.getGameUI()!= null && NUtils.getGameUI().getMap()!=null && !NUtils.getGameUI().getMap().glob.map.grids.isEmpty())
+				updateCustom(this);
 		}
 	for (GAttrib a : attr.values())
 		a.ctick(dt);
@@ -393,7 +396,8 @@ public class Gob extends NGob implements RenderTree.Node, Sprite.Owner, Skeleton
 	updstate();
 	if(virtual && ols.isEmpty() && (getattr(Drawable.class) == null))
 	    glob.oc.remove(this);
-	updateCustom(this);
+	if(NUtils.getGameUI()!= null && NUtils.getGameUI().getMap()!=null)
+		updateCustom(this);
     }
 
 
@@ -679,7 +683,7 @@ public class Gob extends NGob implements RenderTree.Node, Sprite.Owner, Skeleton
 	}
     }
 
-	void hideObject() {
+	public void hideObject() {
 		for (GAttrib a : attr.values()) {
 
 			if (a instanceof RenderTree.Node) {
@@ -690,7 +694,7 @@ public class Gob extends NGob implements RenderTree.Node, Sprite.Owner, Skeleton
 		}
 	}
 
-	void showObject() {
+	public void showObject() {
 		for (GAttrib a : attr.values()) {
 			if (a instanceof RenderTree.Node) {
 				synchronized (slots) {
@@ -725,7 +729,6 @@ public class Gob extends NGob implements RenderTree.Node, Sprite.Owner, Skeleton
 	    updateseq++;
 	    if(updwait != null)
 		updwait.wnotify();
-		NGob.updateRes(this);
 	}
     }
 

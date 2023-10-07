@@ -1,11 +1,9 @@
 package nurgling;
 
 import haven.Audio;
-import haven.HashedMap;
 import haven.Resource;
 
 import java.util.HashMap;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class NAlarmManager {
@@ -22,11 +20,14 @@ public class NAlarmManager {
         alarms.put(NGob.Tags.greyseal,"alarm/greyseal");
         alarms.put(NGob.Tags.mammoth,"alarm/mammoth");
         alarms.put(NGob.Tags.orca,"alarm/orca");
+        alarms.put(NGob.Tags.spermwhale,"alarm/spermwhale");
         alarms.put(NGob.Tags.quest,"alarm/quest");
         alarms.put(NGob.Tags.foe,"alarm/white");
-        alarms.put(NGob.Tags.unknown,"alarm/white");
+        alarms.put(NGob.Tags.notmarked,"alarm/alarm");
         alarms.put(NGob.Tags.winter_stoat,"alarm/stoat");
         alarms.put(NGob.Tags.stalagoomba,"alarm/stalagoomba");
+        alarms.put(NGob.Tags.troll,"alarm/troll");
+        alarms.put(NGob.Tags.looserock,"alarm/looserock");
 
 
     }

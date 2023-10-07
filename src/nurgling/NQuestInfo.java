@@ -376,7 +376,7 @@ public class NQuestInfo extends NDraggableWidget {
     public void tick(double dt) {
         if (!in_work.get() && new_questers != null) {
             if (NUtils.getGameUI() != null && NUtils.getGameUI().chrwdg != null && NUtils.getGameUI().chrwdg.quest != null && !NUtils.getGameUI().chrwdg.cqst.quests.isEmpty() && needUpdate()) {
-                (th = new Thread(new Loader())).start();
+                (th = new Thread(new Loader(), "Quest Checker")).start();
             }
         }
         if (updCompleted.get())
@@ -717,13 +717,13 @@ public class NQuestInfo extends NDraggableWidget {
             String name;
             if(info.contains(" a ") || info.contains(" an ")) {
                 if(info.contains(" a "))
-                    name = info.substring(info.indexOf(" a ") + 3, info.indexOf("to") - 1);
+                    name = info.substring(info.indexOf(" a ") + 3, info.indexOf("to ") - 1);
                 else
-                    name = info.substring(info.indexOf(" an ") + 4, info.indexOf("to") - 1);
+                    name = info.substring(info.indexOf(" an ") + 4, info.indexOf("to ") - 1);
             }
                 else
             {
-                name = info.substring(6, info.indexOf("to") - 1);
+                name = info.substring(6, info.indexOf("to ") - 1);
             }
             items.add(name);
         }
