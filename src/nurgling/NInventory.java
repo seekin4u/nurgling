@@ -599,37 +599,37 @@ public class NInventory extends Inventory {
     }
 
     public short[][] containerMatrix() throws InterruptedException {
-            short[][] ret = new short[isz.x][isz.y];
-            int mo = 0;
+        short[][] ret = new short[isz.y][isz.x];
+        int mo = 0;
 
-            for (int y = 0; y < isz.y; y++) {
-                for (int x = 0; x < isz.x; x++) {
-                    if (sqmask == null || !sqmask[mo++]) {
-                        ret[x][y] = 0; // Пустая ячейка
-                    } else {
-                        ret[x][y] = 2; // Заблокированная ячейка
-                    }
+        for (int y = 0; y < isz.y; y++) {
+            for (int x = 0; x < isz.x; x++) {
+                if (sqmask == null || !sqmask[mo++]) {
+                    ret[y][x] = 0; // Пустая ячейка
+                } else {
+                    ret[y][x] = 2; // Заблокированная ячейка
                 }
             }
-
-            for (WItem item : getAll()) {
-                Coord size = ((NGItem) item.item).sprSz();
-                int xSize = size.x;
-                int ySize = size.y;
-                int xLoc = item.c.div(33).x;
-                int yLoc = item.c.div(33).y;
-
-                for (int i = 0; i < xSize; i++) {
-                    for (int j = 0; j < ySize; j++) {
-                        if (xLoc + i < isz.x && yLoc + j < isz.y) {
-                            ret[xLoc + i][yLoc + j] = 1; // Занятая ячейка
-                        }
-                    }
-                }
-            }
-
-            return ret;
         }
+
+        for (WItem item : getAll()) {
+            Coord size = ((NGItem) item.item).sprSz();
+            int xSize = size.x;
+            int ySize = size.y;
+            int xLoc = item.c.div(33).x;
+            int yLoc = item.c.div(33).y;
+
+            for (int i = 0; i < xSize; i++) {
+                for (int j = 0; j < ySize; j++) {
+                    if (xLoc + i < isz.x && yLoc + j < isz.y) {
+                        ret[yLoc + j][xLoc + i] = 1; // Занятая ячейка
+                    }
+                }
+            }
+        }
+
+        return ret;
+    }
 
 
     public int getNumberFreeCoordOld(Coord target_size) throws InterruptedException {
@@ -663,6 +663,7 @@ public class NInventory extends Inventory {
                 }
             }
         }
+
         return count;
     }
 

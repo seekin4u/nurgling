@@ -17,6 +17,8 @@ import java.util.Objects;
 import static haven.OCache.posres;
 
 public class TakeFromBarrels implements Action {
+
+
     @Override
     public Results run ( NGameUI gui )
             throws InterruptedException {
@@ -29,8 +31,12 @@ public class TakeFromBarrels implements Action {
                 new PathFinder( gui, gob ).run ();
                 while ( need > 0 ) {
                     int current = gui.getInventory ().getWItems( items ).size ();
-                    gui.map.wdgmsg ( "click", Coord.z, gob.rc.floor ( posres ), 3, 1, 0, ( int ) gob.id,
-                            gob.rc.floor ( posres ), 0, -1 );
+                    if (fast){
+                        NUtils.activate(gob, 3, 1);
+                    }else {
+                        gui.map.wdgmsg("click", Coord.z, gob.rc.floor(posres), 3, 1, 0, (int) gob.id,
+                                gob.rc.floor(posres), 0, -1);
+                    }
                     int counter = 0;
                     while ( counter < 20 && current == gui.getInventory ().getWItems( items ).size () ) {
                         Thread.sleep ( 200 );
@@ -62,7 +68,18 @@ public class TakeFromBarrels implements Action {
         this.size = count;
         this.items = items;
     }
-    
+    public TakeFromBarrels(
+            AreasID id,
+            int count,
+            NAlias items,
+            boolean fast
+    ) {
+        this.id = id;
+        this.size = count;
+        this.items = items;
+        this.fast = fast;
+    }
+
     public TakeFromBarrels(
             NArea area,
             int count,
@@ -76,6 +93,7 @@ public class TakeFromBarrels implements Action {
     AreasID id;
     NArea area = null;
     int size;
-    
+
     NAlias items;
+    boolean fast = false;
 }

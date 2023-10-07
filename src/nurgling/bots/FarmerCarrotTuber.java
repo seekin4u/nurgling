@@ -21,15 +21,15 @@ public class FarmerCarrotTuber extends Bot {
         super ( gameUI );
         win_title = "FarmerFlax";
         win_sz.y = 100;
-        /// доливаем воды
+        NAlias seed = new NAlias ( Arrays.asList ( "carrot" ),
+                Arrays.asList ( "items") );
+        NAlias cult = new NAlias ( Arrays.asList ( "carrot" ),
+                Arrays.asList ( "plants") );
 
-        runActions.add ( new HarvestDropAction(new NAlias("Carrot"), AreasID.carrot , true));
+        runActions.add ( new HarvestDropAction(seed, AreasID.carrot , true));
         runActions.add ( new nurgling.bots.actions.EquipTSacks () );
-        runActions.add ( new CollectItemsToPile(AreasID.carrotTuber,AreasID.carrot,new NAlias("Carrot")));
-        runActions.add ( new SeederSeedPiles(new HarvestOut( new NAlias( "Carrot"), AreasID.carrot, AreasID.carrotTuber )) );
-        //runActions.add ( new HarvestSeedAction(new NAlias(new ArrayList<String>(Arrays.asList("flax", "Flax"))), AreasID.flax , true));
-        //runActions.add ( new CollectItemsToPile(AreasID.flaxFibre,AreasID.flax,new NAlias("fibre")));
-        //runActions.add ( new SeederSeed(new HarvestOut( new NAlias( "flax" ), AreasID.flax )) );
+        runActions.add ( new CollectItemsToPile(AreasID.carrotTuber,AreasID.carrot, cult));
+        runActions.add ( new SeederSeedPiles(new HarvestOut(seed, AreasID.carrot, AreasID.carrotTuber )) );
         
     }
     

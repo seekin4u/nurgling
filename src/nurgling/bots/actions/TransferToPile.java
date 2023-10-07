@@ -47,9 +47,10 @@ public class TransferToPile implements Action {
                         PathFinder pf = new PathFinder(gui, target);
                         pf.setHardMode(false);
                         pf.run();
+
                         if (!gui.hand.isEmpty()) {
                             NUtils.activateItemToPile(gob, true);
-                            NUtils.waitEvent(() -> NUtils.getGameUI().hand.isEmpty(), 50);
+                            NUtils.waitEvent(() -> NUtils.getGameUI().hand.isEmpty(), 100);
                             if (NOCache.getgob(gob).getModelAttribute() == 31)
                                 continue;
                         }
@@ -80,7 +81,15 @@ public class TransferToPile implements Action {
                         return new Results(Results.Types.OPEN_FAIL);
                     }
                 }
-                NUtils.transferAlltoStockPile(items, q);
+                ArrayList<GItem> itemsToPile = gui.getInventory().getWItems(items);
+                if (gui.getInventory().getWItems(items).isEmpty()){
+                    return new Results(Results.Types.FILL_FAIL);
+                }
+                NUtils.takeItemToHand(itemsToPile.get(0));
+                NUtils.waitEvent(() -> !NUtils.getGameUI().hand.isEmpty(), 100);
+                NUtils.activateItemToPile(target, true);
+                NUtils.waitEvent(() -> NUtils.getGameUI().hand.isEmpty(), 100);
+//                NUtils.transferAlltoStockPile(items, q);
                 if (!gui.getInventory().getWItems(items, q).isEmpty()) {
                     run(gui);
                 }

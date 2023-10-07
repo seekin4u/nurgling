@@ -21,14 +21,14 @@ public class FarmerTobacco extends Bot {
         win_title = "FarmerTobacco";
         win_sz.y = 100;
         /// доливаем воды
-        NAlias tobaccoSeed = new NAlias ( Arrays.asList ( "pipeweed" ),
+        NAlias seed = new NAlias ( Arrays.asList ( "pipeweed" ),
                 Arrays.asList ( "tobacco") );
-        NAlias tobaccoCult = new NAlias ( Arrays.asList ( "tobacco-fresh" ),
+        NAlias cult = new NAlias ( Arrays.asList ( "pipeleaves", "tobacco-fresh" ),
                 Arrays.asList ( "pipeweed", "plants" ) );
-        runActions.add ( new HarvestSeedAction(tobaccoSeed, AreasID.tobacco , true));
+        runActions.add ( new HarvestSeedAction(seed, AreasID.tobacco , true));
         runActions.add ( new nurgling.bots.actions.EquipTSacks () );
-        runActions.add ( new CollectItemsToPile(AreasID.tobacco_leafs, AreasID.tobacco, tobaccoCult));
-        runActions.add ( new SeederSeed(new HarvestOut( tobaccoSeed, AreasID.tobacco )) );
+        runActions.add ( new CollectItemsToPile(AreasID.tobacco_leafs, AreasID.tobacco, cult));
+        runActions.add ( new SeederSeed(new HarvestOut( seed, AreasID.tobacco )) );
         
     }
     

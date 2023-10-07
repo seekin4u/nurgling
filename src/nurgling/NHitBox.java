@@ -137,7 +137,7 @@ public class NHitBox extends NArea {
         hitboxes.put("gfx/terobjs/stockpile-metal", new NHitBox(new Coord2d(-5.5, -8.25), new Coord2d(5.5, 8.25)));
         hitboxes.put("gfx/terobjs/stockpile-straw", new NHitBox(new Coord2d(-8.25, -8.25), new Coord2d(8.25, 8.25)));
         hitboxes.put("gfx/terobjs/stockpile-brick", new NHitBox(new Coord2d(-11, -5.5), new Coord2d(11, 5.5)));
-        hitboxes.put("gfx/terobjs/stockpile-leaf", new NHitBox(new Coord2d(-5, -5), new Coord2d(5, 5)));
+        hitboxes.put("gfx/terobjs/stockpile-leaf", new NHitBox(new Coord2d(-8.25, -8.25), new Coord2d(-8.25, -8.25)));
         hitboxes.put("gfx/terobjs/ttub", new NHitBox(new Coord2d(-5.5, -5.5), new Coord2d(5.5, 5.5)));
         hitboxes.put("gfx/terobjs/cupboard", new NHitBox(new Coord2d(-5.5, -5.5), new Coord2d(5.5, 5.5)));
         hitboxes.put("gfx/terobjs/cheeserack", new NHitBox(new Coord2d(-4.125, -4.125), new Coord2d(4.125, 4.125)));

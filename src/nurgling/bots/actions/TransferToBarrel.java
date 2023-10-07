@@ -62,6 +62,9 @@ public class TransferToBarrel implements Action {
                     full.add ( gob );
                     break;
                 }
+                if ( gui.getInventory().getNumberItem( items )==0 ) {
+                    break;
+                }
             }
         }
         return new Results ( Results.Types.SUCCESS );

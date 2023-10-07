@@ -1539,6 +1539,12 @@ public class NUtils {
             throws InterruptedException {
         return transferAlltoStockPile(names, -1);
     }
+    public static boolean transferAlltoStockPileTest(
+            NAlias names
+    ) throws InterruptedException {
+
+        return transferAlltoStockPile(names, -1);
+    }
     public static boolean transferAlltoStockPile(
             NAlias names,
             double q
@@ -1558,8 +1564,8 @@ public class NUtils {
                         int freeSpace = ((NISBox) sp).getFreeSpace();
                         /// Передаем предмет и дожидаемся изменения пайла
                         int count = 0;
-                        wItem.wdgmsg("transfer", wItem.sz, 2);
-                        while (freeSpace == ((NISBox) sp).getFreeSpace() && count < 50) {
+                        wItem.wdgmsg("transfer", wItem.sz, 1);
+                        while (freeSpace == ((NISBox) sp).getFreeSpace() && count < 50 ) {
                             Thread.sleep(10);
                             count += 1;
                         }
