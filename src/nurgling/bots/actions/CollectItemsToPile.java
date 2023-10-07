@@ -60,8 +60,10 @@ public class CollectItemsToPile implements Action {
         /// Выполняем процедуру подбора для каждого элемента в массиве
         while ( !Finder.findObjectsInArea ( itemsS, input ).isEmpty () ){
             GItem it = gui.getInventory ().getItem(itemsS);
-//            gui.msg("free: " + gui.getInventory().getNumberFreeCoord(it));
-            if ( (gui.getInventory ().getFreeSpace () <= 1 && !gui.getInventory ().getWItems().isEmpty ()) || gui.getInventory().getNumberFreeCoord(it)<=2) {
+//            Coord size = ((NGItem)it).sprSz();
+//            gui.msg("item: " + size);
+
+            if ( (gui.getInventory ().getFreeSpace () <= 1 && !gui.getInventory ().getWItems().isEmpty ()) || gui.getInventory().getNumberFreeCoord(it)<=1) {
                 new TransferToPile ( output, NHitBox.getByName ( items.keys.get ( 0 ) ), itemsS, itemsS ).run ( gui );
             }
             

@@ -516,45 +516,15 @@ public class NInventory extends Inventory {
     }
 
     public int getNumberFreeCoord(GItem item) throws InterruptedException {
-        waitLoading();
         if (item != null) {
-            boolean[][] inventory = new boolean[isz.x][isz.y];
-            fillInventorySpace(inventory);
-            int count = 0;
             Coord size = ((NGItem)item).sprSz();
-            if (NUtils
-                    .isIt(item, new NAlias(new ArrayList<String>(Arrays.asList("pickaxe", "bough", "leek"))))) {
-                size.y = 2;
-            }
-            if (NUtils
-                    .isIt(item, new NAlias(new ArrayList<String>(Arrays.asList("head"))))) {
-                size.x = 2;
-            }
-            for (int i = 0; i < isz.x; i++) {
-                for (int j = 0; j < isz.y; j++) {
-                    if (!inventory[i][j]) {
-                        if (i + size.x - UI.scale(1) < isz.x && j + size.y - UI.scale(1) < isz.y) {
-                            boolean isFree = true;
-                            for (int k = i; k < i + size.x; k++) {
-                                for (int n = j; n < j + size.y; n++) {
-                                    if (inventory[k][n]) {
-                                        isFree = false;
-                                        break;
-                                    }
-                                }
-                            }
-                            if (isFree) {
-                                count += 1;
-                            }
-                        }
-                    }
-                }
-            }
+            int count =getNumberFreeCoord(new Coord (size.x,size.y));
             return count;
         } else {
-            return isz.x * isz.y;
+            return getMaxSlots();
         }
     }
+
     public int getMaxSlots() {
         Coord c = new Coord();
         int mo = 0;

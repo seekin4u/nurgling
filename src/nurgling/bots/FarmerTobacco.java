@@ -13,20 +13,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class FarmerTabacco extends Bot {
+public class FarmerTobacco extends Bot {
 
 
-    public FarmerTabacco(NGameUI gameUI ) {
+    public FarmerTobacco(NGameUI gameUI ) {
         super ( gameUI );
-        win_title = "FarmerTabacco";
+        win_title = "FarmerTobacco";
         win_sz.y = 100;
         /// доливаем воды
-        
-        
-        runActions.add ( new HarvestSeedAction(new NAlias(new ArrayList<String>(Arrays.asList("pipeweed")),new ArrayList<String>(Arrays.asList("tabacco"))), AreasID.tabacco , true));
+        NAlias tobaccoSeed = new NAlias ( Arrays.asList ( "pipeweed" ),
+                Arrays.asList ( "tobacco") );
+        NAlias tobaccoCult = new NAlias ( Arrays.asList ( "tobacco-fresh" ),
+                Arrays.asList ( "pipeweed", "plants" ) );
+        runActions.add ( new HarvestSeedAction(tobaccoSeed, AreasID.tobacco , true));
         runActions.add ( new nurgling.bots.actions.EquipTSacks () );
-        runActions.add ( new CollectItemsToPile(AreasID.tabacco_leafs,AreasID.tabacco,new NAlias("tabacco")));
-        runActions.add ( new SeederSeed(new HarvestOut( new NAlias( "pipeweed" ), AreasID.tabacco )) );
+        runActions.add ( new CollectItemsToPile(AreasID.tobacco_leafs, AreasID.tobacco, tobaccoCult));
+        runActions.add ( new SeederSeed(new HarvestOut( tobaccoSeed, AreasID.tobacco )) );
         
     }
     

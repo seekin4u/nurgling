@@ -42,7 +42,7 @@ public enum AreasID {
     hide1, hide2, hide3, bunny, rabbit, bar1, bar2, horses,
     //farms
     flax, flaxFibre, hemp, hempFibre, pumpkin, carrot, carrotTuber, swill, straw, barley, wheat, millet, poppy, poppy_flower, lettuce_head, lettuce, wine, grapes,
-    pumpkin_head, turnip, turnip_tuber, r_onion, r_onion_bulb, y_onion, y_onion_bulb, leek, leek_bulb, beet, beet_bulb, beet_leafs, tabacco_leafs, tabacco, hops,
+    pumpkin_head, turnip, turnip_tuber, r_onion, r_onion_bulb, y_onion, y_onion_bulb, leek, leek_bulb, beet, beet_bulb, beet_leafs, tobacco_leafs, tobacco, hops,
     cones,
     //Hides
     hides_rabbit, hides_fox,  hides_adder, hides_bat, hides_bear, hides_raindeer, hides_beaver, hides_lynx, hides_wolverine, hides_badger, hides_grey_seal,
