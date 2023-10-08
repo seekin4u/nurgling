@@ -20,14 +20,18 @@ public class FarmerBeet extends Bot {
         super ( gameUI );
         win_title = "FarmerBeet";
         win_sz.y = 100;
-        NAlias beet = new NAlias(new ArrayList<String>(Arrays.asList("beet")),
-                                new ArrayList<String>(Arrays.asList("leaves", "plants")));
+        NAlias seed = new NAlias(new ArrayList<String>(Arrays.asList("beet")),
+                                new ArrayList<String>(Arrays.asList("leaves")));
+        NAlias cult = new NAlias(new ArrayList<String>(Arrays.asList("beet")),
+                new ArrayList<String>(Arrays.asList( "plants", "leaves")));
+        NAlias leaves = new NAlias(new ArrayList<String>(Arrays.asList("beetleaves", "leaf")),
+                new ArrayList<String>(Arrays.asList( "plants")));
 
-        runActions.add ( new HarvestDropAction(beet, AreasID.beet , true));
+        runActions.add ( new HarvestDropAction(seed, AreasID.beet , true));
         runActions.add ( new nurgling.bots.actions.EquipTSacks () );
-        runActions.add ( new CollectItemsToPile(AreasID.beet_bulb,AreasID.beet, beet));
-        runActions.add ( new CollectItemsToPile(AreasID.beet_leafs,AreasID.beet,new NAlias("beetleaves")));
-        runActions.add ( new SeederSeedPiles(new HarvestOut( new NAlias( "beet"), AreasID.beet, AreasID.beet_bulb )) );
+        runActions.add ( new CollectItemsToPile(AreasID.beet_bulb,AreasID.beet, cult));
+        runActions.add ( new CollectItemsToPile(AreasID.beet_leafs,AreasID.beet, leaves));
+        runActions.add ( new SeederSeedPiles(new HarvestOut( seed, AreasID.beet, AreasID.beet_bulb )) );
         
     }
     

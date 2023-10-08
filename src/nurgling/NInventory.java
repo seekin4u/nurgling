@@ -518,7 +518,7 @@ public class NInventory extends Inventory {
     public int getNumberFreeCoord(GItem item) throws InterruptedException {
         if (item != null) {
             Coord size = ((NGItem)item).sprSz();
-            int count =getNumberFreeCoord(new Coord (size.x,size.y));
+            int count =getNumberFreeCoord(new Coord (size.y,size.x));
             return count;
         } else {
             return getMaxSlots();

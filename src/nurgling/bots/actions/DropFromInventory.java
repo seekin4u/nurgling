@@ -30,9 +30,10 @@ public class DropFromInventory implements Action {
                 item.wdgmsg("drop", item.sz, 1);
 //                NUtils.drop(item);
             }
+            Thread.sleep(100);
         }
         /// Возвращаем true Если предметы были найдены и сброшены
-        return (gui.getInventory().getItem(_name) == null) ? new Results(Results.Types.SUCCESS) : new Results(Results.Types.DROP_FAIL);
+        return (gui.getInventory().getNumberItem(_name) == 0) ? new Results(Results.Types.SUCCESS) : new Results(Results.Types.DROP_FAIL);
     }
 
     NAlias _name;

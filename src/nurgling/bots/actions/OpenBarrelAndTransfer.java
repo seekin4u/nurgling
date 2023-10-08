@@ -30,7 +30,7 @@ public class OpenBarrelAndTransfer implements Action {
                             }
                             barrelCont+=NUtils.getAmount(item);
                             NUtils.activateItem(barrel, true);
-                            NUtils.waitEvent(()->gui.hand.isEmpty(),200);
+                            NUtils.waitEvent(()->gui.hand.isEmpty(),500);
                         } else {
                             return new Results(Results.Types.SUCCESS);
                         }

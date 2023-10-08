@@ -16,7 +16,6 @@ public class HarvestDropAction implements Action {
     public Results run ( NGameUI gui )
             throws InterruptedException {
         NArea input = Finder.findNearestMark ( harvest_area );
-
         new DropFromInventory(crop).run(gui);
 
         /// Выкапываем и роняем урожай. Рассчитано на плоды.

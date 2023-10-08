@@ -85,12 +85,13 @@ public class TransferToPile implements Action {
                 if (gui.getInventory().getWItems(items).isEmpty()){
                     return new Results(Results.Types.FILL_FAIL);
                 }
+                Thread.sleep(100);
                 NUtils.takeItemToHand(itemsToPile.get(0));
-                NUtils.waitEvent(() -> !NUtils.getGameUI().hand.isEmpty(), 100);
+                NUtils.waitEvent(() -> !gui.hand.isEmpty(), 500);
                 NUtils.activateItemToPile(target, true);
-                NUtils.waitEvent(() -> NUtils.getGameUI().hand.isEmpty(), 100);
+                NUtils.waitEvent(() -> gui.hand.isEmpty(), 500);
 //                NUtils.transferAlltoStockPile(items, q);
-                if (!gui.getInventory().getWItems(items, q).isEmpty()) {
+                if (!gui.getInventory().getWItems(items).isEmpty()) {
                     run(gui);
                 }
             }

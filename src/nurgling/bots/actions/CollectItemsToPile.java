@@ -63,13 +63,14 @@ public class CollectItemsToPile implements Action {
 //            Coord size = ((NGItem)it).sprSz();
 //            gui.msg("item: " + size);
 
-            if ( (gui.getInventory ().getFreeSpace () <= 1 && !gui.getInventory ().getWItems().isEmpty ()) || gui.getInventory().getNumberFreeCoord(it)<=1) {
+            if (( (gui.getInventory ().getFreeSpace () <= 1 && !gui.getInventory ().getWItems().isEmpty ()) )|| gui.getInventory().getNumberFreeCoord(it)<=1) {
                 new TransferToPile ( output, NHitBox.getByName ( items.keys.get ( 0 ) ), itemsS, itemsS ).run ( gui );
             }
             
             Gob item = Finder.findObjectInArea ( collected_items, 2000, input );
             if(item == null)
                 break;
+            gui.msg("Растояние: " + MCache.tilesz2.x);
             /// Если предмет далеко, идем к нему с помощью ПФ
             if(item.rc.dist(gui.map.player().rc)> MCache.tilesz2.x) {
                 PathFinder pf = new PathFinder(gui, item);

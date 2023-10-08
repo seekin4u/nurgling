@@ -27,9 +27,9 @@ public class NomadTraveller implements Action {
 ////        gui.msg("res" + barrel.getattr(GobIcon.class).res.get().toString());
 //        gui.mapfile.markobj("wheelbarrow","barrel", barrel.rc);
 ///////
-        gui.getInventory ().printMatrixToChat(gui, gui.getInventory ().containerMatrix());
+//        gui.getInventory ().printMatrixToChat(gui, gui.getInventory ().containerMatrix());
 //        gui.msg("max" +);
-//        gui.msg("3x3 = " + gui.getInventory ().itemCountAtFreeSpace( new Coord (3,3)));
+        gui.msg("2x2 = " + gui.getInventory ().getNumberFreeCoord( new Coord (2,2)));
         URL url = NUtils.class.getProtectionDomain ().getCodeSource ().getLocation ();
         if(url != null) {
             try {
