@@ -49,7 +49,7 @@ public class TransferToPile implements Action {
                         pf.run();
 
                         if (!gui.hand.isEmpty()) {
-                            NUtils.activateItemToPile(gob, true);
+                            NUtils.activateItemToPile(gob, fast);
                             NUtils.waitEvent(() -> NUtils.getGameUI().hand.isEmpty(), 100);
                             if (NOCache.getgob(gob).getModelAttribute() == 31)
                                 continue;
@@ -110,7 +110,19 @@ public class TransferToPile implements Action {
         this.name = name;
         this.items = items;
     }
-    
+    public TransferToPile(
+            AreasID id,
+            NHitBox hitBox,
+            NAlias name,
+            NAlias items,
+            boolean fast
+    ) {
+        this.id = id;
+        this.hitBox = hitBox;
+        this.name = name;
+        this.items = items;
+        this.fast = fast;
+    }
     public TransferToPile(
             NArea area,
             NHitBox hitBox,
@@ -136,7 +148,21 @@ public class TransferToPile implements Action {
         this.items = items;
         this.q = q;
     }
-
+    public TransferToPile(
+            AreasID id,
+            NHitBox hitBox,
+            NAlias name,
+            NAlias items,
+            double q,
+            boolean fast
+    ) {
+        this.id = id;
+        this.hitBox = hitBox;
+        this.name = name;
+        this.items = items;
+        this.q = q;
+        this.fast = fast;
+    }
     public TransferToPile(
             NArea area,
             NHitBox hitBox,
@@ -150,7 +176,21 @@ public class TransferToPile implements Action {
         this.items = items;
         this.q = q;
     }
-
+    public TransferToPile(
+            NArea area,
+            NHitBox hitBox,
+            NAlias name,
+            NAlias items,
+            double q,
+            boolean fast
+    ) {
+        this.area =area;
+        this.hitBox = hitBox;
+        this.name = name;
+        this.items = items;
+        this.q = q;
+        this.fast = fast;
+    }
     AreasID id;
     NHitBox hitBox;
     NAlias name;
@@ -158,4 +198,5 @@ public class TransferToPile implements Action {
     NArea area = null;
 
     private double q =-1;
+    boolean fast = false;
 }

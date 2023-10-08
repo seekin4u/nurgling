@@ -18,6 +18,7 @@ public class FarmerTurnipSeed extends Bot {
         super ( gameUI );
         win_title = "FarmerTurnip";
         win_sz.y = 100;
+
         /// доливаем воды
         
         
@@ -39,5 +40,6 @@ public class FarmerTurnipSeed extends Bot {
     }
     
     HarvestOut seed;
+    HarvestOut q_harvest;
     ArrayList<HarvestOut> harvestOuts = new ArrayList<> ();
 }

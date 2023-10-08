@@ -93,6 +93,8 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
                     "bots/icons/friedfish" ) );
             layouts.get ( 2 ).add ( new NButton ( "Brick", new BrickMaker ( gui ),
                     "bots/icons/brick" ) );
+            layouts.get ( 2 ).add ( new NButton ( "AshesMaker", new AshesMaker ( gui ),
+                    "bots/icons/brick" ) );
             layouts.get ( 2 ).add ( new NButton ( "DryFish", new FishDryer ( gui ),
                     "bots/icons/driedfish" ) );
             layouts.get ( 2 ).add ( new NButton ( "BranchAsh", new BranchAsh( gui ),

@@ -70,9 +70,9 @@ public class CollectItemsToPile implements Action {
             Gob item = Finder.findObjectInArea ( collected_items, 2000, input );
             if(item == null)
                 break;
-            gui.msg("Растояние: " + MCache.tilesz2.x);
+            gui.msg("Растояние: " + MCache.tilesz2.x +" дистанция: " +item.rc.dist(gui.map.player().rc));
             /// Если предмет далеко, идем к нему с помощью ПФ
-            if(item.rc.dist(gui.map.player().rc)> MCache.tilesz2.x) {
+            if(item.rc.dist(gui.map.player().rc)> 22) {
                 PathFinder pf = new PathFinder(gui, item);
                 pf.run();
             }

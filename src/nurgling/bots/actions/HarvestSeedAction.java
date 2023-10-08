@@ -22,7 +22,7 @@ public class HarvestSeedAction implements Action {
 
         ArrayList<Gob> plants = Finder.findObjectsInArea ( crop, input );
         Gob barrel = Finder.findObjectInArea ( new NAlias("barrel"),2000,input );
-//        new OpenBarrelAndTransfer ( 9000,  crop, harvest_area, barrel ).run ( gui );
+        new OpenBarrelAndTransfer ( 9000,  crop, harvest_area, barrel ).run ( gui );
 //        if ( !gui.getInventory ().getWItems( crop ).isEmpty () ) {
 //            new TransferToTrough ( crop ).run ( gui );
 //        }

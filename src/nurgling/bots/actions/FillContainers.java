@@ -46,9 +46,9 @@ public class FillContainers implements Action
 
         if(allPiles()) {
             if (outArea != null ) {
-                new TransferToPile(outArea,NHitBox._default,new NAlias("stockpile"), items,q).run(gui);
+                new TransferToPile(outArea,NHitBox._default,new NAlias("stockpile"), items,q, fast).run(gui);
             }else if (outId != null) {
-                new TransferToPile(outId,NHitBox._default,new NAlias("stockpile"), items,q).run(gui);
+                new TransferToPile(outId,NHitBox._default,new NAlias("stockpile"), items,q, fast).run(gui);
             }
         }
         else {
@@ -69,6 +69,10 @@ public class FillContainers implements Action
                         new PathFinder(gui, outContainer.gob, true).run();
                         if (new OpenTargetContainer(outContainer.gob, NUtils.getContainerType(outContainer.gob).cap).run(gui).type != Results.Types.SUCCESS) {
                             return new Results(Results.Types.OPEN_FAIL);
+                        }
+//                        gui.msg("есть место " + gui.getInventory ( NUtils.getContainerType(outContainer.gob).cap ).getNumberFreeCoord ( gui.getInventory().getItem(items) ));
+                        if ( gui.getInventory ( NUtils.getContainerType(outContainer.gob).cap ).getNumberFreeCoord ( gui.getInventory().getItem(items) )==0 ) {
+                            outContainer.isFull = true;
                         }
                         if (new TransferToContainer(items, NUtils.getContainerType(outContainer.gob).cap, needed, q).run(gui).type == Results.Types.FULL) {
                             outContainer.isFull = true;
@@ -130,7 +134,12 @@ public class FillContainers implements Action
         this.q = q;
 
     }
+    public FillContainers(NAlias items, Object o, ArrayList<OutContainer> outContainers, double q, boolean fast){
+        this(items,o,outContainers);
+        this.q = q;
+        this.fast = fast;
 
+    }
     public FillContainers(NAlias items, Object o, ArrayList<OutContainer> outContainers, TakeMaxFromContainers takeMaxFromContainers) {
         this.items = items;
         if (o instanceof NArea) {
@@ -154,4 +163,5 @@ public class FillContainers implements Action
 
     double q = -1;
     TakeMaxFromContainers takeMaxFromContainers = null;
+    boolean fast = false;
 }
