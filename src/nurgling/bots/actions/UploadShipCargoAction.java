@@ -24,11 +24,12 @@ public class UploadShipCargoAction implements Action {
         Coord2d ship = shipGob.rc;
 //        int th = NUtils.checkName("leaf", item_name) ? 3 : 2;
         gui.msg("hitB x: "+ (shipGob.getHitBox().end.x -shipGob.getHitBox().begin.x) + "hitB x: "+(shipGob.getHitBox().end.y -shipGob.getHitBox().begin.y));
-        ArrayList<Gob> logs = Finder.findObjectsInArea(new NAlias("barrel"), tree);
-        for(Gob log : logs){
-            new LiftObject(log).run(gui);
+
+        ArrayList<Gob> gobs = Finder.findObjectsInArea(new NAlias("barrel"), tree);
+        for(Gob gob : gobs){
+            new LiftObject(gob).run(gui);
             PathFinder pf = new PathFinder( gui, shipGob);
-            pf.ignoreGob ( log );
+            pf.ignoreGob ( gob );
 //            pf.setPhantom(ship, NHitBox.get("snekkja"));
             pf.setHardMode ( true);
             pf.run ();

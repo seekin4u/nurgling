@@ -15,7 +15,7 @@ public class NomadFinderBot extends Bot {
         super ( gameUI );
         win_title = "GobFinder";
         win_sz.y = 100;
-        runActions.add ( new NomadFinder(  ) );
+        runActions.add ( new NomadFinder("./path_test_ocra.dat"  ) );
         //runActions.add ( new MonitorGob(  ) );
         runActions.add ( new Returner( true ) );
 

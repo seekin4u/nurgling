@@ -26,6 +26,7 @@ public class LightGobTorch implements Action {
         Gob brazier = Finder.findObject ( new NAlias ( "brazier" ));
         new PathFinder(gui, brazier).run();
         NUtils.freeHands (new NAlias("bucket"));
+        Thread.sleep(100);
         WItem wbelt = Finder.findDressedItem ( new NAlias ("belt") );
         GItem item = null;
         if(wbelt!=null) {

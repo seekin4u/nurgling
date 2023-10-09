@@ -33,9 +33,9 @@ public class ButchingShip implements Action {
         while (NUtils.takeGobFromCargo(gui, ship, kritter)){
             Gob lifted = Finder.findLifted();
             //from res take name of gob
-            String namelifted = lifted.getResName().substring(lifted.getResName().lastIndexOf('/') + 1);
-            gui.msg(namelifted);
-            new PlaceLifted(placeTile, NHitBox.get(namelifted), kritter).run(gui);
+//            String namelifted = lifted.getResName().substring(lifted.getResName().lastIndexOf('/') + 1);
+//            gui.msg(lifted.getName());
+            new PlaceLifted(placeTile, NHitBox.get(lifted.getName()), kritter).run(gui);
             ArrayList<Gob> gobs = Finder.findObjectsInArea(new NAlias("kritter"),
                     Finder.findNearestMark(AreasID.kritter));
 

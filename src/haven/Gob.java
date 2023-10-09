@@ -949,7 +949,11 @@ public class Gob extends NGob implements RenderTree.Node, Sprite.Owner, Skeleton
 			return getres().name;
 		return null;
 	}
-
+	public String getName(){
+		if(getres()!=null)
+			return getres().name.substring(getres().name.lastIndexOf('/') + 1);
+		return null;
+	}
 
 	public void removeol(Class<? extends Sprite> spr ) {
 		synchronized (ols){
