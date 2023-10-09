@@ -1680,7 +1680,7 @@ public class NUtils {
                     if (NUtils.checkName(widgetS.toString(), "Img")) {
                         if (checkName(((Img)widgetS).img.toString(), findName)){
                             widgetS.wdgmsg("click", Coord.z, 1, 0);
-                            waitEvent(()->!NUtils.isPose(gui.map.player(),new NAlias("banzai")),1000);
+                            waitEvent(()->NUtils.isPose(gui.map.player(),new NAlias("banzai")),1000);
                             return true;
                         }
                         gui.msg("name: " + ((Img)widgetS).img.toString());
