@@ -23,7 +23,7 @@ public class LightFire implements Action {
             pathFinder.ignoreGob ( candelabrum );
             pathFinder.setHardMode ( true );
             pathFinder.run ();
-            NUtils.activate ( fired_gob );
+            NUtils.activateItem ( fired_gob );
             int counter = 0;
             while ( (  NUtils.getProg() >= 0 || counter < 20) ) {
                 counter++;

@@ -10,6 +10,7 @@ import nurgling.bots.tools.HarvestOut;
 import nurgling.tools.AreasID;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class FarmerRedOnion extends Bot {
@@ -19,11 +20,15 @@ public class FarmerRedOnion extends Bot {
         super ( gameUI );
         win_title = "FarmerRedOnion";
         win_sz.y = 100;
+        NAlias seed = new NAlias(new ArrayList<String>(Arrays.asList("redonion")),
+                new ArrayList<String>(Arrays.asList("leaves")));
+        NAlias cult = new NAlias(new ArrayList<String>(Arrays.asList("onion", "redonion")),
+                new ArrayList<String>(Arrays.asList( "plants")));
 
-        runActions.add ( new HarvestDropAction(new NAlias("redonion"), AreasID.r_onion , true));
+        runActions.add ( new HarvestDropAction(seed, AreasID.r_onion , true));
         runActions.add ( new nurgling.bots.actions.EquipTSacks () );
-        runActions.add ( new CollectItemsToPile(AreasID.r_onion_bulb,AreasID.r_onion,new NAlias("redonion")));
-        runActions.add ( new SeederSeedPiles(new HarvestOut( new NAlias( "redonion"), AreasID.r_onion, AreasID.r_onion_bulb )) );
+        runActions.add ( new CollectItemsToPile(AreasID.r_onion_bulb,AreasID.r_onion,cult));
+        runActions.add ( new SeederSeedPiles(new HarvestOut( seed, AreasID.r_onion, AreasID.r_onion_bulb )) );
         
     }
     

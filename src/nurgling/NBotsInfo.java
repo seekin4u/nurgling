@@ -94,7 +94,7 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
             layouts.get ( 2 ).add ( new NButton ( "Brick", new BrickMaker ( gui ),
                     "bots/icons/brick" ) );
             layouts.get ( 2 ).add ( new NButton ( "AshesMaker", new AshesMaker ( gui ),
-                    "bots/icons/brick" ) );
+                    "bots/icons/ashMaker" ) );
             layouts.get ( 2 ).add ( new NButton ( "DryFish", new FishDryer ( gui ),
                     "bots/icons/driedfish" ) );
             layouts.get ( 2 ).add ( new NButton ( "BranchAsh", new BranchAsh( gui ),
@@ -234,11 +234,11 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
             layouts.get ( 5 ).add ( new NButton ( "Lettuce", new FarmerLettuce (  gui ),
                     "bots/icons/lettuce" ) );
             layouts.get ( 5 ).add ( new NButton ( "Beet", new FarmerBeet (  gui ),
-                    "bots/icons/lettuce" ) );
+                    "bots/icons/beet" ) );
             layouts.get ( 5 ).add ( new NButton ( "Grape", new FarmerGrape (  gui ),
-                    "bots/icons/flax" ) );
+                    "bots/icons/grape" ) );
             layouts.get ( 5 ).add ( new NButton ( "Hope", new FarmerHope (  gui ),
-                    "bots/icons/flax" ) );
+                    "bots/icons/hop" ) );
             layouts.get ( 5 ).add ( new NButton ( "Grape", new FarmerGrape (  gui ),
                     "bots/icons/flax" ) );
 //            layouts.get ( 5 ).add ( new NButton ( "FieldsBarleyFarmer", new FarmerBarleyFields ( gui ),
