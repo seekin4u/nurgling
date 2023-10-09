@@ -34,7 +34,7 @@ public class ButchingShip implements Action {
             Gob lifted = Finder.findLifted();
             //from res take name of gob
             //String nameShip = ship.getResName().substring(ship.getResName().lastIndexOf('/') + 1);
-            new PlaceLifted(placeTile, NHitBox.get(lifted.getResName()), new NAlias(lifted.getResName())).run(gui);
+            new PlaceLifted(placeTile, NHitBox.get("moose"), new NAlias(lifted.getResName())).run(gui);
             ArrayList<Gob> gobs = Finder.findObjectsInArea(new NAlias("kritter"),
                     Finder.findNearestMark(AreasID.kritter));
 

@@ -20,7 +20,7 @@ public class FarmerRedOnion extends Bot {
         super ( gameUI );
         win_title = "FarmerRedOnion";
         win_sz.y = 100;
-        NAlias seed = new NAlias(new ArrayList<String>(Arrays.asList("redonion")),
+        NAlias seed = new NAlias(new ArrayList<String>(Arrays.asList("onion", "redonion")),
                 new ArrayList<String>(Arrays.asList("leaves")));
         NAlias cult = new NAlias(new ArrayList<String>(Arrays.asList("onion", "redonion")),
                 new ArrayList<String>(Arrays.asList( "plants")));
