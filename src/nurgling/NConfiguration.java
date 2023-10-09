@@ -91,6 +91,8 @@ public class NConfiguration {
 
     public boolean nextshowCSprite = false;
     public boolean minesup = false;
+    public boolean alarmWhite = false;
+    public boolean alarmRed = false;
 
     public static void saveButtons(String name, NGameUI.NButtonBeltSlot[] custom) {
         String key = NUtils.getUI().sessInfo.username +"/" + NUtils.getUI().sessInfo.characterInfo.chrid;
@@ -729,21 +731,7 @@ public class NConfiguration {
         }
         obj.put("button_keys" ,keys);
 
-        JSONArray ingredients = new JSONArray();
-        {
-            for (String ingredientKey : IngredientSettings.data.keySet()) {
-                JSONObject jingredientKey = new JSONObject();
-                jingredientKey.put("name", ingredientKey);
-                jingredientKey.put("barter_in", IngredientSettings.data.get(ingredientKey).barter_in.toString());
-                jingredientKey.put("barter_out", IngredientSettings.data.get(ingredientKey).barter_out.toString());
-                jingredientKey.put("area_in", IngredientSettings.data.get(ingredientKey).area_in.toString());
-                jingredientKey.put("area_out", IngredientSettings.data.get(ingredientKey).area_out.toString());
-                jingredientKey.put("th",IngredientSettings.data.get(ingredientKey).th);
-                jingredientKey.put("isGroup",IngredientSettings.data.get(ingredientKey).isGroup);
-                ingredients.add(jingredientKey);
-            }
-        }
-        obj.put("ingredients" ,ingredients);
+        obj.put("ingredients" ,getIngredientsArray());
         obj.put("isMinerCredo" ,isMinerCredo);
         obj.put("lockStudy" ,lockStudy);
         obj.put("alarmGreyseal" ,alarmGreyseal);
@@ -895,6 +883,8 @@ public class NConfiguration {
         obj.put ( "showCropStage", showCropStage);
         obj.put ( "autoPicking", autoPicking);
         obj.put ( "nightVision", nightVision);
+        obj.put ( "alarmWhite", alarmWhite);
+        obj.put ( "alarmRed", alarmRed);
         obj.put ( "showAreas", showAreas);
         obj.put ( "playerSpeed", playerSpeed);
         obj.put ( "horseSpeed", horseSpeed);
@@ -922,6 +912,24 @@ public class NConfiguration {
         }  catch (IOException e) {
             System.out.println("No config. config.nurgling.json not found");
         }
+    }
+
+    public JSONArray getIngredientsArray() {
+        JSONArray ingredients = new JSONArray();
+        {
+            for (String ingredientKey : IngredientSettings.data.keySet()) {
+                JSONObject jingredientKey = new JSONObject();
+                jingredientKey.put("name", ingredientKey);
+                jingredientKey.put("barter_in", IngredientSettings.data.get(ingredientKey).barter_in.toString());
+                jingredientKey.put("barter_out", IngredientSettings.data.get(ingredientKey).barter_out.toString());
+                jingredientKey.put("area_in", IngredientSettings.data.get(ingredientKey).area_in.toString());
+                jingredientKey.put("area_out", IngredientSettings.data.get(ingredientKey).area_out.toString());
+                jingredientKey.put("th",IngredientSettings.data.get(ingredientKey).th);
+                jingredientKey.put("isGroup",IngredientSettings.data.get(ingredientKey).isGroup);
+                ingredients.add(jingredientKey);
+            }
+        }
+        return ingredients;
     }
 
     public static void initDefault () {
@@ -1091,19 +1099,7 @@ public class NConfiguration {
                 }
             }
 
-            JSONArray jingredients = ( JSONArray ) jsonObject.get ( "ingredients" );
-            if(jingredients!=null) {
-                Iterator<JSONObject> jingredient = jingredients.iterator();
-                while (jingredient.hasNext()) {
-                    JSONObject ingredient = jingredient.next();
-                    String ingName = ingredient.get("name").toString();
-                    IngredientSettings.data.put(ingName,
-                            new Ingredient(AreasID.valueOf(ingredient.get("area_out").toString()),
-                                    AreasID.valueOf(ingredient.get("barter_out").toString()),
-                                    AreasID.valueOf(ingredient.get("area_in").toString()),
-                                    AreasID.valueOf(ingredient.get("barter_in").toString()), new NAlias(ingName), ((ingredient.containsKey("th")) ? Double.parseDouble(ingredient.get("th").toString()) : 0.), (ingredient.containsKey("isGroup") && (boolean) (ingredient.get("isGroup")))));
-                }
-            }
+            parseIngredients(( JSONArray ) jsonObject.get ( "ingredients" ));
             JSONArray jkeys =  ( JSONArray ) jsonObject.get ( "button_keys" );
             if(jkeys!=null) {
                 Iterator<JSONObject> jkey = jkeys.iterator();
@@ -1314,6 +1310,10 @@ public class NConfiguration {
                 autoPicking = ( Boolean ) jsonObject.get ( "autoPicking" );
             if(jsonObject.get ( "nightVision" )!=null)
                 nightVision = ( Boolean ) jsonObject.get ( "nightVision" );
+            if(jsonObject.get ( "alarmWhite" )!=null)
+                alarmWhite = ( Boolean ) jsonObject.get ( "alarmWhite" );
+            if(jsonObject.get ( "alarmRed" )!=null)
+                alarmRed = ( Boolean ) jsonObject.get ( "alarmRed" );
             if(jsonObject.get ( "showAreas" )!=null)
                 showAreas = ( Boolean ) jsonObject.get ( "showAreas" );
             if(jsonObject.get ( "isEye" )!=null)
@@ -1345,6 +1345,21 @@ public class NConfiguration {
         }
         /// TODO light
 //        Light.isEnable = Configuration.getInstance().nightVision;
+    }
+
+    public void parseIngredients( JSONArray jingredients) {
+        if(jingredients!=null) {
+            Iterator<JSONObject> jingredient = jingredients.iterator();
+            while (jingredient.hasNext()) {
+                JSONObject ingredient = jingredient.next();
+                String ingName = ingredient.get("name").toString();
+                IngredientSettings.data.put(ingName,
+                        new Ingredient(AreasID.valueOf(ingredient.get("area_out").toString()),
+                                AreasID.valueOf(ingredient.get("barter_out").toString()),
+                                AreasID.valueOf(ingredient.get("area_in").toString()),
+                                AreasID.valueOf(ingredient.get("barter_in").toString()), new NAlias(ingName), ((ingredient.containsKey("th")) ? Double.parseDouble(ingredient.get("th").toString()) : 0.), (ingredient.containsKey("isGroup") && (boolean) (ingredient.get("isGroup")))));
+            }
+        }
     }
 
     private void read_drink_data() {

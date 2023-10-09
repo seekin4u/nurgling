@@ -29,10 +29,20 @@ package haven;
 import haven.render.Lighting;
 import nurgling.*;
 import nurgling.bots.settings.*;
+import nurgling.json.JSONArray;
+import nurgling.json.JSONObject;
+import nurgling.json.parser.JSONParser;
+import nurgling.json.parser.ParseException;
 import nurgling.tools.AreasID;
 
-import haven.render.*;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.KeyEvent;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -1389,7 +1399,7 @@ public class OptWnd extends Window {
 						a = val;
 					}
 				}, prev.pos("bl").adds(0, 5));
-				add(new CheckBox("Ring") {
+				Widget white = add(new CheckBox("Ring") {
 					{
 						a = NConfiguration.getInstance().players.get("white").ring;
 					}
@@ -1399,6 +1409,16 @@ public class OptWnd extends Window {
 						a = val;
 					}
 				}, prev.pos("ur").adds(5, 0));
+				add(new CheckBox("Alarm") {
+					{
+						a = NConfiguration.getInstance().alarmWhite;
+					}
+
+					public void set(boolean val) {
+						NConfiguration.getInstance().alarmWhite = val;
+						a = val;
+					}
+				}, white.pos("ur").adds(5, 0));
 				prev = add(new Label("Red:"), prev.pos("bl").adds(0, 5));
 				prev = add(new CheckBox("Arrow") {
 					{
@@ -1454,6 +1474,16 @@ public class OptWnd extends Window {
 						a = val;
 					}
 				}, right.pos("ur").adds(5, 0));
+				add(new CheckBox("Alarm") {
+					{
+						a = NConfiguration.getInstance().alarmRed;
+					}
+
+					public void set(boolean val) {
+						NConfiguration.getInstance().alarmRed = val;
+						a = val;
+					}
+				}, right.pos("ur").adds(5, 0));
 				ring_red_mark = right;
 
 				pack();
@@ -1483,7 +1513,7 @@ public class OptWnd extends Window {
 			public QoL() {
 
 				prev = add(new Label("Other:"), new Coord(0, 0));
-				prev = add(new CheckBox("Show crop stage:") {
+				prev = add(new CheckBox("Show crop stages") {
 					{
 						a = NConfiguration.getInstance().showCropStage;
 					}
@@ -1493,7 +1523,7 @@ public class OptWnd extends Window {
 						a = val;
 					}
 				}, prev.pos("bl").adds(0, 5));
-				prev = add(new CheckBox("Night vision:") {
+				prev = add(new CheckBox("Night vision") {
 					{
 						a = NConfiguration.getInstance().nightVision;
 					}
@@ -1503,7 +1533,7 @@ public class OptWnd extends Window {
 						a = val;
 					}
 				}, prev.pos("bl").adds(0, 5));
-				prev = add(new CheckBox("PF Bounding Boxes:") {
+				prev = add(new CheckBox("PF Bounding Boxes") {
 					{
 						a = NConfiguration.getInstance().enablePfBoundingBoxes;
 					}
@@ -1515,7 +1545,7 @@ public class OptWnd extends Window {
 					}
 				}, prev.pos("bl").adds(0, 5));
 
-				prev = add(new CheckBox("Bounding Boxes:") {
+				prev = add(new CheckBox("Bounding Boxes") {
 					{
 						a = NConfiguration.getInstance().showBB;
 					}
@@ -1527,7 +1557,7 @@ public class OptWnd extends Window {
 					}
 				}, prev.pos("bl").adds(0, 5));
 
-				prev = add(new CheckBox("Flat surface (need reboot):") {
+				prev = add(new CheckBox("Flat surface (need reboot)") {
 					{
 						a = NConfiguration.getInstance().nextflatsurface;
 					}
@@ -1538,7 +1568,7 @@ public class OptWnd extends Window {
 					}
 
 				}, prev.pos("bl").adds(0, 5));
-				prev = add(new CheckBox("Show decorative objects(need reboot):") {
+				prev = add(new CheckBox("Show decorative objects(need reboot)") {
 					{
 						a = NConfiguration.getInstance().nextshowCSprite;
 					}
@@ -1549,17 +1579,17 @@ public class OptWnd extends Window {
 					}
 
 				}, prev.pos("bl").adds(0, 5));
-//				prev = add(new CheckBox("Collect Food Info:") {
-//					{
-//						a = NConfiguration.getInstance().collectFoodInfo;
-//					}
-//
-//					public void set(boolean val) {
-//						NConfiguration.getInstance().collectFoodInfo = val;
-//						a = val;
-//					}
-//				}, prev.pos("bl").adds(0, 5));
-				prev = add(new CheckBox("Bots zones:") {
+				prev = add(new CheckBox("Collect Food Info") {
+					{
+						a = NConfiguration.getInstance().collectFoodInfo;
+					}
+
+					public void set(boolean val) {
+						NConfiguration.getInstance().collectFoodInfo = val;
+						a = val;
+					}
+				}, prev.pos("bl").adds(0, 5));
+				prev = add(new CheckBox("Bots zones") {
 					{
 						a = NConfiguration.getInstance().showAreas;
 					}
@@ -1797,6 +1827,53 @@ public class OptWnd extends Window {
 
 				pack();
 			}
+
+		}
+
+		public void importdata() {
+			java.awt.EventQueue.invokeLater(() -> {
+				JFileChooser fc = new JFileChooser();
+				fc.setFileFilter(new FileNameExtensionFilter("Exported Nurgling data", "ndata"));
+				if(fc.showOpenDialog(null) != JFileChooser.APPROVE_OPTION)
+					return;
+				Path path = fc.getSelectedFile().toPath();
+				if(path.getFileName().toString().indexOf('.') < 0)
+					path = path.resolveSibling(path.getFileName() + ".ndata");
+				BufferedReader reader = null;
+				try {
+					reader = new BufferedReader(
+							new InputStreamReader(Files.newInputStream(path), "UTF-8" ) );
+					JSONParser parser = new JSONParser();
+					JSONObject main = ( JSONObject ) parser.parse ( reader );
+					AreasID.parseJson((JSONObject) main.get("areas"));
+					NConfiguration.getInstance().parseIngredients((JSONArray) main.get("ingredients"));
+					NConfiguration.getInstance().write();
+					AreasID.write();
+				} catch (IOException | ParseException ex) {
+					System.out.println("Incorrect import file");
+				}
+			});
+		}
+
+		public void exportdata() {
+			java.awt.EventQueue.invokeLater(() -> {
+				JFileChooser fc = new JFileChooser();
+				fc.setFileFilter(new FileNameExtensionFilter("Import Nurgling data", "ndata"));
+				if(fc.showSaveDialog(null) != JFileChooser.APPROVE_OPTION)
+					return;
+				Path path = fc.getSelectedFile().toPath();
+				if(path.getFileName().toString().indexOf('.') < 0)
+					path = path.resolveSibling(path.getFileName() + ".ndata");
+				try (OutputStreamWriter file = new OutputStreamWriter(Files.newOutputStream(path), StandardCharsets.UTF_8)) {
+					JSONObject obj = new JSONObject();
+					obj.put("areas", AreasID.constructJson());
+					obj.put("ingredients", NConfiguration.getInstance().getIngredientsArray());
+					file.write ( obj.toJSONString () );
+				}
+				catch ( IOException e ) {
+					e.printStackTrace ();
+				}
+			});
 		}
 
 		class BotSettings extends Widget {
