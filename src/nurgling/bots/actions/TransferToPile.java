@@ -35,6 +35,9 @@ public class TransferToPile implements Action {
         }else if(NUtils.checkName(name.getDefault(),new NAlias("leaf")))
         {
             name = new NAlias("gfx/terobjs/stockpile-leaf");
+        }else if(NUtils.checkName(name.getDefault(),new NAlias("flesh")))
+        {
+            name = new NAlias("gfx/terobjs/stockpile-trash");
         }
         if (!gui.getInventory().getWItems(items).isEmpty() ) {
             if (area == null)
@@ -134,7 +137,19 @@ public class TransferToPile implements Action {
         this.name = name;
         this.items = items;
     }
-
+    public TransferToPile(
+            NArea area,
+            NHitBox hitBox,
+            NAlias name,
+            NAlias items,
+            boolean fast
+    ) {
+        this.area =area;
+        this.hitBox = hitBox;
+        this.name = name;
+        this.items = items;
+        this.fast = fast;
+    }
     public TransferToPile(
             AreasID id,
             NHitBox hitBox,

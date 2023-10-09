@@ -1,13 +1,17 @@
 package nurgling.bots;
 
 
+import haven.Gob;
+import haven.Resource;
 import nurgling.NAlias;
 import nurgling.NGameUI;
 import nurgling.bots.actions.CollectItemsToPile;
+import nurgling.bots.actions.EquipTSacks;
 import nurgling.bots.actions.HarvestSeedAction;
 import nurgling.bots.actions.SeederSeed;
 import nurgling.bots.tools.HarvestOut;
 import nurgling.tools.AreasID;
+import nurgling.tools.Finder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,9 +31,8 @@ public class FarmerPoppy extends Bot {
         AreasID stockpile = AreasID.poppy_flower;
         String cult = "flower";
 
-        
         runActions.add ( new HarvestSeedAction(new NAlias(new ArrayList<String>(Arrays.asList(seed)),new ArrayList<String>(Arrays.asList(cult))), field , true));
-        runActions.add ( new nurgling.bots.actions.EquipTSacks () );
+        runActions.add ( new EquipTSacks() );
         runActions.add ( new CollectItemsToPile(stockpile, field, new NAlias(cult)));
         runActions.add ( new SeederSeed(new HarvestOut( new NAlias( seed ), field )) );
         

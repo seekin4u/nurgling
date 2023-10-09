@@ -113,6 +113,7 @@ public class SeederSeed implements Action {
 
         if (!gui.hand.isEmpty())
             NUtils.transferToInventory();
+        gui.msg("Тут");
         new TransferToBarrel(in.outArea, in.items).run(gui);
         return new Results(Results.Types.SUCCESS);
     }

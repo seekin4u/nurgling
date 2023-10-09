@@ -2,6 +2,7 @@ package nurgling.bots.actions;
 
 import haven.Gob;
 
+import haven.Resource;
 import nurgling.NAlias;
 import nurgling.NGameUI;
 import nurgling.NUtils;

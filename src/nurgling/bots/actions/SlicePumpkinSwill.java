@@ -39,8 +39,8 @@ public class SlicePumpkinSwill implements Action{
                 if (swill) {
                     new TransferToTrough ( new NAlias("pumpkinflesh", "Pumpkin Flesh") ).run ( gui );
                 }else {
-                    NAlias itemsS = new NAlias("pumpkinflesh", "Pumpkin Flesh");
-                    new TransferToPile (Finder.findNearestMark(AreasID.pumpkin_head), NHitBox.getByName ( itemsS.keys.get ( 0 ) ), itemsS, itemsS ).run ( gui );
+                    NAlias itemsS = new NAlias("flesh", "pumpkinflesh", "Pumpkin Flesh", "trash");
+                    new TransferToPile (Finder.findNearestMark(AreasID.pumpkin_head), NHitBox.getByName ( itemsS.keys.get ( 0 ) ), itemsS, itemsS , true).run ( gui );
                 }
 
 

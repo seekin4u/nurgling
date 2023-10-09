@@ -35,7 +35,7 @@ public class SeederSeedPiles implements Action {
         if (gui.getInventory().getWItems(in.items).size() < 2) {
             if (!gui.hand.isEmpty())
                 NUtils.transferToInventory();
-            while(!(gui.getInventory().getFreeSpace() <= 2)){
+            while(!(gui.getInventory().getNumberFreeCoord(gui.getInventory().getItem(in.items)) <= 1)){
                 new TakeMaxFromPile(in.fromArea, true).run(gui);
                 NUtils.waitEvent(() -> !gui.getInventory().getWItems(in.items).isEmpty(), 50);
             }

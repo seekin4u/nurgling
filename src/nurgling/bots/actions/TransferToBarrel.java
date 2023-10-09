@@ -3,6 +3,7 @@ package nurgling.bots.actions;
 import haven.GItem;
 import haven.Gob;
 
+import haven.Resource;
 import nurgling.NAlias;
 import nurgling.NGameUI;
 import nurgling.NUtils;
@@ -49,7 +50,12 @@ public class TransferToBarrel implements Action {
             if ( gob == null ) {
                 return new Results ( Results.Types.NO_CONTAINER );
             }
-            
+            boolean empty = true;
+            for ( Gob.Overlay ol : gob.ols ) {
+                if ( ol.res != null ) {
+                    empty = false;
+                }
+            }
             new PathFinder( gui, gob ).run ();
             for ( GItem item : gui.getInventory ().getWItems( items ) ) {
                 if ( gui.hand.isEmpty () ) {
@@ -57,8 +63,8 @@ public class TransferToBarrel implements Action {
                 }
                 NUtils.waitEvent(()->!gui.hand.isEmpty (),200);
                 NUtils.activateItem ( gob , true);
-                NUtils.waitEvent(()->gui.hand.isEmpty (),200);
-                if ( !gui.hand.isEmpty () ) {
+                NUtils.waitEvent(()->gui.hand.isEmpty (),100);
+                if ( !gui.hand.isEmpty () && !empty) {
                     full.add ( gob );
                     break;
                 }

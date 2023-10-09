@@ -60,17 +60,13 @@ public class CollectItemsToPile implements Action {
         /// Выполняем процедуру подбора для каждого элемента в массиве
         while ( !Finder.findObjectsInArea ( itemsS, input ).isEmpty () ){
             GItem it = gui.getInventory ().getItem(itemsS);
-//            Coord size = ((NGItem)it).sprSz();
-//            gui.msg("item: " + size);
-
             if (( (gui.getInventory ().getFreeSpace () <= 1 && !gui.getInventory ().getWItems().isEmpty ()) )|| gui.getInventory().getNumberFreeCoord(it)<=1) {
-                new TransferToPile ( output, NHitBox.getByName ( items.keys.get ( 0 ) ), itemsS, itemsS ).run ( gui );
+                new TransferToPile ( output, NHitBox.getByName ( items.keys.get ( 0 ) ), itemsS, itemsS,true).run ( gui );
             }
             
             Gob item = Finder.findObjectInArea ( collected_items, 2000, input );
             if(item == null)
                 break;
-            gui.msg("Растояние: " + MCache.tilesz2.x +" дистанция: " +item.rc.dist(gui.map.player().rc));
             /// Если предмет далеко, идем к нему с помощью ПФ
             if(item.rc.dist(gui.map.player().rc)> 22) {
                 PathFinder pf = new PathFinder(gui, item);
@@ -80,7 +76,7 @@ public class CollectItemsToPile implements Action {
             NUtils.takeFromEarth ( item );
         }
        
-        new TransferToPile ( output, NHitBox.getByName ( items.keys.get ( 0 ) ), itemsS, itemsS ).run ( gui );
+        new TransferToPile ( output, NHitBox.getByName ( items.keys.get ( 0 ) ), itemsS, itemsS ,true).run ( gui );
         return new Results ( Results.Types.SUCCESS );
     }
     

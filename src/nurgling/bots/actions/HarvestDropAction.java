@@ -26,7 +26,7 @@ public class HarvestDropAction implements Action {
                     NUtils.drop();
                     NUtils.waitEvent(() -> gui.hand.isEmpty(), 100);
                 }
-                if ( gui.getInventory ().getFreeSpace () < 5 ) {
+                if ( gui.getInventory ().getNumberFreeCoord(gui.getInventory ().getItem(crop)) <= 1 ) {
                     new DropFromInventory(crop).run(gui);
                 }
                 if ( NUtils.getStamina() <= 0.3 ) {
