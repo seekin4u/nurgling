@@ -376,8 +376,8 @@ public class GobIcon extends GAttrib {
 	    }
 
 	    protected boolean searchmatch(Icon icon, String text) {
-		return((icon.name != null) &&
-		       (icon.name.toLowerCase().indexOf(text.toLowerCase()) >= 0));
+		return((icon.conf.res != null) &&
+		       (icon.conf.res.name.toLowerCase().indexOf(text.toLowerCase()) >= 0));
 	    }
 	    protected List<Icon> allitems() {return(ordered);}
 	    protected IconLine makeitem(Icon icon, int idx, Coord sz) {return(new IconLine(sz, icon));}

@@ -3,12 +3,7 @@ package nurgling.bots;
 
 import nurgling.NAlias;
 import nurgling.NGameUI;
-import nurgling.bots.actions.CollectItemsToPile;
-import nurgling.bots.actions.EquipTSacks;
-import nurgling.bots.actions.HarvestSeedAction;
-import nurgling.bots.actions.SeederSeed;
-import nurgling.bots.tools.HarvestOut;
-import nurgling.tools.AreasID;
+import nurgling.bots.actions.HiveSmokerAction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +18,7 @@ public class HiveSmoker extends Bot {
         win_sz.y = 100;
 
 
-        runActions.add ( new EquipTSacks() );
+        runActions.add ( new HiveSmokerAction() );
 
         
     }

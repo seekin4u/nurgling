@@ -30,22 +30,6 @@ public class NomadTraveller implements Action {
     public Results run(NGameUI gui)
             throws InterruptedException {
         marks.clear();
-        HashMap<String, String> iconMap = new HashMap<>();
-        Gob barrel = Finder.findObject(new NAlias("sprucelog", "Barrel"));
-        Coord tc = gui.map.player().rc.floor(tilesz);
-        MapFile.Marker nm = new NPMarker(gui.mapfile.playerSegmentId(), tc, "Custom:"+gui.map.player().id, BuddyWnd.gc[new Random().nextInt(BuddyWnd.gc.length)]);
-        gui.mapfile.file.add(nm);
-//        gui.timers.add(new NTimerWdg(NTimer.add("Custom:"+gui.map.player().id, 1000 * 3)));
-        NTimer tt= NTimer.add("Custom:"+gui.map.player().id, 5000);
-        tt.start();
-        gui.timers.pack();
-        Thread.sleep(10000);
-        gui.mapfile.file.remove(nm);
-//        gui.mapfile.markobj("mm/anvil","barrel", barrel.rc.floor());
-///////
-//        gui.getInventory ().printMatrixToChat(gui, gui.getInventory ().containerMatrix());
-//        gui.msg("max" +);
-        gui.msg("2x2 = " + gui.getInventory ().getNumberFreeCoord( new Coord (2,2)));
         URL url = NUtils.class.getProtectionDomain ().getCodeSource ().getLocation ();
         if(url != null) {
             try {
