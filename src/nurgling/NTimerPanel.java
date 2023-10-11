@@ -108,6 +108,7 @@ public class NTimerPanel extends Window {
 		try {time += Integer.parseInt(minutes.text()) * 60;} catch (NumberFormatException ignored) {}
 		try {time += Integer.parseInt(hours.text()) * 3600;} catch (NumberFormatException ignored) {}
 		panel.add(new NTimerWdg(NTimer.add(name.text(), 1000 * time)));
+
 		panel.pack();
 		ui.destroy(this);
 	    } else if(sender == btnedit) {

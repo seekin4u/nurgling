@@ -72,7 +72,7 @@ public class NUtils {
         }
     }
     private static NGameUI gameUI;
-    private static NUI nui;
+    public static NUI nui;
     private static Speedget speedget;
 
     public static boolean checkName(

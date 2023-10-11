@@ -40,7 +40,7 @@ public class PlaceLifted implements Action {
             pf.setPhantom ( coord, hitBox );
             pf.ignoreGob ( plObj );
             pf.setHardMode ( true );
-            pf.setOneSize ( true );
+//            pf.setOneSize ( true );
             pf.run ();
             //double shift_x = hitBox.end.x - hitBox.begin.x;
             //double shift_y = hitBox.end.y - hitBox.begin.y;

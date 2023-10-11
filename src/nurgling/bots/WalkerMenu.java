@@ -68,6 +68,9 @@ public class WalkerMenu extends Bot {
             public void click () {
                 b.set ( false );
                 this.hide ();
+                _start.set ( false );
+                System.out.println(runActions.get(0));
+                runActions.remove(0);
                 startButton.show ();
             }
         };
@@ -88,29 +91,27 @@ public class WalkerMenu extends Bot {
         for (Button button : buttons){
             window.add ( button, new Coord ( 0, y ) );
             y+=25;
-            win_sz.y +=25;
         }
 //        window.add ( startButton, new Coord ( 0, y ) );
 //        window.add ( stopButton, new Coord ( 0, y) );
-        startButton.hide ();
+//        startButton.hide ();
         stopButton.hide ();
-        window.add ( new Button ( window.buttons_size, "Стартовая зона" ) {
-            @Override
-            public void click () {
-                gameUI.getMap ().isAreaSelectorEnable.set(true);
-                if ( !m_selection_start.get () ) {
-                    m_selection_start.set ( true );
-                    
-                    this.hide ();
-                    new Thread ( new AreaSelecter( gameUI, _zone, m_selection_start, area ),
-                            "Cont Area Selecter" ).start ();
-                }
-            }
-        }, new Coord ( 0, y ) );
-        while (!_zone.get ()) {
-            Thread.sleep ( 100 );
-        }
-        startButton.show ();
+//        window.add ( new Button ( window.buttons_size, "Стартовая зона" ) {
+//            @Override
+//            public void click () {
+//                gameUI.getMap ().isAreaSelectorEnable.set(true);
+//                if ( !m_selection_start.get () ) {
+//                    m_selection_start.set ( true );
+//
+//                    this.hide ();
+//                    new Thread ( new AreaSelecter( gameUI, _zone, m_selection_start, area ),
+//                            "Cont Area Selecter" ).start ();
+//                }
+//            }
+//        }, new Coord ( 0, y ) );
+//        while (!_zone.get ()) {
+//            Thread.sleep ( 100 );
+//        }
         while ( !_start.get ()) {
             Thread.sleep ( 100 );
         }
@@ -135,14 +136,14 @@ public class WalkerMenu extends Bot {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-//        _start.set ( false );
+        _start.set ( false );
 //        _zone.set ( false );
 //        if(startButton!=null)
 //            startButton.hide ();
 //        if(stopButton!=null)
 //            stopButton.hide ();
 //        coords.clear();
-//        super.endAction ();
+        super.endAction ();
     }
     public void findDatFiles(File directory, List<File> datFiles) {
         File[] files = directory.listFiles();

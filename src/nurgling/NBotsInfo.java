@@ -331,6 +331,10 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
                     "bots/icons/downloadShip") );
             layouts.get ( 8 ).add ( new NButton ( "Upload Ship", new UploadShipCargo ( gui ),
                     "bots/icons/uploadShip") );
+            layouts.get ( 8 ).add ( new NButton ( "NomadCalibr", new WalkerMenu ( gui ),
+                    "bots/icons/nomad" ) );
+            layouts.get ( 8 ).add ( new NButton ( "Hive Smoker", new HiveSmoker ( gui ),
+                    "bots/icons/leaf2"  ) );
             layouts.put ( 5000, new Layout ( this, "bots/icons/tools" ) );
             layouts.get ( 5000 ).add ( new NButton ( "TestBot", new TestBot ( gui ), "bots/icons/testbot") );
             layouts.get ( 5000 ).add ( new NButton ( "Timer",null,"bots/icons/timer"){

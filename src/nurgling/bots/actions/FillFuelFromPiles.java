@@ -26,6 +26,14 @@ public class FillFuelFromPiles implements Action {
             }
         }
         Gob inPile = Finder.findObjectInArea ( iname, 1000, Finder.findNearestMark ( input ) );
+        int size_need = 0;
+        for (Gob i : out) {
+            size_need += size;
+        }
+        if (gui.getInventory().getMaxSlots()<=size_need){
+            size_need = gui.getInventory().getMaxSlots();
+        }
+        new TakeFromPile(iname, size_need, items, input).run(gui);
         for ( Gob gob : out ) {
             if(marker==-1 || (gob.getModelAttribute()&marker) ==0) {
                 int need = size;
@@ -44,6 +52,11 @@ public class FillFuelFromPiles implements Action {
                             new OpenTargetContainer(gob, cap).run(gui);
                             need -= (18 * NUtils.getFuelLvl(cap, new Color(255, 128, 0)));
                     }
+//                    else if (cap.contains("Kiln")) {
+//                        new PathFinder(gui, gob).run();
+//                        new OpenTargetContainer(gob, cap).run(gui);
+//                        need -= (18 * NUtils.getFuelLvl(cap, new Color(255, 128, 0)));
+//                    }
                 }
                 if(need>0) {
                     int for_load = need;
@@ -51,7 +64,9 @@ public class FillFuelFromPiles implements Action {
                     if (inPile == null) {
                         return new Results(Results.Types.NO_FUEL);
                     }
-                    new TakeFromPile(iname,need,items,input).run(gui);
+                    if (need >= 0) {
+                        new TakeFromPile(iname,need,items,input).run(gui);
+                    }
                     new PathFinder(gui, gob).run();
                     int count = 0;
                     while (count<for_load) {

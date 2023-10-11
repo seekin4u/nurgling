@@ -236,7 +236,7 @@ public class NHitBox extends NArea {
 //            return new NHitBox ( new Coord2d ( -0.02, -5.5 ), new Coord2d ( 0.02, 5.5 ) );
 //        }
         else if ( name.contains ( "log" ) || name.contains ( "oldtrunk" ) ) {
-            return new NHitBox ( new Coord2d ( -11, -2.75 ), new Coord2d ( 11, 2.75 ) );
+            return new NHitBox ( new Coord2d ( -9, -2 ), new Coord2d ( 9, 2 ) );
         }
         else if ( name.contains ( "ptrellis" ) ) {
             return new NHitBox(new Coord2d(-4, -5.5), new Coord2d(4, 5.5));

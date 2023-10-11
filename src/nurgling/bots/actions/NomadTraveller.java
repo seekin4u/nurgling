@@ -1,7 +1,9 @@
 package nurgling.bots.actions;
 
 import haven.*;
+import haven.render.InstanceList;
 import nurgling.*;
+import nurgling.minimap.NPMarker;
 import nurgling.tools.Finder;
 import nurgling.tools.NArea;
 
@@ -11,21 +13,35 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
+import static haven.MCache.cmaps;
 import static haven.MCache.tilesz;
 import static haven.OCache.posres;
+import static javax.swing.UIManager.put;
+import static nurgling.NUtils.nui;
 import static nurgling.bots.actions.NomadCalibration.anchors;
 
 public class NomadTraveller implements Action {
+
+
     @Override
     public Results run(NGameUI gui)
             throws InterruptedException {
         marks.clear();
-//        Gob barrel = Finder.findObject(new NAlias("barrel", "Barrel"));
-//////        gui.mapfile.markobj(barrel.id, barrel, "barrel");
-//        gui.msg("res" + barrel.getResName());
-////        gui.msg("res" + barrel.getattr(GobIcon.class).res.get().toString());
-//        gui.mapfile.markobj("wheelbarrow","barrel", barrel.rc);
+        HashMap<String, String> iconMap = new HashMap<>();
+        Gob barrel = Finder.findObject(new NAlias("sprucelog", "Barrel"));
+        Coord tc = gui.map.player().rc.floor(tilesz);
+        MapFile.Marker nm = new NPMarker(gui.mapfile.playerSegmentId(), tc, "Custom:"+gui.map.player().id, BuddyWnd.gc[new Random().nextInt(BuddyWnd.gc.length)]);
+        gui.mapfile.file.add(nm);
+//        gui.timers.add(new NTimerWdg(NTimer.add("Custom:"+gui.map.player().id, 1000 * 3)));
+        NTimer tt= NTimer.add("Custom:"+gui.map.player().id, 5000);
+        tt.start();
+        gui.timers.pack();
+        Thread.sleep(10000);
+        gui.mapfile.file.remove(nm);
+//        gui.mapfile.markobj("mm/anvil","barrel", barrel.rc.floor());
 ///////
 //        gui.getInventory ().printMatrixToChat(gui, gui.getInventory ().containerMatrix());
 //        gui.msg("max" +);
