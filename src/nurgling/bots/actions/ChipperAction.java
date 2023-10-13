@@ -11,8 +11,14 @@ import java.util.Arrays;
 public class ChipperAction implements Action {
     public static ArrayList<String> chip_tools = new ArrayList<String> ( Arrays.asList ( "pickaxe", "stoneaxe" ) );
     public static NAlias stones = new NAlias ( new ArrayList<String> (
-            Arrays.asList ( "granite", "hornblende", "feldspar", "gabbro", "catgold", "dolomit", "mica", "diorite",
-                    "alabaster", "gneiss", "sandstone", "arkose", "schist", "olivine" , "diabase", "cinnabar", "chert", "basalt", "porphyry", "flint" ) ) );
+            Arrays.asList ( "alabaster", "apatite", "arkose", "basalt", "bat rock", "black coal", "black ore", "bloodstone", "breccia", "cassiterite",
+                    "cat gold", "chalcopyrite", "chert", "cinnabar", "diabase", "diorite", "direvein", "dolomite", "dross", "eclogite", "feldspar",
+                    "flint", "fluorospar", "gabbro", "galena", "gneiss", "granite", "graywacke", "greenschist", "heavy earth", "horn silver", "hornblende",
+                    "iron ochre", "jasper", "korund", "kyanite", "lead glance", "leaf ore", "limestone", "malachite", "marble", "meteorite", "mica",
+                    "microlite", "olivine", "orthoclase", "peacock ore", "pegmatite", "porphyry", "pumice", "quarryartz", "quartz", "rhyolite",
+                    "rock crystal", "sandstone", "schist", "schrifterz", "serpentine", "shard of conch", "silvershine", "slag", "slate", "soapstone",
+                    "sodalite", "sunstone", "wine glance", "zincspar"
+            ) ) );
     
     @Override
     public Results run ( NGameUI gui )
