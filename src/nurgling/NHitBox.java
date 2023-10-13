@@ -119,6 +119,7 @@ public class NHitBox extends NArea {
         hitboxes.put("gfx/terobjs/arch/stonetower-door", new NHitBox(new Coord2d(-2.75, -8.25), new Coord2d(2.75, 8.25)));
         hitboxes.put("gfx/terobjs/plants/trellis", new NHitBox(new Coord2d(-1.375, -5.5), new Coord2d(1.375, 5.5)));
         hitboxes.put("gfx/terobjs/arch/hwall", new NHitBox(new Coord2d(-0.02, -5.5), new Coord2d(0.02, 5.5)));
+        hitboxes.put("gfx/terobjs/pow", new NHitBox(new Coord2d(-5.5, -5.5), new Coord2d(5.5, 5.5)));
         hitboxes.put("gfx/terobjs/vehicle/dugout", new NHitBox(new Coord2d(-11, -2.75), new Coord2d(11, 2.75)));
         ///hitboxes.put("gfx/terobjs/trees/oldtrunk", new NHitBox(new Coord2d(-11, -2.75), new Coord2d(11, 2.75)));
         ///TODO:dreca
@@ -137,9 +138,9 @@ public class NHitBox extends NArea {
         hitboxes.put("gfx/terobjs/stockpile-metal", new NHitBox(new Coord2d(-5.5, -8.25), new Coord2d(5.5, 8.25)));
         hitboxes.put("gfx/terobjs/stockpile-straw", new NHitBox(new Coord2d(-8.25, -8.25), new Coord2d(8.25, 8.25)));
         hitboxes.put("gfx/terobjs/stockpile-brick", new NHitBox(new Coord2d(-11, -5.5), new Coord2d(11, 5.5)));
-        hitboxes.put("gfx/terobjs/stockpile-leaf", new NHitBox(new Coord2d(-8.25, -8.25), new Coord2d(8.25, 8.25)));
+        hitboxes.put("gfx/terobjs/stockpile-leaf", new NHitBox(new Coord2d(-5.5, -5.5), new Coord2d(5.5, 5.5)));
         hitboxes.put("gfx/terobjs/ttub", new NHitBox(new Coord2d(-5.5, -5.5), new Coord2d(5.5, 5.5)));
-        hitboxes.put("gfx/terobjs/cupboard", new NHitBox(new Coord2d(-5.5, -5.5), new Coord2d(5.5, 5.5)));
+        hitboxes.put("gfx/terobjs/cupboard", new NHitBox(new Coord2d(-5, -5), new Coord2d(5, 5)));
         hitboxes.put("gfx/terobjs/cheeserack", new NHitBox(new Coord2d(-4.125, -4.125), new Coord2d(4.125, 4.125)));
         hitboxes.put("gfx/terobjs/vehicle/cart", new NHitBox(new Coord2d(-8.25, -6.875), new Coord2d(8.25, 6.875)));
         hitboxes.put("gfx/terobjs/steelcrucible", new NHitBox(new Coord2d(-4.75, -5.5), new Coord2d(4.75, 5.5)));

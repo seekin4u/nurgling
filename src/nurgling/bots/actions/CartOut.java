@@ -28,8 +28,7 @@ public class CartOut implements Action {
                 NUtils.waitEvent(()->NUtils.isPose(gui.map.player(),new NAlias("banzai")),200);
                 NUtils.waitEvent(()->Finder.findLifted()!=null,200);
                 Gob lifted = Finder.findLifted();
-                gui.msg("ht: " + (lifted.getHitBox().end.x - lifted.getHitBox().begin.x ));
-                new PlaceLifted(output_area, lifted.getHitBox(), lifted).run(gui);
+                new PlaceLifted(output_area,lifted.getHitBox(),lifted).run(gui);
             }
         }
         return new Results(Results.Types.SUCCESS);

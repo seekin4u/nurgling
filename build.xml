@@ -82,6 +82,7 @@
 	<pathelement path="lib/ext/lwjgl/lwjgl-opengl-fat.jar" />
 	<pathelement path="lib/rxjava-1.1.5.jar" />
 	<pathelement path="lib/jglob.jar" />
+        <pathelement path="lib/json.jar" />
       </classpath>
       <compilerarg value="-Xlint:unchecked" />
       <compilerarg value="-Xlint:-options" />
