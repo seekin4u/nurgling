@@ -18,10 +18,10 @@ public class TakeMaxFromPile implements Action {
             throws InterruptedException {
         if ( inPile == null ) {
             if ( area == null ) {
-                inPile = Finder.findObjectInArea ( new NAlias( "stockpile" ), 1000, Finder.findNearestMark ( input ) );
+                inPile = Finder.findObjectInArea ( stockpileName, 1000, Finder.findNearestMark ( input ) );
             }
             else {
-                inPile = Finder.findObjectInArea ( new NAlias ( "stockpile" ), 1000, area );
+                inPile = Finder.findObjectInArea ( stockpileName, 1000, area );
             }
         }
         
@@ -41,7 +41,7 @@ public class TakeMaxFromPile implements Action {
                 }
             }
             if ( Finder.findObject ( inPile.id ) == null ) {
-                inPile = Finder.findObjectInArea ( new NAlias ( "stockpile" ), 1000, Finder.findNearestMark ( input ) );
+                inPile = Finder.findObjectInArea ( stockpileName, 1000, Finder.findNearestMark ( input ) );
             }
             else {
                 Window wpile = gui.getWindow ("Stockpile"  );
@@ -80,9 +80,15 @@ public class TakeMaxFromPile implements Action {
         this.area = area;
         this.fast=true;
     }
+    public TakeMaxFromPile(NArea area , boolean fast, NAlias stockpileName) {
+        this.area = area;
+        this.fast = true;
+        this.stockpileName = stockpileName;
+    }
 
     AreasID input;
     Gob inPile = null;
     NArea area = null;
+    NAlias stockpileName = new NAlias("stockpile");
     boolean fast = false;
 }

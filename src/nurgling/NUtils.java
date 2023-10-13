@@ -1566,7 +1566,7 @@ public class NUtils {
                         int count = 0;
                         wItem.wdgmsg("transfer", wItem.sz, 1);
                         while (freeSpace == ((NISBox) sp).getFreeSpace() && count < 50 ) {
-                            Thread.sleep(10);
+                            Thread.sleep(5);
                             count += 1;
                         }
                         if (((NISBox) sp).getFreeSpace() == 0) {
@@ -1891,9 +1891,9 @@ public class NUtils {
     public static void activateItemToPile(Gob gob, boolean fast) {
         Coord grc = gob.rc.floor(posres);
         if (fast){
-            gameUI.map.wdgmsg("itemact", Coord.z, grc, 3, 0, (int) gob.id, grc, 0, 0);
+            gameUI.map.wdgmsg("itemact", Coord.z, grc, 0, 0, (int) gob.id, grc, 0, 0);
         }else{
-            gameUI.map.wdgmsg("itemact", Coord.z, grc, 3, 0, (int) gob.id, grc, 0, 0);
+            gameUI.map.wdgmsg("itemact", Coord.z, grc, 0, 0, (int) gob.id, grc, 0, 0);
         }
     }
 
