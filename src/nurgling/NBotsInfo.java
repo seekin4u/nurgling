@@ -376,6 +376,8 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
                     "bots/icons/glassjugout" ) );
             layouts.get ( 5000 ).add ( new NButton ( "CartOut", new CartOut (  gui ),
                     "bots/icons/cartout" ) );
+            layouts.get ( 5000 ).add ( new NButton ( "CartIn", new CartIn (  gui ),
+                    "bots/icons/cartout" ) );
             layouts.get ( 5000 ).add ( new NButton ( "SortAndTransferMeat", new SortAndTransferMeat (  gui ),
                     "bots/icons/transfersortmeat" ) );
             layouts.get ( 5000 ).add ( new NButton ( "SortAndTransferBars", new SortAndTransferBars (  gui ),

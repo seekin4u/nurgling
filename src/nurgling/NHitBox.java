@@ -236,8 +236,11 @@ public class NHitBox extends NArea {
 //        else if ( name.contains ( "hwall" ) ) {
 //            return new NHitBox ( new Coord2d ( -0.02, -5.5 ), new Coord2d ( 0.02, 5.5 ) );
 //        }
-        else if ( name.contains ( "log" ) || name.contains ( "oldtrunk" ) ) {
-            return new NHitBox ( new Coord2d ( -9, -2 ), new Coord2d ( 9, 2 ) );
+        else if ( name.contains ( "log" )  ) {
+            return new NHitBox ( new Coord2d ( -10, -2.8 ), new Coord2d ( 10, 2.8 ) );
+        }
+        else if ( name.contains ( "oldtrunk" ) ) {
+            return new NHitBox ( new Coord2d ( -10, -2.8 ), new Coord2d ( 10, 2.8 ) );
         }
         else if ( name.contains ( "ptrellis" ) ) {
             return new NHitBox(new Coord2d(-4, -5.5), new Coord2d(4, 5.5));
