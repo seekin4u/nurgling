@@ -8,18 +8,17 @@ import java.util.function.*;
 import java.nio.*;
 import java.awt.Color;
 
-@FromResource(name = "gfx/fx/fishline", version = 3)
+@haven.FromResource(name = "gfx/fx/fishline", version = 5)
 public class FishLine extends Sprite {
+    public final Gob plob = owner.context(Gob.class);
     public final Pipe.Op linemat;
     public final long floatid;
-    public final Gob plob;
     public final Line fx;
     private Coord3f gnd, ppos, fpos;
     private final List<RenderTree.Slot> slots = new ArrayList<>(1);
 
     public FishLine(Owner owner, Resource res, Color color, boolean stretch, long floatid) {
 	super(owner, res);
-	this.plob = (Gob)owner;
 	this.floatid = floatid;
 	this.linemat = new BaseColor(color);
 	fx = new Line(stretch);
@@ -46,7 +45,7 @@ public class FishLine extends Sprite {
 	    Skeleton.BoneOffset bo = spr.res.layer(Skeleton.BoneOffset.class, "l");
 	    if(bo == null)
 		throw(new RuntimeException("No line-offset (\"l\") in fish-float sprite"));
-	    off = bo.forpose(spr.pose);
+	    off = bo.from(spr.pose);
 	    this.flob = flob;
 	}
 	Location.Chain loc = new BufPipe().prep(flob.placed.placement()).prep(off.get()).get(Homo3D.loc);

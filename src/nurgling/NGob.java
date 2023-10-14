@@ -262,8 +262,10 @@ public class NGob {
             return -1;
         }
         long res = calcMarker(rd.sdt);
-        if (res != gob.modelAttribute || res == -1)
+        if (res != gob.modelAttribute || res == -1) {
             gob.status = Status.ready_for_update;
+            gob.modelAttribute = res;
+        }
         updateCustom(gob);
         return res;
     }
@@ -563,7 +565,7 @@ public class NGob {
                 gob.addTag(Tags.minesupport);
             }
 
-            if (!gob.isTag(Tags.item) && !gob.isTag(Tags.barterarea) && !gob.isTag(Tags.plant) && !gob.isTag(Tags.cellar) && !gob.isTag(Tags.moundbed) && !(gob.isTag(Tags.pow) && (gob.getModelAttribute() & 17) == 17) && !(gob.isTag(Tags.kritter) && NUtils.checkName(name, "cavemoth"))) {
+            if (!gob.isTag(Tags.item) && !gob.isTag(Tags.barterarea) && !gob.isTag(Tags.plant) && !gob.isTag(Tags.cellar) && !gob.isTag(Tags.moundbed) && !(gob.isTag(Tags.kritter) && NUtils.checkName(name, "cavemoth"))) {
                 gob.hitBox = NHitBox.get(name);
             }
 
@@ -670,8 +672,10 @@ public class NGob {
                     }
                     if (gob.isTag(Tags.plant)) {
                         NProperties.Crop crop = gob.getCrop();
-                        crop.currentStage = gob.modelAttribute;
-                        gob.addcustomol(new NCropMarker(gob, crop));
+                        if(crop!=null) {
+                            crop.currentStage = gob.modelAttribute;
+                            gob.addcustomol(new NCropMarker(gob, crop));
+                        }
                     } else if (gob.isTag(Tags.item)) {
                         if (gob.isTag(Tags.gem)) {
                             gob.addcustomol(new NTexMarker(gob, 5, Tags.gem));
@@ -777,7 +781,7 @@ public class NGob {
                     if (NConfiguration.getInstance().showAreas) {
                         if (NUtils.getGameUI() != null && NUtils.getGameUI().updated()) {
                             for (String name : made_id.keySet()) {
-                                if (made_id.get(name) == gob.modelAttribute)
+                                if (gob.getattr(ResDrawable.class)!=null && made_id.get(name) == gob.getModelAttribute())
                                     try {
                                         NOCache.constructOverlay(AreasID.find(name));
                                     } catch (IllegalArgumentException e) {

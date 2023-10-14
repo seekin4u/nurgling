@@ -336,7 +336,7 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
             layouts.get ( 8 ).add ( new NButton ( "Hive Smoker", new HiveSmoker ( gui ),
                     "bots/icons/larvae"  ) );
             layouts.put ( 5000, new Layout ( this, "bots/icons/tools" ) );
-            layouts.get ( 5000 ).add ( new NButton ( "TestBot", new TestBot ( gui ), "bots/icons/testbot") );
+            //layouts.get ( 5000 ).add ( new NButton ( "TestBot", new TestBot ( gui ), "bots/icons/testbot") );
             layouts.get ( 5000 ).add ( new NButton ( "Timer",null,"bots/icons/timer"){
                 @Override
                 public void click() {
