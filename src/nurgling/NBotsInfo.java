@@ -334,7 +334,7 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
             layouts.get ( 8 ).add ( new NButton ( "NomadCalibr", new WalkerMenu ( gui ),
                     "bots/icons/nomad" ) );
             layouts.get ( 8 ).add ( new NButton ( "Hive Smoker", new HiveSmoker ( gui ),
-                    "bots/icons/leaf2"  ) );
+                    "bots/icons/larvae"  ) );
             layouts.put ( 5000, new Layout ( this, "bots/icons/tools" ) );
             layouts.get ( 5000 ).add ( new NButton ( "TestBot", new TestBot ( gui ), "bots/icons/testbot") );
             layouts.get ( 5000 ).add ( new NButton ( "Timer",null,"bots/icons/timer"){
@@ -377,13 +377,13 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
             layouts.get ( 5000 ).add ( new NButton ( "CartOut", new CartOut (  gui ),
                     "bots/icons/cartout" ) );
             layouts.get ( 5000 ).add ( new NButton ( "CartIn", new CartIn (  gui ),
-                    "bots/icons/cartout" ) );
+                    "bots/icons/cartUpload" ) );
             layouts.get ( 5000 ).add ( new NButton ( "SortAndTransferMeat", new SortAndTransferMeat (  gui ),
                     "bots/icons/transfersortmeat" ) );
             layouts.get ( 5000 ).add ( new NButton ( "SortAndTransferBars", new SortAndTransferBars (  gui ),
                     "bots/icons/transfersortbars" ) );
             layouts.get ( 5000 ).add ( new NButton ( "WormMaster", new WormMaster (  gui ),
-                    "bots/icons/cartout" ) );
+                    "bots/icons/worms" ) );
             layouts.get ( 5000 ).add ( new NButton ( "DigSnow", new SnowCleaner ( gui ),
                     "bots/icons/clearsnow"  ) );
             layouts.get ( 5000 ).add ( new NButton ( "Orca", new NomadFinderBot ( gui ),

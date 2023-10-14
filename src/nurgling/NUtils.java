@@ -1891,7 +1891,7 @@ public class NUtils {
     public static void activateItemToPile(Gob gob, boolean fast) {
         Coord grc = gob.rc.floor(posres);
         if (fast){
-            gameUI.map.wdgmsg("itemact", Coord.z, grc, 0, 0, (int) gob.id, grc, 0, 0);
+            gameUI.map.wdgmsg("itemact", Coord.z, grc, 3, 0, (int) gob.id, grc, 0, 0);
         }else{
             gameUI.map.wdgmsg("itemact", Coord.z, grc, 0, 0, (int) gob.id, grc, 0, 0);
         }
