@@ -15,18 +15,20 @@ public class CheckWater implements Action {
     @Override
     public Results run ( NGameUI gui )
             throws InterruptedException {
-        GItem item = gui.getInventory ().getItem ( new NAlias( "woodencup" ) );
+        NAlias water_cup = new NAlias( "woodencup" , "waterskin");
+        GItem item = gui.getInventory ().getItem ( water_cup );
         new TakeToHand ( item ).run ( gui );
         gui.map.wdgmsg ( "itemact", Coord.z, gui.getMap ().player ().rc.floor ( posres ), 0 );
         Thread.sleep ( 500 );
 
         NUtils.transferToInventory ();
-        gui.msg ( "Water q =" +String.valueOf ( NUtils.getContentQuality ( gui.getInventory ().getItem ( new NAlias ( "woodencup" )) ) ) );
+        gui.msg ( "Water q =" +String.valueOf ( NUtils.getContentQuality ( gui.getInventory ().getItem ( water_cup) ) ) );
+        Thread.sleep ( 100 );
         gui.map.wdgmsg ( "click", Coord.z, gui.getMap ().player ().rc.floor ( posres ), 3, 0, 0);
-        NUtils.waitEvent ( () -> gui.getInventory ().getItem ( new NAlias ( "woodencup" ) ) != null, 60 );
-        new SelectFlowerAction ( (NGItem) gui.getInventory ().getItem ( new NAlias ( "woodencup" )), "Empty",
+        NUtils.waitEvent ( () -> gui.getInventory ().getItem ( water_cup ) != null, 100 );
+        new SelectFlowerAction ( (NGItem) gui.getInventory ().getItem ( water_cup), "Empty",
                 SelectFlowerAction.Types.Item ).run ( gui );
-        NUtils.waitEvent ( () -> NUtils.getContent (gui.getInventory ().getItem ( new NAlias ( "woodencup" )) ) == null, 10 );
+        NUtils.waitEvent ( () -> NUtils.getContent (gui.getInventory ().getItem ( water_cup) ) == null, 100 );
         return new Results ( Results.Types.SUCCESS );
     }
 }
