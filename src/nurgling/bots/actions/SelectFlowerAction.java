@@ -58,7 +58,8 @@ public class SelectFlowerAction implements Action {
     @Override
     public Results run(NGameUI gui)
             throws InterruptedException {
-        NUtils.waitEvent(()->NUtils.isPose(NUtils.getGameUI().getMap().player(),new NAlias("idle")),1000);
+        //<gfx/borka/snekkjaman0(v2)>
+        NUtils.waitEvent(()->NUtils.isPose(NUtils.getGameUI().getMap().player(),new NAlias("idle", "snekkjaman0")),200);
         Results res = null;
         switch (type) {
             case Item:
