@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class AshesMakerAction implements Action {
     NAlias kiln = new NAlias(new ArrayList<>(Arrays.asList("Kiln", "kiln")),new ArrayList<>(Arrays.asList("tar")));
 
-    String blocksName = "board";
+    String blocksName = "block";
     NAlias block = new NAlias ( Arrays.asList (blocksName),
             Arrays.asList ( "tobacco") );
     @Override
@@ -37,7 +37,7 @@ public class AshesMakerAction implements Action {
             }, 500).run(gui);
 
             /// Одеваем ТСакс
-            new Equip(new NAlias("traveller"), 2).run(gui);
+//            new Equip(new NAlias("traveller"), 2).run(gui);
 
             /// Собираем эш
             new TransferToBarrelFromContainer(kiln, new NAlias("ashes"), AreasID.kilns, AreasID.kilns, "Kiln").run(gui);
@@ -50,7 +50,7 @@ public class AshesMakerAction implements Action {
             new TransferToPile(AreasID.blocks, NHitBox.getByName(blocksName), block, block, true).run(gui);
 
             /// Заполняем топливо
-            new FillFuelFromPiles(3, new NAlias("branch"), kiln,
+            new FillFuelFromPiles(8, new NAlias("branch"), kiln,
                     new NAlias("branch"), AreasID.branch).run(gui);
 
             /// поджигаем с помощью факела

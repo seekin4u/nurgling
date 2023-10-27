@@ -230,6 +230,7 @@ public class Build implements Action {
                     new Drink ( 0.9, false ).run ( gui );
                     if ( command.special_command == null ) {
                         NUtils.build ( command.command, pos, rotation, command.name, workArea );
+                        Thread.sleep ( 100 );
                     }
                     else {
                         NUtils.build ( command.command, command.special_command, pos, rotation, command.name,
@@ -248,7 +249,9 @@ public class Build implements Action {
                 new Drink ( 0.9, false ).run ( gui );
                 Thread.sleep ( 200 );
                 new OpenTargetContainer ( buildedObj, command.name ).run ( gui );
+                Thread.sleep ( 100 );
                 NUtils.buildCurrent ( command.name );
+                Thread.sleep ( 50 );
             }
         }
     }

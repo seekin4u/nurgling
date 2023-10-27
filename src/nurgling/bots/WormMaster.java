@@ -3,7 +3,6 @@ package nurgling.bots;
 import haven.Button;
 import haven.Coord;
 import nurgling.NGameUI;
-import nurgling.bots.actions.CartInActions;
 import nurgling.bots.actions.WormMasterAction;
 import nurgling.tools.AreaSelecter;
 import nurgling.tools.NArea;

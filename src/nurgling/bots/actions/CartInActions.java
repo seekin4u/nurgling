@@ -12,9 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CartInActions implements Action {
-    public CartInActions(NArea input_area, NArea output_area) {
+    public CartInActions(NArea input_area) {
         this.input_area = input_area;
-        this.output_area = output_area;
     }
 
     @Override
@@ -24,8 +23,8 @@ public class CartInActions implements Action {
 
 
         ArrayList<Gob> gobs = Finder.findObjectsInArea(gobsName, input_area);
-
-        Gob cart = Finder.findObjectInArea(new NAlias("cart"),1000, output_area);
+        Gob cart = Finder.findNearestObjectToObject (new NAlias("cart"), gui.map.player());
+//        Gob cart = Finder.findObjectInArea(new NAlias("cart"),1000, output_area);
         int max = 6;
         for (Gob gob : gobs){
             new PathFinder(gui, gob).run();
@@ -44,5 +43,4 @@ public class CartInActions implements Action {
     }
 
     NArea input_area;
-    NArea output_area;
 }

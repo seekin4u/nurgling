@@ -86,7 +86,8 @@ public class SmelterAction implements Action {
             //Fill the smelter with fuel from the piles
             new FillFuelSmelter ( smelter_name ).run ( gui );
             /// Light fire
-            new LightGob ( new NAlias ( "smelter" ), AreasID.smelter, 2 ).run ( gui );
+            new LightGobTorch(new NAlias ( "smelter" ), AreasID.kilns, 1).run(gui);
+//            new LightGob ( new NAlias ( "smelter" ), AreasID.smelter, 2 ).run ( gui );
         }
         return new Results ( Results.Types.SUCCESS );
     }

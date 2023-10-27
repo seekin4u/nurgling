@@ -1623,7 +1623,7 @@ public class NUtils {
             if(space>0)
             {
                 item.wdgmsg("transfer", item.sz, 1);
-                int see = targetinv.getNumberFreeCoord(item);
+//                int see = targetinv.getNumberFreeCoord(item);
                 waitEvent(() -> targetinv.getNumberFreeCoord(item)!=space, 5000,100);
             }
             return targetinv.getNumberFreeCoord(item)!=space;

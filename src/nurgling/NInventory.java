@@ -412,7 +412,7 @@ public class NInventory extends Inventory {
      *
      * @return свободное место
      */
-    public int getFreeSpaceOld() throws InterruptedException {
+    public int getFreeSpace() throws InterruptedException {
         waitLoading();
         int freespace = 0;
         if(parent instanceof NGameUI || parent instanceof Window) {
@@ -437,7 +437,6 @@ public class NInventory extends Inventory {
     }
 
     private void fillInventorySpace(boolean[][] inventory) {
-        waitLoading();
         for (int i = 0; i < isz.x; i++) {
             for (int j = 0; j < isz.y; j++) {
                 inventory[i][j] = false;
@@ -515,7 +514,7 @@ public class NInventory extends Inventory {
         return new Coord(-1, -1);
     }
 
-    public int getNumberFreeCoord(GItem item) throws InterruptedException {
+    public int getNumberFreeCoordNew(GItem item) throws InterruptedException {
         if (item != null) {
             Coord size = ((NGItem)item).sprSz();
             int count =getNumberFreeCoord(new Coord (size.y,size.x));
@@ -536,7 +535,19 @@ public class NInventory extends Inventory {
         }
         return (max);
     }
-    public int getFreeSpace() {
+
+    public int getMaxSlotsNew() {
+        Coord c = new Coord();
+        int mo = 0;
+        int max = 0;
+        for (c.y = 0; c.y < isz.y; c.y++) {
+            for (c.x = 0; c.x < isz.x; c.x++) {
+                if (sqmask == null || !sqmask[mo++]) max++;
+            }
+        }
+        return (max);
+    }
+    public int getFreeSpaceNew() {
         int freespace = getMaxSlots();
         for (Widget wdg = child; wdg != null; wdg = wdg.next) {
             if (wdg instanceof WItem)
@@ -545,7 +556,7 @@ public class NInventory extends Inventory {
         return freespace;
     }
     // Ищет количество свободных мест в инвентаре для предмета заданного размера
-    public int getNumberFreeCoord(Coord size) throws InterruptedException {
+    public int getNumberFreeCoordNew(Coord size) throws InterruptedException {
         int count = 0;
         short[][] inventoryMatrix = containerMatrix();
 
@@ -632,7 +643,7 @@ public class NInventory extends Inventory {
     }
 
 
-    public int getNumberFreeCoordOld(Coord target_size) throws InterruptedException {
+    public int getNumberFreeCoordnn(Coord target_size) throws InterruptedException {
         waitLoading();
         int count = 0;
         /// Вычисляем свободные слоты в инвентаре
@@ -667,6 +678,80 @@ public class NInventory extends Inventory {
         return count;
     }
 
+    public int getNumberFreeCoord(GItem item) throws InterruptedException {
+        waitLoading();
+        if (item != null) {
+            boolean[][] inventory = new boolean[isz.x][isz.y];
+            fillInventorySpace(inventory);
+            int count = 0;
+            Coord size = ((NGItem)item).sprSz();
+            if (NUtils
+                    .isIt(item, new NAlias(new ArrayList<String>(Arrays.asList("pickaxe", "bough"))))) {
+                size.y = 2;
+            }
+            if (NUtils
+                    .isIt(item, new NAlias(new ArrayList<String>(Arrays.asList("block"))))) {
+                size.x = 2;
+            }
+            for (int i = 0; i < isz.x; i++) {
+                for (int j = 0; j < isz.y; j++) {
+                    if (!inventory[i][j]) {
+                        if (i + size.x - UI.scale(1) < isz.x && j + size.y - UI.scale(1) < isz.y) {
+                            boolean isFree = true;
+                            for (int k = i; k < i + size.x; k++) {
+                                for (int n = j; n < j + size.y; n++) {
+                                    if (inventory[k][n]) {
+                                        isFree = false;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (isFree) {
+                                count += 1;
+                            }
+                        }
+                    }
+                }
+            }
+            return count;
+        } else {
+            return isz.x * isz.y;
+        }
+    }
+
+    public int getNumberFreeCoord(Coord target_size) throws InterruptedException {
+        waitLoading();
+        int count = 0;
+        /// Вычисляем свободные слоты в инвентаре
+        boolean[][] inventory = new boolean[isz.x][isz.y];
+        fillInventorySpace(inventory);
+        for (int i = 0; i < isz.x; i++) {
+            for (int j = 0; j < isz.y; j++) {
+                if (!inventory[i][j]) {
+                    if (i + target_size.x - 1 < isz.x && j + target_size.y - 1 < isz.y) {
+                        boolean isFree = true;
+                        for (int k = i; k < i + target_size.x; k++) {
+                            for (int n = j; n < j + target_size.y; n++) {
+                                if (inventory[k][n]) {
+                                    isFree = false;
+                                    break;
+                                }
+                            }
+                        }
+                        if (isFree) {
+                            count += 1;
+                            for (int k = i; k < i + target_size.x; k++) {
+                                for (int n = j; n < j + target_size.y; n++) {
+                                    inventory[k][n] = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return count;
+    }
     public static final Comparator<NGItem> ITEM_COMPARATOR_ASC = new Comparator<NGItem>() {
         @Override
         public int compare(NGItem o1, NGItem o2) {

@@ -11,14 +11,14 @@ import nurgling.tools.NArea;
 import java.util.ArrayList;
 
 public class CartOut implements Action {
-    public CartOut(NArea input_area, NArea output_area) {
-        this.input_area = input_area;
+    public CartOut(NArea output_area) {
         this.output_area = output_area;
     }
 
     @Override
     public Results run(NGameUI gui) throws InterruptedException {
-        Gob cart = Finder.findObjectInArea(new NAlias("cart"),1000, input_area);
+        Gob cart = Finder.findNearestObjectToObject (new NAlias("cart"), gui.map.player());
+//        Gob cart = Finder.findObjectInArea(new NAlias("cart"),1000, input_area);
         int n = 2;
         for(int i = 0; i < 6; i++){
             n = n<<1;
@@ -34,6 +34,5 @@ public class CartOut implements Action {
         return new Results(Results.Types.SUCCESS);
     }
 
-    NArea input_area;
     NArea output_area;
 }

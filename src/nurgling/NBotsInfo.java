@@ -350,6 +350,8 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
                     "bots/icons/nomad" ) );
             layouts.get ( 5000 ).add ( new NButton ( "NomadCalibr2", new NomadCalibrator2 ( gui ),
                     "bots/icons/nomad2" ) );
+            layouts.get ( 5000 ).add ( new NButton ( "Candleberry", new Candleberry ( gui ),
+                    "bots/icons/nomad2" ) );
             layouts.get ( 5000 ).add ( new NButton ( "Mining", new MineBot ( gui ),
                     "bots/icons/miner" ) );
             layouts.get ( 5000 ).add ( new NButton ( "SoilDest", new SoilDestroyer (  gui ),
