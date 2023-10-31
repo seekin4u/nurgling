@@ -3,3 +3,13 @@
 /local-config.properties
 /local-boot.properties
 *~
+calibr.json
+cheese_shedule.json
+config.nurgling.json
+*.dat
+notes3.txt
+nurgling.iml
+.idea/*
+out/production/nurgling/com/jcraft/jogg/Buffer.class
+out/*
+resources/compiled/*
