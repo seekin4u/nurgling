@@ -2,6 +2,7 @@
 /bin
 /local-config.properties
 /local-boot.properties
+/build.properties
 *~
 calibr.json
 cheese_shedule.json
