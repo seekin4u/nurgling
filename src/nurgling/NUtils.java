@@ -219,6 +219,7 @@ public class NUtils {
                     return checkName(res.name, regEx);
                 }
             } catch (Loading e) {
+                e.printStackTrace();
             }
         }
         return false;
@@ -413,6 +414,7 @@ public class NUtils {
                     return checkName(res.name, regEx);
                 }
             } catch (Loading e) {
+                e.printStackTrace();
             }
         }
         return false;
@@ -432,6 +434,7 @@ public class NUtils {
                     return checkName(res.name, regEx);
                 }
             } catch (Loading e) {
+                e.printStackTrace();
             }
         }
         return false;
@@ -481,6 +484,7 @@ public class NUtils {
                     return checkName(res.name, regEx) || (((NGItem)item.item).name()!=null && checkName(((NGItem)item.item).name(), regEx));
                 }
             } catch (Loading e) {
+                e.printStackTrace();
             }
         }
         return false;
@@ -1372,6 +1376,7 @@ public class NUtils {
                     }
                 }
             } catch (Loading e) {
+                e.printStackTrace();
             }
         }
         return resa;

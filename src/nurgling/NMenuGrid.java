@@ -129,6 +129,7 @@ public class NMenuGrid extends MenuGrid {
             Pagina parent = paginafor(ad.parent);
             return (parent == p) ? null : parent;
         } catch (Loading e){
+            e.printStackTrace();
             return null;
         }
     }

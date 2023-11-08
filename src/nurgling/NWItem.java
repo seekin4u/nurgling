@@ -72,6 +72,7 @@ public class NWItem extends WItem {
                 }
             }
         } catch (Loading e) {
+            e.printStackTrace();
         }
         if (((NGItem) item).isSeached) {
             if (NUtils.getGameUI().itemsForSearch != null && !NUtils.getGameUI().itemsForSearch.q.isEmpty() && searchQuality())

@@ -49,6 +49,7 @@ public class NBuff extends Buff {
                     }
                 }
             } catch (Loading e) {
+                e.printStackTrace();
             }
         }
         if (done) {
@@ -108,6 +109,7 @@ public class NBuff extends Buff {
                     g.chcolor(255, 255, 255, a);
                 }
             } catch (Loading e) {
+                e.printStackTrace();
             }
         }
     }

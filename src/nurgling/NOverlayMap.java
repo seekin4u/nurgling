@@ -68,7 +68,9 @@ public class NOverlayMap extends NSprite{
                         }
                 }
                 catch (Loading e)
-                    {}
+                    {
+                        e.printStackTrace();
+                    }
             }
             if(needUpdate)
                 NUtils.getGameUI().getMap().setStatus(id.id, true);
@@ -121,7 +123,9 @@ public class NOverlayMap extends NSprite{
                             }
                         }
                         catch (Loading e)
-                        {}
+                        {
+                            e.printStackTrace();
+                        }
                     }
                 }
                 if (needUpdate || (isPlob && (plobrc.x!=plob.rc.x || plobrc.y!=plob.rc.y)))
