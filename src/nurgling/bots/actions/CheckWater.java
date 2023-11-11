@@ -22,14 +22,11 @@ public class CheckWater implements Action {
         Thread.sleep ( 500 );
 
         NUtils.transferToInventory ();
-        gui.msg ( "Water q =" +String.valueOf ( NUtils.getContentQuality ( gui.getInventory ().getItem ( water_cup) ) ) );
-        Thread.sleep ( 100 );
+        gui.msg ( "Water q = " + String.valueOf ( NUtils.getContentQuality ( gui.getInventory ().getItem ( water_cup) ) ) );
         gui.map.wdgmsg ( "click", Coord.z, gui.getMap ().player ().rc.floor ( posres ), 3, 0, 0);
         NUtils.waitEvent ( () -> gui.getInventory ().getItem ( water_cup ) != null, 100 );
 
-        GItem cup = gui.getInventory().getItem(new NAlias("woodencup"));
-        Thread.sleep(200);
-        new SelectFlowerAction ( (NGItem) cup, "Empty", SelectFlowerAction.Types.Item ).run ( gui );
+        new SelectFlowerAction ( (NGItem) item, "Empty", SelectFlowerAction.Types.Item ).run ( gui );
         NUtils.waitEvent ( () -> NUtils.getContent (gui.getInventory ().getItem ( water_cup) ) == null, 200 );
         return new Results ( Results.Types.SUCCESS );
     }
