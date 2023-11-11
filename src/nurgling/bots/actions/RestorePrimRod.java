@@ -25,25 +25,26 @@ public class RestorePrimRod implements Action {
 
         if ( !NUtils.checkContent ( rod, fishlanes ) ) {
             NUtils.ContainerProp fishline_prop = NUtils.getContainerType ( tools );
-            new TakeFromContainers ( fishline_prop.name, fishlanes, 1, tools, fishline_prop.cap ).run ( gui );
+            if(!fromInv) new TakeFromContainers ( fishline_prop.name, fishlanes, 1, tools, fishline_prop.cap ).run ( gui );
             new UseItemOnItem ( fishlanes, rod ).run ( gui );
         }
         NUtils.waitEvent(()->NUtils.checkContent ( rod, fishlanes ),50);
         if ( !NUtils.checkContent ( rod, hooks ) ) {
             NUtils.ContainerProp fishline_prop = NUtils.getContainerType ( tools );
-            new TakeFromContainers ( fishline_prop.name, hooks, 1, tools, fishline_prop.cap ).run ( gui );
+            if(!fromInv) new TakeFromContainers ( fishline_prop.name, hooks, 1, tools, fishline_prop.cap ).run ( gui );
             new UseItemOnItem ( hooks, rod ).run ( gui );
         }
         NUtils.waitEvent(()->NUtils.checkContent ( rod, hooks ),50);
         if ( !NUtils.checkContent ( rod, bait_item ) ) {
-            if ( !Finder.findObjectsInArea (
-                    new NAlias ( new ArrayList<> ( Arrays.asList ( "stockpile-soil", "stockpile" + "-trash" ) ) ),
-                    baits ).isEmpty () ) {
-                new TakeFromPile (
+            if(!fromInv){
+                if ( !Finder.findObjectsInArea (
+                        new NAlias ( new ArrayList<> ( Arrays.asList ( "stockpile-soil", "stockpile" + "-trash" ) ) ), baits ).isEmpty () ) {
+                    new TakeFromPile (
                         new NAlias ( new ArrayList<> ( Arrays.asList ( "stockpile-soil", "stockpile-trash" ) ), new ArrayList<> () ), target_count, bait_item, baits ).run ( gui );
-            }else{
-                NUtils.ContainerProp fishline_prop = NUtils.getContainerType ( baits );
-                new TakeFromContainers ( fishline_prop.name, bait_item, 1, baits, fishline_prop.cap ).run ( gui );
+                }else{
+                    NUtils.ContainerProp fishline_prop = NUtils.getContainerType ( baits );
+                    new TakeFromContainers ( fishline_prop.name, bait_item, 1, baits, fishline_prop.cap ).run ( gui );
+                }
             }
             new UseItemOnItem ( bait_item, rod ).run ( gui );
         }
@@ -63,9 +64,21 @@ public class RestorePrimRod implements Action {
         this.tools = tools;
         this.rod = rod;
     }
+    public RestorePrimRod(
+            NArea baits,
+            NArea tools,
+            GItem rod,
+            boolean fromInv
+    ) {
+        this.baits = baits;
+        this.tools = tools;
+        this.rod = rod;
+        this.fromInv = fromInv;
+    }
     
     NArea baits;
     NArea tools;
+    boolean fromInv = false;
     
     GItem rod;
     

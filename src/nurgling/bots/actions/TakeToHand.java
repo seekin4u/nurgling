@@ -20,6 +20,9 @@ public class TakeToHand implements Action {
         if ( item == null ) {
             item = gui.getInventory ().getItem ( name );
         }
+        if(item == null){
+            item = gui.getInventory("Creel", false).getItem(name);
+        }
         if ( item != null ) {
                 NUtils.takeItemToHand ( item );
                 NUtils.waitEvent(()->!gui.hand.isEmpty () , 500);
