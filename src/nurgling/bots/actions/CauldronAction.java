@@ -3,6 +3,7 @@ package nurgling.bots.actions;
 import haven.Area;
 import haven.GItem;
 
+import haven.Gob;
 import nurgling.NAlias;
 import nurgling.NGameUI;
 import nurgling.tools.AreasID;
@@ -15,7 +16,11 @@ public class CauldronAction implements Action {
     @Override
     public Results run ( NGameUI gui )
             throws InterruptedException {
-        new UseWorkStation ( new NAlias ( "cauldron" ), "Cauldron", "Open" ).run ( gui );
+        if(cauldron == null){
+            new UseWorkStation ( new NAlias ( "cauldron" ), "Cauldron", "Open" ).run ( gui );
+        }else{
+            new UseWorkStation ( cauldron, "Cauldron", "Open" ).run ( gui );
+        }
         
         while ( !gui.getInventory( "Cauldron" ).getWItems ( iitems ).isEmpty () &&
                 ( getModelAttribute ( Finder.findObject ( new NAlias ( "cauldron" )) ) & 2 ) != 0 &&
@@ -42,7 +47,11 @@ public class CauldronAction implements Action {
         else {
             new TakeFromContainers ( null, iitems, 9, input, "" ).run ( gui );
         }
-        new UseWorkStation ( new NAlias ( "cauldron" ), "Cauldron", "Open" ).run ( gui );
+        if(cauldron == null){
+            new UseWorkStation ( new NAlias ( "cauldron" ), "Cauldron", "Open" ).run ( gui );
+        }else{
+            new UseWorkStation ( cauldron, "Cauldron", "Open" ).run ( gui );
+        }
         new TransferToContainer ( iitems, "Cauldron" ).run ( gui );
         return new Results ( Results.Types.SUCCESS );
     }
@@ -63,6 +72,25 @@ public class CauldronAction implements Action {
             fromBarrel = true;
         }
     }
+
+    public CauldronAction (
+            Gob cauldron,
+            NAlias iitems,
+            NAlias oitems,
+            AreasID input,
+            AreasID outut,
+            boolean barrel
+    ) {
+        this.cauldron = cauldron;
+        this.iitems = iitems;
+        this.oitems = oitems;
+        this.input = input;
+        this.outut = outut;
+        if ( barrel ) {
+            toBarrel = true;
+            fromBarrel = true;
+        }
+    }
     
     
     boolean toBarrel = false;
@@ -71,5 +99,6 @@ public class CauldronAction implements Action {
     NAlias oitems;
     AreasID input;
     AreasID outut;
+    Gob cauldron = null;
     
 }
