@@ -16,7 +16,7 @@ public class UseItemOnItem implements Action {
         else
             new TakeToHand ( src ).run ( gui );
         target_item.wdgmsg ( "itemact",0 );
-        NUtils.waitEvent(()->gui.vhand==null,50);
+        NUtils.waitEvent(()->gui.vhand==null,100);
         return new Results ( Results.Types.SUCCESS );
     }
     

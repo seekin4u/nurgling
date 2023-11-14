@@ -28,13 +28,13 @@ public class RestorePrimRod implements Action {
             if(!fromInv) new TakeFromContainers ( fishline_prop.name, fishlanes, 1, tools, fishline_prop.cap ).run ( gui );
             new UseItemOnItem ( fishlanes, rod ).run ( gui );
         }
-        NUtils.waitEvent(()->NUtils.checkContent ( rod, fishlanes ),50);
+        NUtils.waitEvent(()->NUtils.checkContent ( rod, fishlanes ),100);
         if ( !NUtils.checkContent ( rod, hooks ) ) {
             NUtils.ContainerProp fishline_prop = NUtils.getContainerType ( tools );
             if(!fromInv) new TakeFromContainers ( fishline_prop.name, hooks, 1, tools, fishline_prop.cap ).run ( gui );
             new UseItemOnItem ( hooks, rod ).run ( gui );
         }
-        NUtils.waitEvent(()->NUtils.checkContent ( rod, hooks ),50);
+        NUtils.waitEvent(()->NUtils.checkContent ( rod, hooks ),100);
         if ( !NUtils.checkContent ( rod, bait_item ) ) {
             if(!fromInv){
                 if ( !Finder.findObjectsInArea (
