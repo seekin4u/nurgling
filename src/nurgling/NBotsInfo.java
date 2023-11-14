@@ -2,6 +2,8 @@ package nurgling;
 
 import haven.*;
 import nurgling.bots.*;
+import nurgling.bots.actions.BoneAshBurner;
+import nurgling.bots.actions.LyeBoiler;
 import nurgling.bots.build.*;
 
 
@@ -100,6 +102,8 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
             layouts.get ( 2 ).add ( new NButton ( "Tanning", new Tanning ( gui ),
                     "bots/icons/tanning" ) );
             layouts.get ( 2 ).add ( new NButton ( "Branch", new BranchMaker (  gui ),"bots/icons/branch" ) );
+            layouts.get ( 2 ).add ( new NButton ( "BoneAshBurner", new BoneToAsh(  gui ),"bots/icons/boneAsh" ) );
+            layouts.get ( 2 ).add ( new NButton ( "LyeBoiler", new AshToLye(  gui ),"bots/icons/ashBoiler" ) );
 
 
 //            layouts.get ( 2 ).add ( new NButton ( "GardenPot", new Gardener ( gui ),

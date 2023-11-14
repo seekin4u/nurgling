@@ -1,0 +1,6 @@
+#name
+Brick Maker
+#req
+lqbone, kilns, boneashes, candelabrum, branch
+#text
+Take bone ashes from kilns to "boneashes" storage, take bones from "lqbone" piles, take sticks from "branch", use light source from "candelabrum".
