@@ -78,10 +78,12 @@ public class UseWorkStation implements Action {
 
     public UseWorkStation(
             Gob gob,
+            NAlias names,
             String cap,
             String action
     ) {
         this.workstation = gob;
+        this.names = names;
         this.cap = cap;
         this.action = action;
         this.withAction = true;

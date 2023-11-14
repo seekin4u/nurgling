@@ -1,0 +1,6 @@
+#name
+Lye boiler
+#req
+boilers, barrels, water, block, candelabrum
+#text
+Take ash from barrel with "ash" overlay. Boil in cauldrons, fill with blocks from "blocks" area, lit with candelabrum. Fill cauldrons with water. Take lye to barrel with "lye" overlay.

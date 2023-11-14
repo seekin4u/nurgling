@@ -19,7 +19,7 @@ public class CauldronAction implements Action {
         if(cauldron == null){
             new UseWorkStation ( new NAlias ( "cauldron" ), "Cauldron", "Open" ).run ( gui );
         }else{
-            new UseWorkStation ( cauldron, "Cauldron", "Open" ).run ( gui );
+            new UseWorkStation ( cauldron, new NAlias("cauldron"), "Cauldron", "Open" ).run ( gui );
         }
         
         while ( !gui.getInventory( "Cauldron" ).getWItems ( iitems ).isEmpty () &&
@@ -27,11 +27,12 @@ public class CauldronAction implements Action {
                 ( getModelAttribute ( Finder.findObject ( new NAlias ( "cauldron" )) ) & 4 ) != 0 ) {
             Thread.sleep ( 1000 );
         }
-        if ( ( getModelAttribute ( Finder.findObject ( new NAlias ( "cauldron" ) ) ) & 2 ) == 0 ||
+        /*if ( ( getModelAttribute ( Finder.findObject ( new NAlias ( "cauldron" ) ) ) & 2 ) == 0 ||
                 ( getModelAttribute ( Finder.findObject ( new NAlias ( "cauldron" ) ) ) & 4 ) == 0 ) {
             return new Results ( Results.Types.SUCCESS );
-        }
+        }*/
         if ( !gui.getInventory ( "Cauldron" ).getWItems ( oitems ).isEmpty () ) {
+            //todo: исключение на тип предмета, если это "пепел" а не готовый лай
             new TakeFromContainer ( "Cauldron", oitems, 9 ).run ( gui );
         }
         if ( toBarrel ) {
@@ -50,7 +51,7 @@ public class CauldronAction implements Action {
         if(cauldron == null){
             new UseWorkStation ( new NAlias ( "cauldron" ), "Cauldron", "Open" ).run ( gui );
         }else{
-            new UseWorkStation ( cauldron, "Cauldron", "Open" ).run ( gui );
+            new UseWorkStation ( cauldron, new NAlias("cauldron"), "Cauldron", "Open" ).run ( gui );
         }
         new TransferToContainer ( iitems, "Cauldron" ).run ( gui );
         return new Results ( Results.Types.SUCCESS );
