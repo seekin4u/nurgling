@@ -101,9 +101,10 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
                     "bots/icons/branchash" ) );
             layouts.get ( 2 ).add ( new NButton ( "Tanning", new Tanning ( gui ),
                     "bots/icons/tanning" ) );
-            layouts.get ( 2 ).add ( new NButton ( "Branch", new BranchMaker (  gui ),"bots/icons/branch" ) );
-            layouts.get ( 2 ).add ( new NButton ( "BoneAshBurner", new BoneToAsh(  gui ),"bots/icons/boneAsh" ) );
-            layouts.get ( 2 ).add ( new NButton ( "LyeBoiler", new AshToLye(  gui ),"bots/icons/ashBoiler" ) );
+            layouts.get ( 2 ).add ( new NButton ( "Branch", new BranchMaker (gui),"bots/icons/branch" ) );
+            layouts.get ( 2 ).add ( new NButton ( "BoneAshBurner", new BoneToAsh(gui),"bots/icons/boneAsh" ) );
+            layouts.get ( 2 ).add ( new NButton ( "LyeBoiler", new AshToLye(gui),"bots/icons/ashBoiler" ) );
+            layouts.get ( 2 ).add ( new NButton ( "GardenPo", new GardenPotMaker(gui),"bots/icons/ashBoiler" ) );
 
 
 //            layouts.get ( 2 ).add ( new NButton ( "GardenPot", new Gardener ( gui ),

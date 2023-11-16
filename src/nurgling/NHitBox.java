@@ -365,9 +365,9 @@ public class NHitBox extends NArea {
 //        else if ( name.contains ( "villageidol" ) ) {
 //            return new NHitBox ( new Coord2d ( -11, -16.5 ), new Coord2d ( 11, 16.5 ) );
 //        }
-//        else if ( name.contains ( "gardenpot" ) || name.contains ( "iconsign" ) || name.contains ( "barterstand-sign" )) {
-//            return new NHitBox ( new Coord2d ( -2.75, -2.75 ), new Coord2d ( 2.75, 2.75 ) );
-//        }
+        else if ( name.contains ( "gardenpot" ) /*|| name.contains ( "iconsign" ) || name.contains ( "barterstand-sign" )*/) {
+            return new NHitBox ( new Coord2d ( -2.75, -2.75 ), new Coord2d ( 2.75, 2.75 ) );
+        }
 //        else if ( name.contains ( "chest" ) || name.contains ( "metalcabinet" ) ) {
 //            return new NHitBox ( new Coord2d ( -4.125, -4.125 ), new Coord2d ( 4.125, 4.125 ) );
 //        }
