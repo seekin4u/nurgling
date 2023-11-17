@@ -16,7 +16,7 @@ public class SmelterAction implements Action {
     static NAlias ores = new NAlias ( new ArrayList<> (
             Arrays.asList ( "cassiterite", "hematite", "peacockore", "chalcopyrite", "malachite", "leadglance",
                     "cinnabar", "galena", "ilmenite", "hornsilver", "argentite", "sylvanite" , "magnetite", "nagyagite", "petzite", "cuprite","limonite") ) );
-    private final NAlias smelter_name = new NAlias ( new ArrayList<> ( Arrays.asList ( "primsmelter" ) ),
+    private final NAlias smelter_name = new NAlias ( new ArrayList<> ( Arrays.asList ( "smelter" ) ),
             new ArrayList<> () );
 
     boolean isPrim = false;
@@ -85,8 +85,9 @@ public class SmelterAction implements Action {
 
             //Fill the smelter with fuel from the piles
             new FillFuelSmelter ( smelter_name ).run ( gui );
+            new TransferToPile(AreasID.coal, NHitBox.getByName("stockpile"), new NAlias("stockpile"), new NAlias("coal")).run(gui);
             /// Light fire
-            new LightGobTorch(new NAlias ( "smelter" ), AreasID.kilns, 1).run(gui);
+            new LightGobTorch(new NAlias ( "smelter" ), AreasID.smelter, 2).run(gui);
 //            new LightGob ( new NAlias ( "smelter" ), AreasID.smelter, 2 ).run ( gui );
         }
         return new Results ( Results.Types.SUCCESS );
