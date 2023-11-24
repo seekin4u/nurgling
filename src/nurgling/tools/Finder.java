@@ -522,7 +522,21 @@ public class Finder {
         //        }
         return result;
     }
-    
+
+    public static Gob getNearestGardenPot()
+    {
+        ArrayList<Gob> gobs = Finder.findObjects(new NAlias("gardenpot"));
+        double dist = -1;
+        Gob result = null;
+        for (Gob gob : gobs) {
+            if ((gob.getattr(Following.class) != null) && (dist != -1 && gob.rc.dist(NUtils.getGameUI().map.player().rc) < dist) || dist == -1) {
+                dist = gob.rc.dist(NUtils.getGameUI().map.player().rc);
+                result = gob;
+            }
+        }
+        return result;
+    }
+
     public static WItem findDressedItem (
             NAlias name
     ) {

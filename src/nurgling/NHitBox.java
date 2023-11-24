@@ -8,9 +8,7 @@ import nurgling.tools.NArea;
 import java.util.HashMap;
 
 public class NHitBox extends NArea {
-    public String toString() {
-        return  ("Sizes:" + coord2ds[0].toString() + "|" + coord2ds[2].toString() + " Pos: " + center.toString());
-    }
+
 
     public static NHitBox _default = new NHitBox ( new Coord2d( -5.5, -5.5 ), new Coord2d ( 5.5, 5.5 ) );;
     public static NHitBox _default2 = new NHitBox ( new Coord2d( -8.25, -8.25 ), new Coord2d ( 8.25, 8.25 ) );;
@@ -209,9 +207,8 @@ public class NHitBox extends NArea {
         hitboxes.put("gfx/terobjs/vehicle/plow", new NHitBox( new Coord2d ( -8.25, -5.5 ), new Coord2d ( 8.25, 5.5 )));
         hitboxes.put("gfx/terobjs/cistern", new NHitBox(  new Coord2d ( -9.625, -9.625 ), new Coord2d ( 9.625, 9.625 )));
         hitboxes.put("gfx/terobjs/ladder", new NHitBox(  new Coord2d ( -2.75, -8.25 ), new Coord2d ( 2.75, 8.25 )));
+        hitboxes.put("gfx/terobjs/gardenpot", new NHitBox(  new Coord2d ( -3, -3 ), new Coord2d ( 3, 3 )));
     }
-
-
     public static NHitBox getByName ( String name ) {
 //        if ( name.contains ( "stockpile-branch" )  ) {
 //            return new NHitBox ( new Coord2d ( -3.4375, -3.4375 ), new Coord2d ( 3.4375, 3.4375 ) );
@@ -365,9 +362,9 @@ public class NHitBox extends NArea {
 //        else if ( name.contains ( "villageidol" ) ) {
 //            return new NHitBox ( new Coord2d ( -11, -16.5 ), new Coord2d ( 11, 16.5 ) );
 //        }
-        else if ( name.contains ( "gardenpot" ) /*|| name.contains ( "iconsign" ) || name.contains ( "barterstand-sign" )*/) {
-            return new NHitBox ( new Coord2d ( -2.75, -2.75 ), new Coord2d ( 2.75, 2.75 ) );
-        }
+//        else if ( name.contains ( "gardenpot" ) /*|| name.contains ( "iconsign" ) || name.contains ( "barterstand-sign" )*/) {
+//            return new NHitBox ( new Coord2d ( -2.75, -2.75 ), new Coord2d ( 2.75, 2.75 ) );
+//        }
 //        else if ( name.contains ( "chest" ) || name.contains ( "metalcabinet" ) ) {
 //            return new NHitBox ( new Coord2d ( -4.125, -4.125 ), new Coord2d ( 4.125, 4.125 ) );
 //        }
