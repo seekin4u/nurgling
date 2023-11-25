@@ -28,7 +28,7 @@ public class NWindow extends Window {
         super ( new Coord ( sz ), name );
         this.bot = bot;
         /// Добавляем кнопку отмены
-        add ( new Button ( buttons_size, "Close" ) {
+        add ( new Button ( sz.x, "Close" ) {
             /**
              * Реализация слота клик
              */
