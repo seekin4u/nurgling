@@ -662,8 +662,9 @@ public class NUtils {
             for (Widget w = inv.lchild; w != null; w = w.prev) {
                 if (w instanceof VMeter) {
                     for (LayerMeter.Meter meter : ((VMeter) w).meters) {
-                        if (meter.c.getRed() == c.getRed() && meter.c.getBlue() == c.getBlue() && meter.c.getGreen() == c.getGreen())
+                        if (meter.c.getRed() == c.getRed() && meter.c.getBlue() == c.getBlue() && meter.c.getGreen() == c.getGreen()) {
                             return meter.a;
+                        }
                     }
                 }
             }
