@@ -75,7 +75,7 @@ public class Goat extends Entry {
 			return 0;
 		NConfiguration.GoatsHerd herd = NConfiguration.getInstance().goatsHerd.get(NConfiguration.getInstance().selected_goatsHerd);
 
-		double ql = (q > (seedq - herd.breedingGap.get())) ? (q + seedq - herd.breedingGap.get()) / 2. : q + ((seedq - herd.breedingGap.get()) - q) * herd.coverbreed.get();
+		double ql = (!herd.ignoreBD || billy)?(q > (seedq - herd.breedingGap.get())) ? (q + seedq - herd.breedingGap.get()) / 2. : q + ((seedq - herd.breedingGap.get()) - q) * herd.coverbreed.get():q;
 		double m = ql * herd.meatq.get() * meatq / 100.;
 		double qm = meat * herd.meatquan1.get() + ((meat > herd.meatquanth.get()) ? ((meat - herd.meatquanth.get()) * (herd.meatquan2.get() - herd.meatquan1.get())) : 0);
 		double _milk = ql * herd.milkq.get() * milkq / 100.;
@@ -83,8 +83,8 @@ public class Goat extends Entry {
 		double _wool = ql * herd.woolq.get() * woolq / 100.;
 		double qwool = wool * herd.woolquan1.get() + ((wool > herd.woolquanth.get()) ? ((wool - herd.woolquanth.get()) * (herd.woolquan2.get() - herd.woolquan1.get())) : 0);
 		double hide = ql * herd.hideq.get() * hideq / 100.;
-
-		return Math.round((m + qm + _milk + qmilk + _wool + qwool + hide) * 10) / 10.;
+		double k_res = (m + qm + _milk + qmilk + _wool + qwool + hide);
+		return k_res == 0 ? ql : Math.round(k_res * 10) / 10.;
 	}
 }
 

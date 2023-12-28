@@ -686,12 +686,10 @@ public class NUtils {
 
         @Override
         public void run() {
-            while (getGameUI().map==null || !getGameUI ().ui.sess.glob.map.isLoaded()) {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
             switch (NConfiguration.botmod.bot){
                 case "Dreamer":
@@ -752,10 +750,6 @@ public class NUtils {
     public static void setGameUI(NGameUI nGameUI) {
         gameUI = nGameUI;
         NTimer.start(gameUI);
-
-        if(NConfiguration.botmod!=null){
-            new Thread(new AutoBot()).start();
-        }
     }
 
     static Optional<Integer> speedValue = Optional.empty();
@@ -1425,9 +1419,10 @@ public class NUtils {
     }
 
     public static double getEnergy() {
-        IMeter.Meter njr = getGameUI().getmeter ( "njr", 0 );
-        return njr.a;// double [0.0;1.0]
+        IMeter.Meter stam = getGameUI().getmeter ( "nrj", 0 );
+        return stam.a*10000;
     }
+
     public static int getEqupmentId () {
         int id = 0;
         /// Проверяем все зарегистрированные виджеты
@@ -1863,14 +1858,9 @@ public class NUtils {
                 }
             }
         }
-        do {
-            gameUI.getMap()
-                    .wdgmsg("place", coord.floor(posres), (int) Math.round(rotation * 32768 / Math.PI), 1, 0);
-            Thread.sleep(50);
-        }
-        while (Finder.findObjectInArea(new NAlias("consobj"), 1000, area) == null);
+        gameUI.getMap().wdgmsg("place", coord.floor(posres), (int) Math.round(rotation * 32768 / Math.PI), 1, 0);
 
-        waitEvent(()->NUtils.isPose(NUtils.getGameUI().map.player(),new NAlias("thinkan")), 500);
+        waitEvent(()->NUtils.isPose(NUtils.getGameUI().map.player(),new NAlias("thinkan")) && gameUI.getBuildWindow(name)!=null, 500);
         spwnd = gameUI.getBuildWindow(name);
         if (spwnd != null) {
             for (Widget sp = spwnd.lchild; sp != null; sp = sp.prev) {

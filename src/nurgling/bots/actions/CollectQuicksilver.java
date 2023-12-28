@@ -19,9 +19,17 @@ public class CollectQuicksilver implements Action {
     public Results run ( NGameUI gui )
             throws InterruptedException {
         if ( name == null ) {
-            NUtils.ContainerProp iprop = NUtils.getContainerType ( Finder.findObject ( new NAlias("smelter")) );
-            name = iprop.name;
-            cap = iprop.cap;
+            if(!Finder.findObjectsInArea(new NAlias("primsmelter"), Finder.findNearestMark(AreasID.smelter)).isEmpty())
+            {
+                NUtils.ContainerProp iprop = NUtils.getContainerType ( Finder.findObject ( new NAlias("smelter")) );
+                name = iprop.name;
+                cap = iprop.cap;
+            }
+            else
+            {
+                cap = "Ore Smelter";
+                name = new NAlias("smelter");
+            }
         }
         
         ArrayList<Gob> in = Finder.findObjects ( name );
@@ -32,7 +40,7 @@ public class CollectQuicksilver implements Action {
             WItem activeBucket = null;
             for ( WItem bucket : buckets ) {
                 if ( NUtils.getContent ( bucket.item )!= null && NUtils.checkName ( NUtils.getContent ( bucket.item ),
-                        new NAlias ( new ArrayList<> ( Arrays.asList ( "quicksilver", "free" ) ) ) ) ) {
+                        new NAlias ( new ArrayList<> ( Arrays.asList ( "quicksilver", "free" ) ) ) ) ||  NUtils.getContent ( bucket.item ) == null ) {
                     activeBucket = bucket;
                 }
             }
@@ -50,7 +58,7 @@ public class CollectQuicksilver implements Action {
             }
     
             for ( Gob gob : in ) {
-                if ( NUtils.checkName ( NUtils.getContent ( gui.vhand.item ), new NAlias ( new ArrayList<> ( Arrays.asList ( "quicksilver" ) ) ) ) ) {
+                if ( NUtils.getContent ( gui.vhand.item ) != null && NUtils.checkName ( NUtils.getContent ( gui.vhand.item ), new NAlias ( new ArrayList<> ( Arrays.asList ( "quicksilver" ) ) ) ) ) {
                     if ( NUtils.getContentNumber ( gui.vhand ) > 1 ) {
                         /// Сливаем лишнюю ртуть
                         new TransferBucketToBarrel ( AreasID.barrels, new NAlias ( new ArrayList<> ( Arrays.asList ( "quicksilver", "mercury" ) ) ) ).run (

@@ -1,6 +1,9 @@
 package nurgling;
 
 import haven.*;
+import nurgling.minimap.NSMarker;
+
+import java.net.MalformedURLException;
 
 public class NMiniMapWnd extends NResizedWidget{
     NMapView map;
@@ -31,8 +34,9 @@ public class NMiniMapWnd extends NResizedWidget{
         ResCache mapstore = ResCache.global;
         if(MapFile.mapbase.get() != null) {
             try {
-                mapstore = HashDirCache.get(MapFile.mapbase.get().toURI());
-            } catch(java.net.URISyntaxException e) {
+                mapstore = HashDirCache.get(String.valueOf(MapFile.mapbase.get().toURL()));
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
             }
         }
         if(mapstore != null) {
@@ -99,7 +103,7 @@ public class NMiniMapWnd extends NResizedWidget{
 
         public boolean clickmarker(DisplayMarker mark, Location loc, int button, boolean press) {
             if(mark.m instanceof MapFile.SMarker) {
-                Gob gob = MarkerID.find(ui.sess.glob.oc, ((MapFile.SMarker)mark.m).oid);
+                Gob gob = MarkerID.find(ui.sess.glob.oc, ((NSMarker)mark.m));
                 if(gob != null)
                     mvclick(map, null, loc, gob, button);
             }

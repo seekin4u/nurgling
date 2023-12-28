@@ -18,6 +18,17 @@ public class SelectFlowerAction implements Action {
         this.type = type;
     }
 
+    boolean skip = false;
+    public SelectFlowerAction(
+            NGItem item,
+            String action,
+            Types type,
+            boolean skip
+    ) {
+        this(item, action, type);
+        this.skip = skip;
+    }
+
     public SelectFlowerAction(
             NAlias name,
             String action,

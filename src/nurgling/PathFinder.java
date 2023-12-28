@@ -118,7 +118,7 @@ public class PathFinder {
         this.phantom = phantom;
         this.phantom_hitbox = hitBox;
         this.phantom_hitbox.correct(phantom, 0);
-        this.default_delta = 5;
+        this.default_delta = 2;
     }
 
 
@@ -155,6 +155,8 @@ public class PathFinder {
 
         @Override
         public void run() {
+
+
             if(vertex.get(start) == null)
                 return;
             vertex.get(start).length = 0;
@@ -230,14 +232,15 @@ public class PathFinder {
                 if(checkBattle()){
                     return;
                 }
-                horseMode = (Finder.findObject(new NAlias("horse"))!= null && gui.map.player().isTag(NGob.Tags.mounted)) ;
-                if(horseMode){
-                    horse = Finder.findObject(new NAlias("horse"));
-                }
+
                 calculateGridSize();
 
-
-                map = new NMap(gui, ignored_id, endCoord, cell_half, cell_num,
+                ArrayList<Long> ignored = new ArrayList<>();
+                if(ignored_id!=-1)
+                    ignored.add(ignored_id);
+                if(horse!=null)
+                    ignored.add(horse.id);
+                map = new NMap(gui, ignored, endCoord, cell_half, cell_num,
                         (enableWater) ? 1 : enableAllWater ? 2 : 0, horseMode, trellis);
                 if (phantom != null) {
                     map.checkGob(phantom_hitbox, new Gob(null, phantom, 0));
@@ -303,7 +306,13 @@ public class PathFinder {
 
         }
         while (true);
-
+        if(phantom!=null) {
+            if (Math.abs(path.getLast().coord.x - endCoord.x) < 2.75) {
+                path.add(new Vertex(new Coord2d(endCoord.x, path.getLast().coord.y)));
+            } else if (Math.abs(path.getLast().coord.y - endCoord.y) < 2.75) {
+                path.add(new Vertex(new Coord2d(path.getLast().coord.x, endCoord.y)));
+            }
+        }
         fixPath();
     }
 
@@ -569,7 +578,7 @@ public class PathFinder {
             calculates.add(new PFCalculate(edge.start,edge.end,vertex));
             return true;
         }
-        int delta = default_delta;
+        int delta = default_delta * (horseMode?2:1);
         int fi = i + delta;
         int fj = j;
         while (fi < map.array.length) {
@@ -728,11 +737,14 @@ public class PathFinder {
 
         boolean isSuccess = false;
         boolean isReset = false;
-
+        horseMode = NUtils.isPose(NUtils.getGameUI().map.player(),new NAlias("riding-idle"));
+        if(horseMode){
+            horse = Finder.findObject(new NAlias("horse"));
+        }
         Coord2d currentCoord = (target!=null)?target.rc:null;
         while (!isSuccess) {
             endCoord = (target==null)?endCoord:target.rc;
-            coordFind(endCoord, 16, 1.375);
+            coordFind(endCoord, 16, 1.375*(horseMode?2:1));
             if(checkBattle())
                 return;
             if (!quick) {
@@ -742,8 +754,8 @@ public class PathFinder {
                     int reset_count = 0;
                     do {
 
-                        NUtils.waitEvent(()->NUtils.isPose(gui.map.player(),new NAlias("walk")),10,50);
-                        while ( NUtils.isPose(gui.map.player(), new NAlias("walk"))) {
+                        NUtils.waitEvent(()->NUtils.isPose(gui.map.player(),new NAlias("walk") ),10,50);
+                        while ( (NUtils.isPose(gui.map.player(), new NAlias("walk")) && horse == null) || (horse!=null && !NUtils.isPose(horse, new NAlias("idle")))) {
                             if (withAlarm) {
                                 if (NUtils.alarm()) {
                                     /// Тревога валим
@@ -761,11 +773,11 @@ public class PathFinder {
                             reset_count+=1;
                             gui.map.wdgmsg("click", Coord.z, vert.coord.floor(posres), 1, 0);
                         }else{
-                            if(gui.map.player().rc.dist(vert.coord) < 1.375 || (gui.map.player().rc.dist(vert.coord) < 2.75 && NUtils.isPose(gui.map.player(), new NAlias("idle"))))
+                            if(gui.map.player().rc.dist(vert.coord) < 1.375  || (gui.map.player().rc.dist(vert.coord) < 2.75 && NUtils.isPose(gui.map.player(), new NAlias("idle"))))
                                 break;
                         }
                     }while (reset_count<4);
-                    if (reset_count==4 || (type== Type.dyn && target!=null && currentCoord.dist(target.rc)>15)) {
+                    if ((reset_count==4 || (type== Type.dyn && target!=null && currentCoord.dist(target.rc)>15)) && horse == null) {
                         isReset = true;
                         if(target!=null) {
                             currentCoord = target.rc;

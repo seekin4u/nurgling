@@ -269,13 +269,15 @@ public class GameUI extends ConsoleHost implements Console.Directory, UI.Message
 	menubuttons(rbtnimg);
 	portrait = ulpanel.add(Frame.with(new Avaview(Avaview.dasz, plid, "avacam"), false), UI.scale(10, 10));
 	buffs = ulpanel.add(new Bufflist(), portrait.c.x + portrait.sz.x + UI.scale(10), portrait.c.y + ((IMeter.fsz.y + UI.scale(2)) * 2) + UI.scale(5 - 2));
-	umpanel.add(new Cal(), Coord.z);
+	umpanel.add(cal = new Cal(), Coord.z);
 //	syslog = chat.add(new ChatUI.Log("System"));
 	opts = add(new OptWnd());
 	opts.hide();
 	zerg = add(new Zergwnd(), Utils.getprefc("wndc-zerg", UI.scale(new Coord(187, 50))));
 	zerg.hide();
     }
+
+	public Cal cal;
 
     protected void attached() {
 	iconconf = loadiconconf();
@@ -761,12 +763,8 @@ public class GameUI extends ConsoleHost implements Console.Directory, UI.Message
 		mapfile = null;
 	    }
 	    ResCache mapstore = ResCache.global;
-	    if(MapFile.mapbase.get() != null) {
-		try {
-		    mapstore = HashDirCache.get(MapFile.mapbase.get().toURI());
-		} catch(java.net.URISyntaxException e) {
-		}
-	    }
+	    if(MapFile.mapbase.get() != null)
+		mapstore = HashDirCache.get(MapFile.mapbase.get());
 	    if(mapstore != null) {
 		MapFile file;
 		try {
@@ -1015,9 +1013,9 @@ public class GameUI extends ConsoleHost implements Console.Directory, UI.Message
 //	}
     }
     
-    private String iconconfname() {
+    private String iconconfname(String ver) {
 	StringBuilder buf = new StringBuilder();
-	buf.append("data/mm-icons");
+	buf.append("data/mm-icons" + ver);
 	if(genus != null)
 	    buf.append("/" + genus);
 	if(ui.sess != null)
@@ -1029,22 +1027,29 @@ public class GameUI extends ConsoleHost implements Console.Directory, UI.Message
 	if(ResCache.global == null)
 	    return(new GobIcon.Settings());
 	try {
-	    try(StreamMessage fp = new StreamMessage(ResCache.global.fetch(iconconfname()))) {
+	    try(StreamMessage fp = new StreamMessage(ResCache.global.fetch(iconconfname("-2")))) {
 		return(GobIcon.Settings.load(fp));
 	    }
 	} catch(java.io.FileNotFoundException e) {
-	    return(new GobIcon.Settings());
 	} catch(Exception e) {
 	    new Warning(e, "failed to load icon-conf").issue();
-	    return(new GobIcon.Settings());
 	}
+	try {
+	    try(StreamMessage fp = new StreamMessage(ResCache.global.fetch(iconconfname("")))) {
+		return(GobIcon.Settings.loadold(fp));
+	    }
+	} catch(java.io.FileNotFoundException e) {
+	} catch(Exception e) {
+	    new Warning(e, "failed to load old icon-conf").issue();
+	}
+	return(new GobIcon.Settings());
     }
 
     public void saveiconconf() {
 	if(ResCache.global == null)
 	    return;
 	try {
-	    try(StreamMessage fp = new StreamMessage(ResCache.global.store(iconconfname()))) {
+	    try(StreamMessage fp = new StreamMessage(ResCache.global.store(iconconfname("-2")))) {
 		iconconf.save(fp);
 	    }
 	} catch(Exception e) {
@@ -1064,7 +1069,7 @@ public class GameUI extends ConsoleHost implements Console.Directory, UI.Message
 
 	public boolean clickmarker(DisplayMarker mark, Location loc, int button, boolean press) {
 	    if(mark.m instanceof MapFile.SMarker) {
-		Gob gob = MarkerID.find(ui.sess.glob.oc, ((MapFile.SMarker)mark.m).oid);
+		Gob gob = MarkerID.find(ui.sess.glob.oc, (MapFile.SMarker)mark.m);
 		if(gob != null)
 		    mvclick(map, null, loc, gob, button);
 	    }

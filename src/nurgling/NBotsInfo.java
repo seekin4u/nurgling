@@ -104,7 +104,7 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
             layouts.get ( 2 ).add ( new NButton ( "Branch", new BranchMaker (gui),"bots/icons/branch" ) );
             layouts.get ( 2 ).add ( new NButton ( "BoneAshBurner", new BoneToAsh(gui),"bots/icons/boneAsh" ) );
             layouts.get ( 2 ).add ( new NButton ( "LyeBoiler", new AshToLye(gui),"bots/icons/ashBoiler" ) );
-            layouts.get ( 2 ).add ( new NButton ( "GardenPo", new GardenPotMaker(gui),"bots/icons/gardenPots" ) );
+            layouts.get ( 2 ).add ( new NButton ( "GardenPo", new GardenPotMaker(gui),"bots/icons/ugardenpot" ) );
 
 
 //            layouts.get ( 2 ).add ( new NButton ( "GardenPot", new Gardener ( gui ),
@@ -137,6 +137,8 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
                     "bots/icons/cloth" ) );
             layouts.get ( 3 ).add ( new NButton ( "Craft Tarsticks", new TarSticker ( gui ),
                     "bots/icons/tarsticks" ) );
+            layouts.get ( 3 ).add ( new NButton ( "Craft WIron", new FineryForge ( gui ),
+                    "bots/icons/ff" ) );
 //            layouts.get ( 3 ).add ( new NButton ( "Bone Glue", new nurgler.bots.crafting.BoneGlue (  gui ),
 //                    Special.getPath () + "/icons/boneglue.png" ) );
 //            layouts.get ( 3 ).add ( new NButton ( "Harden Leather", new HardenLeatherMaker (  gui ),
@@ -350,6 +352,8 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
                     "bots/icons/fillwaterskin"  ) );
             layouts.get ( 5000 ).add ( new NButton ( "DreamHarvester", new DreamHarvester ( gui ),
                     "bots/icons/dreamer"  ) );
+            layouts.get ( 5000 ).add ( new NButton ( "DanserAction", new Dancer( gui ),
+                    "bots/icons/dance"  ) );
             layouts.get ( 5000 ).add ( new NButton ( "CollectAll", new AllToPile ( gui ),
                     "bots/icons/collectitemstopiles"  ) );
             layouts.get ( 5000 ).add ( new NButton ( "GateBot", new GateBot ( gui ), "bots/icons/fenceBot") );
