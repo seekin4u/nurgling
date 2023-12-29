@@ -14,25 +14,30 @@ public class FillFluidOnce implements Action {
     public Results run (NGameUI gui )
             throws InterruptedException {
         Gob barrel = Finder.findObjectInArea ( new NAlias( "barrel" ), 1000, Finder.findNearestMark ( input ) );
-        ArrayList<Gob> tunner;
-        if ( withPaving ) {
-            tunner = Finder.findObjectsInArea ( target, Finder.findNearestMark ( output, paving ) );
+        ArrayList<Gob> tunner = new ArrayList<>();
+        if(gobToFill != null){
+            tunner.add(gobToFill);
         }
-        else {
-            if(output!=null)
-            tunner = Finder.findObjectsInArea ( target, Finder.findNearestMark ( output ) );
-            else
-                tunner = Finder.findObjects ( target );
+        else{
+            if ( withPaving ) {
+                tunner = Finder.findObjectsInArea ( target, Finder.findNearestMark ( output, paving ) );
+            }
+            else {
+                if(output!=null)
+                    tunner = Finder.findObjectsInArea ( target, Finder.findNearestMark ( output ) );
+                else
+                    tunner = Finder.findObjects ( target );
+            }
         }
         boolean isFound = false;
         for ( Gob gob : tunner ) {
-            if ( (  gob.getModelAttribute() & flag ) == 0 ) {
+            if ( ((  gob.getModelAttribute() & flag ) == 0) || forced ) {
                 isFound = true;
                 break;
             }
         }
         if ( !isFound ) {
-            return new Results ( Results.Types.SUCCESS );
+            return new Results ( Results.Types.NO_CONTAINER );
         }
 
         if ( new LiftObject( new NAlias ( "barrel" ), input ).run ( gui ).type != Results.Types.SUCCESS ) {
@@ -124,58 +129,20 @@ public class FillFluidOnce implements Action {
             AreasID output,
             int flag,
             NAlias target,
-            NAlias content
-    ) {
-        this.input = input;
-        this.output = output;
-        this.flag = flag;
-        this.target = target;
-        this.content = content;
-    }
-
-    public FillFluidOnce(
-            AreasID input,
-            int flag,
-            NAlias target,
-            NAlias content
-    ) {
-        this.input = input;
-        this.output = null;
-        this.flag = flag;
-        this.target = target;
-        this.content = content;
-    }
-
-    public FillFluidOnce(
-            AreasID input,
-            AreasID output,
-            int flag,
-            NAlias target,
             NAlias content,
-            String paving
-    ) {
-        this.input = input;
-        this.output = output;
-        this.flag = flag;
-        this.target = target;
-        this.content = content;
-        this.paving = paving;
-        this.withPaving = true;
-    }
-
-    public FillFluidOnce(
-            AreasID input,
-            AreasID output,
-            NAlias target,
-            NAlias content,
+            Gob gobToFill,
             boolean forced
     ) {
         this.input = input;
         this.output = output;
+        this.flag = flag;
         this.target = target;
         this.content = content;
+        this.gobToFill = gobToFill;
         this.forced = forced;
+
     }
+
     
     AreasID input;
     AreasID output;
@@ -185,4 +152,5 @@ public class FillFluidOnce implements Action {
     boolean forced = false;
     boolean withPaving = false;
     String paving;
+    Gob gobToFill;
 }

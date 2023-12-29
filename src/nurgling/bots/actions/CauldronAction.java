@@ -6,8 +6,11 @@ import haven.GItem;
 import haven.Gob;
 import nurgling.NAlias;
 import nurgling.NGameUI;
+import nurgling.NUtils;
 import nurgling.tools.AreasID;
 import nurgling.tools.Finder;
+
+import java.awt.*;
 
 import static nurgling.NGob.*;
 
@@ -54,6 +57,10 @@ public class CauldronAction implements Action {
             new UseWorkStation ( cauldron, new NAlias("cauldron"), "Cauldron", "Open" ).run ( gui );
         }
         new TransferToContainer ( iitems, "Cauldron" ).run ( gui );
+        if(NUtils.getFuelLvl("Cauldron", new Color(71, 101, 153)) < 0.95){
+            //fill with water
+            new FillFluidOnce(AreasID.water, AreasID.boilers, 4, new NAlias ( "cauldron" ), new NAlias ( "water" ), cauldron, true).run(gui);
+        }
         return new Results ( Results.Types.SUCCESS );
     }
     

@@ -35,8 +35,6 @@ public class LyeBoiler implements Action {
                 new PathFinder( gui, cauldron ).run ();
                 new CauldronAction ( cauldron, new NAlias ( "ash" ), new NAlias ( new ArrayList<> ( Arrays.asList ( "lye", "Lye" ) ) ),
                         AreasID.barrels, AreasID.barrels, true ).run(gui);
-                new FillFluid( AreasID.water, AreasID.boilers, 4, new NAlias ( "cauldron" ),
-                        new NAlias ( "water" )).run(gui);
                 cauldronToFill.add(cauldron);
                 new FillFuelFromPiles(2, new NAlias("block"), cauldronToFill, new NAlias("block"),
                         AreasID.block, 1).run(gui);

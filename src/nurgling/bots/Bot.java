@@ -38,7 +38,7 @@ public class Bot implements Runnable {
         /// Получаем ссылку на текущий поток
         thread = Thread.currentThread();
         /// Вызываем функцию инициализации бота
-        window = gameUI.add(new NWindow(this, this.win_title, win_sz));
+        window = gameUI.add(new NWindow(this, this.win_title, this.win_sz));
         window.move(UI.scale(new Coord(200,200)));
         try {
             initAction();
@@ -107,7 +107,7 @@ public class Bot implements Runnable {
     /// Заголовок виджета состояния бота
     protected String win_title = "Bot";
     /// Параметры виджета состояния окна
-    protected Coord win_sz = new Coord(UI.scale(80), UI.scale(200));
+    protected Coord win_sz = new Coord(UI.scale(300), UI.scale(300));
     protected ArrayList<Action> initActions = new ArrayList<>();
     protected ArrayList<Action> runActions = new ArrayList<>();
 }
