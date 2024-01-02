@@ -1,0 +1,6 @@
+#name
+Farmer tobacco
+#req
+tobacco, tobaccoLeaves
+#text
+tobacco is farming area, tobaccoLeaves is stockpiling area.
