@@ -62,8 +62,8 @@ public class Goats implements Action {
                 return !p1.billy && !p1.dead && p1.lactate;
             }
         };
-        new AnimalWool<Goat>(new NAlias("goat"), AreasID.goats,AreasID.wool,Goat.class,wlpred).run(gui);
         new AnimalMilk<Goat>(new NAlias("goat"), AreasID.goats,AreasID.milk,Goat.class,wlpred).run(gui);
+        new AnimalWool<Goat>(new NAlias("goat"), AreasID.goats,AreasID.wool,Goat.class,wlpred).run(gui);
         new AnimalAction<Goat>(new NAlias("goat"), AreasID.goats, comparator, Goat.class, wpred, wlpred,NConfiguration.getInstance().goatsHerd.get(NConfiguration.getInstance().selected_goatsHerd).adultGoats.get()).run(gui);
         new AnimalAction<Goat>(new NAlias("goat"), AreasID.goats, comparator, Goat.class, mpred, mlpred,1).run(gui);
         return new Results(Results.Types.SUCCESS);

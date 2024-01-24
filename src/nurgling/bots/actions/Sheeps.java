@@ -61,8 +61,8 @@ public class Sheeps implements Action {
                 return !p1.ram && !p1.dead && p1.lactate;
             }
         };
-        new AnimalWool<Sheep>(new NAlias("sheep"), AreasID.sheeps,AreasID.wool,Sheep.class,wlpred).run(gui);
         new AnimalMilk<Sheep>(new NAlias("sheep"), AreasID.sheeps,AreasID.milk,Sheep.class,wlpred).run(gui);
+        new AnimalWool<Sheep>(new NAlias("sheep"), AreasID.sheeps,AreasID.wool,Sheep.class,wlpred).run(gui);
         new AnimalAction<Sheep>(new NAlias("sheep"), AreasID.sheeps, comparator, Sheep.class, wpred, wlpred,NConfiguration.getInstance().sheepsHerd.get(NConfiguration.getInstance().selected_sheepsHerd).adultSheeps.get()).run(gui);
         new AnimalAction<Sheep>(new NAlias("sheep"), AreasID.sheeps, comparator, Sheep.class, mpred,mlpred,1).run(gui);
         return new Results(Results.Types.SUCCESS);
