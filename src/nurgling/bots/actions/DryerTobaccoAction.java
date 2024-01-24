@@ -21,7 +21,9 @@ public class DryerTobaccoAction implements Action {
             throws InterruptedException {
         if (Finder.findObjectInArea(new NAlias("barter"), 3000, Finder.findNearestMark(AreasID.tobacco_out)) == null) {
             /// Забираем высушенный табак и переносим его в ящики
-            new FillContainers(new NAlias("tobacco-cured"), AreasID.tobacco_out, new ArrayList<>(), new TakeMaxFromContainers(new NAlias("tobacco-cured"), AreasID.tobacco_work, new ArrayList<>())).run(gui);
+//            new FillContainers(new NAlias("tobacco-cured"), AreasID.tobacco_out, new ArrayList<>(), new TakeMaxFromContainers(new NAlias("tobacco-cured"), AreasID.tobacco_work, new ArrayList<>())).run(gui);
+            new TransferToPileFromContainer( new NAlias ( "htable" ), new NAlias ( "stockpile-pipeleaves" ),
+                    new NAlias("cured")  , AreasID.tobacco_out, "Herbalist" ).run(gui);
         } else {
             ArrayList<Gob> in = Finder.findObjects ( new NAlias("htable"), AreasID.tobacco_work );
 
