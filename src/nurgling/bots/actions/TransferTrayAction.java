@@ -49,28 +49,31 @@ public class TransferTrayAction implements Action {
     }
 
     boolean taskInBarter(NGameUI gui, LinkedList<CheesedShedule.Task> tasks, AreasID id) throws InterruptedException {
-        Gob gob = Finder.findObjectInArea(new NAlias("barter"), 2000,
-                Finder.findNearestMark(id));
+        //Gob gob = Finder.findObjectInArea(new NAlias("barter"), 2000, Finder.findNearestMark(id));
+        ArrayList<Gob> barters = Finder.findObjectsInArea(new NAlias("barter"), Finder.findNearestMark(id));
 
-        PathFinder pf = new PathFinder(gui, gob);
-        pf.run();
-        new OpenTargetContainer(gob, "Barter Stand").run(gui);
 
-        Window spwnd = gui.getWindow("Barter Stand");
-        if (spwnd != null) {
-            for (Widget sp = spwnd.lchild; sp != null; sp = sp.prev) {
-                if (sp instanceof Shopbox) {
-                    Shopbox sb = (Shopbox) sp;
-                    NUtils.waitEvent(()->sb.price != null && sb.spr != null, 10);
-                    if (sb.price != null && sb.spr != null) {
-                        if (NUtils.isIt(sb.res, new NAlias("cheesetray"))) {
-                            String value = NUtils.getContentName(sb.info());
-                            if (value != null) {
-                                for (CheesedShedule.Task task : tasks) {
-                                    for(CheesedShedule.Task.Status status: task.status) {
-                                        if (status.left >0 && status.name.contains(value)) {
-                                            if(workWithTray(status,gui,gob,id,task,value))
-                                                return true;
+        for( Gob barter: barters){
+            PathFinder pf = new PathFinder(gui, barter);
+            pf.run();
+            new OpenTargetContainer(barter, "Barter Stand").run(gui);
+
+            Window spwnd = gui.getWindow("Barter Stand");
+            if (spwnd != null) {
+                for (Widget sp = spwnd.lchild; sp != null; sp = sp.prev) {
+                    if (sp instanceof Shopbox) {
+                        Shopbox sb = (Shopbox) sp;
+                        NUtils.waitEvent(()->sb.price != null && sb.spr != null, 10);
+                        if (sb.price != null && sb.spr != null) {
+                            if (NUtils.isIt(sb.res, new NAlias("cheesetray"))) {
+                                String value = NUtils.getContentName(sb.info());
+                                if (value != null) {
+                                    for (CheesedShedule.Task task : tasks) {
+                                        for(CheesedShedule.Task.Status status: task.status) {
+                                            if (status.left >0 && status.name.contains(value)) {
+                                                if(workWithTray(status,gui,barter,id,task,value))
+                                                    return true;
+                                            }
                                         }
                                     }
                                 }
@@ -80,6 +83,35 @@ public class TransferTrayAction implements Action {
                 }
             }
         }
+//        PathFinder pf = new PathFinder(gui, gob);
+//        pf.run();
+//        new OpenTargetContainer(gob, "Barter Stand").run(gui);
+//
+//        Window spwnd = gui.getWindow("Barter Stand");
+//        if (spwnd != null) {
+//            for (Widget sp = spwnd.lchild; sp != null; sp = sp.prev) {
+//                if (sp instanceof Shopbox) {
+//                    Shopbox sb = (Shopbox) sp;
+//                    NUtils.waitEvent(()->sb.price != null && sb.spr != null, 10);
+//                    if (sb.price != null && sb.spr != null) {
+//                        if (NUtils.isIt(sb.res, new NAlias("cheesetray"))) {
+//                            String value = NUtils.getContentName(sb.info());
+//                            if (value != null) {
+//                                for (CheesedShedule.Task task : tasks) {
+//                                    for(CheesedShedule.Task.Status status: task.status) {
+//                                        if (status.left >0 && status.name.contains(value)) {
+//                                            if(workWithTray(status,gui,gob,id,task,value))
+//                                                return true;
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+
         return false;
     }
 
@@ -89,6 +121,9 @@ public class TransferTrayAction implements Action {
         new TakeFromContainers(new NAlias("chest"), new NAlias(new ArrayList<>(Arrays.asList("branch"))),num
                 , id, "Chest").run(gui);
         num = Math.min(num, gui.getInventory().getWItems(new NAlias("branch")).size());
+        if(num == 0){
+            return false;
+        }
         new PathFinder(gui, gob).run();
         new OpenTargetContainer(gob, "Barter Stand").run(gui);
         Window spwnd = gui.getWindow("Barter Stand");
@@ -108,13 +143,14 @@ public class TransferTrayAction implements Action {
                             NUtils.waitEvent(()->sb.price != null && sb.spr != null, 10);
                         }
                         break;
+
                     }
                 }
             }
         }
         AreasID target_id = findTargetPlace(task, value);
         if (target_id != null) {
-            new TransferItemsToBarter(target_id, new NAlias("cheesetray"), false).run(gui);
+            new TransferItemsToBarter(target_id, new NAlias("cheesetray"), false, true).run(gui);
             status.left-=transfered;
         }
         else

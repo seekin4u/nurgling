@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import haven.Button;
 import haven.Label;
+import haven.res.ui.tt.drinkbuff.Drinkbuff;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -213,6 +214,30 @@ public class NGameUI extends GameUI {
     NToolBelt t3;
 
     NEquipProxy extEquipory;
+
+    public class lastError{
+        private int counter = 0;
+        private String lastError = "no error";
+
+        public void setLastError(String lastError) {
+            this.lastError = lastError;
+            incCounter();
+        }
+
+        public int getCounter() {
+            return counter;
+        }
+
+        private void incCounter(){
+            counter++;
+        }
+
+        public String getLastError() {
+            return lastError;
+        }
+    }
+
+    public lastError chatError = new lastError();
     public void updateButtons(){
         t1.updateButtons(NConfiguration.getInstance().toolBelts.get("belt0").toolKeys);
         t2.updateButtons(NConfiguration.getInstance().toolBelts.get("belt1").toolKeys);
@@ -239,6 +264,9 @@ public class NGameUI extends GameUI {
                     }
                 }
             }
+        }
+        if(msg.contains("cannot") || msg.contains("out of space")){
+            chatError.setLastError(msg);
         }
         syslog.append(msg, logcol);
     }
@@ -549,6 +577,40 @@ public class NGameUI extends GameUI {
             }
         }
         return realmBuff;
+    }
+
+    public Drinkbuff getDrinkList() {
+        Drinkbuff drb = null;
+        for (Widget wdg = child; wdg != null; wdg = wdg.next) {
+            if (wdg instanceof GameUI.Hidepanel) {
+                for (Widget wdg1 = wdg.child; wdg1 != null; wdg1 = wdg1.next) {
+                    if (wdg1 instanceof Bufflist) {
+                        for (Widget pbuff = wdg1.child; pbuff != null; pbuff = pbuff.next) {
+                            if (pbuff instanceof Buff) {
+                                String s = ((Buff) pbuff).res.get().name;
+                                if (NUtils.checkName(((Buff) pbuff).res.get().name, new NAlias("drink"))) {
+                                    ArrayList<ItemInfo> drinks = new ArrayList<>(((Buff) pbuff).info());
+                                    for (Object data : drinks) {
+                                        if (data instanceof Drinkbuff) {
+                                            Drinkbuff db = ((Drinkbuff) data);
+                                            db.toString();
+                                            System.out.println(db.nm + ":" + db.n);
+                                            drb = db;
+
+//                                            if (NUtils.checkName(ah.str.text, new NAlias("Wine"))) {
+//                                                System.out.println("success");
+//                                                //realmBuff = realmBuff + Double.parseDouble(ah.str.text.substring(ah.str.text.indexOf("+") + 1, ah.str.text.indexOf("%"))) / 100.;
+//                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return drb;
     }
 
     public int getMaxBase(){
