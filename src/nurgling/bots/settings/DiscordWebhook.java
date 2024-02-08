@@ -58,6 +58,9 @@ public class    DiscordWebhook extends Settings {
         prev = third = add(new Button(200, "Test hook"){
             @Override
             public void click() {
+                if(NConfiguration.getInstance().discordWebhookUrl != null &&
+                        NConfiguration.getInstance().discordWebhookUsername != null &&
+                        NConfiguration.getInstance().discordWebhookIcon != null)
                 DiscordWebhookWrap.Push("This is test message!");
             }
         }, prev.pos("bl").adds(0, 10));
