@@ -345,6 +345,8 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
                     "bots/icons/clearsnow"  ) );
             layouts.get ( 5000 ).add ( new NButton ( "Orca", new NomadFinderBot ( gui ),
                     "bots/icons/gobfinder"  ) );
+            layouts.get ( 5000 ).add ( new NButton ( "", new OysterFinderBot ( gui ),
+                    "bots/icons/sailoroyster"  ) );
             layouts.get ( 5000 ).add ( new NButton ( "FishSorter", new SortAndTransferFish ( gui ),
                     "bots/icons/fishsorter"  ) );
             layouts.get ( 5000 ).add ( new NButton ( "HideSorter", new SortAndTransferHides ( gui ),
@@ -363,7 +365,7 @@ public class NBotsInfo extends NDraggableWidget implements KeyBinding.Bindable {
             layouts.get ( 5000 ).add ( new NButton ( "CrossBot", new CrossBot ( gui ), "bots/icons/crossBot") );
             layouts.get ( 5000 ).add ( new NButton ( "FinderBot", new FinderBot ( gui ), "bots/icons/fish1") );
             layouts.get ( 5000 ).add ( new NButton ( "FillTreeplanter", new FillTreeplanter ( gui ),"bots/icons/testbot"  ) );
-            layouts.get ( 5000 ).add ( new NButton ( "TestBot", new Miner ( gui ),"bots/icons/testbot"  ) );
+            layouts.get ( 5000 ).add ( new NButton ( "TestBot", new TestBot_ ( gui ),"bots/icons/testbot"  ) );
 
 //            layouts.get ( 5000 ).add ( new NButton ( "Sort and Transfer Trash", new SortAndTransferTrash ( gui ),
 //                    Special.getPath () + "/icons/trash.png" ) );

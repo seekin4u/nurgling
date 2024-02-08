@@ -255,6 +255,31 @@ public class Finder {
         return result;
     }
 
+    public static ArrayList<Gob> findObjectsInArea (
+            NAlias name,
+            NAlias exclude,
+            NArea area
+    ) {
+        /// Расстояние до объекта с "запасом"
+        ArrayList<Gob> result = new ArrayList<> ();
+        if(area!=null) {
+            synchronized ( NUtils.getGameUI().ui.sess.glob.oc ) {
+                for ( Gob gob : NUtils.getGameUI().ui.sess.glob.oc ) {
+                    if ( NUtils.isGobInArea ( gob, area ) && gob != NUtils.getGameUI().map.player () ) {
+                        if( NUtils.isIt(gob, exclude)){
+                            continue;
+                        }
+                        if ( NUtils.isIt ( gob, name ) ) {
+                            result.add ( gob );
+                        }
+                    }
+                }
+            }
+            sort(result);
+        }
+        return result;
+    }
+
     public static ArrayList<Gob> findObjects (
             NAlias name
     ) {

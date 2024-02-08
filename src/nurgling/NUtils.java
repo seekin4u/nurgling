@@ -11,9 +11,11 @@ import haven.res.ui.croster.Entry;
 import haven.res.ui.croster.RosterWindow;
 import haven.res.ui.tt.defn.DefName;
 import nurgling.bots.*;
+import nurgling.bots.actions.Returner;
 import nurgling.bots.actions.SelectFlowerAction;
 import nurgling.bots.actions.UseItemOnItem;
 import nurgling.bots.actions.WaitAction;
+import nurgling.bots.settings.DiscordWebhookWrap;
 import nurgling.json.JSONObject;
 import nurgling.json.parser.JSONParser;
 import nurgling.tools.AreasID;
@@ -1315,6 +1317,33 @@ public class NUtils {
         for(Gob gob: gobs) {
             if (!gob.isTag(NGob.Tags.knocked) && gob.isTag(NGob.Tags.kritter_is_ready))
                 return true;
+        }
+        return false;
+    }
+
+    public static boolean alarmOyster() {
+        ArrayList<Gob> gobs;
+        gobs = Finder.findObjectsInArea(
+                new NAlias("oyster"),
+                new NAlias("oystermushroom"),
+                new NArea(gameUI.map.player().rc, 3999));
+        if(!gobs.isEmpty())
+            return true;
+        return false;
+    }
+
+    public static boolean alarmFoe(NGameUI gui) throws InterruptedException {
+        ArrayList<Gob> gobs = Finder.findObjects(new NAlias("borka"));
+        for (Gob gob : gobs) {
+            if(gob.id!=gui.map.player().id) {
+                int group = KinInfo.getGroup(gob);
+                if (group == 0 || group == 2 || group == -1 && gob.getattr(NGobHealth.class) == null) {
+                    NUtils.sendToChat("Abstáculos son oportunidades", "ПИДОРА НАШЕЛ");
+                    DiscordWebhookWrap.Push("Я НАШЕЛ ПИДОРА! <@196302145706786816>");
+                    new Returner( false).run(gui);
+                    return true;
+                }
+            }
         }
         return false;
     }
