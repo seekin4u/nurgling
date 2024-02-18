@@ -116,90 +116,67 @@ public class OysterFinder implements Action {
                             if (gob != null) {
                                 //заменить участок на обычный клик к каждой мидии по её координате, ПФ по воде долгий
                                 gui.map.wdgmsg("click", Coord.z, gob.rc.floor(posres), 1, 0);
-                                while( !(gui.map.player().rc.dist(gob.rc) < 1) ){
-                                    double temp_dist = gui.map.player().rc.dist(gob.rc);
-                                    NUtils.alarmFoe(NUtils.getGameUI());
+                                double temp_dist = gui.map.player().rc.dist(gob.rc);
+                                while( (gui.map.player().rc.dist(gob.rc) >= 2) ){
+                                    if(NUtils.alarmFoe(NUtils.getGameUI())){
+                                        //log out
+                                    }
                                     Thread.sleep(500);
 
-                                    while( !(gui.map.player().rc.dist(gob.rc) < 1) ){
-                                        NUtils.alarmFoe(NUtils.getGameUI());
-                                        Thread.sleep(500);
-                                        if(gui.map.player().rc.dist(gob.rc) == temp_dist){
-                                            //we do not move
-                                            PathFinder pf = new PathFinder(gui, gob.rc);
-                                            pf.setWithAlarm(false);
-                                            pf.run();
-                                        }
-                                        temp_dist = gui.map.player().rc.dist(gob.rc);
+                                    if(NUtils.alarmFoe(NUtils.getGameUI())){
+                                        //log out
                                     }
+                                    Thread.sleep(500);
+                                    if(gui.map.player().rc.dist(gob.rc) == temp_dist){
+                                        //we do not move
+                                        PathFinder pf = new PathFinder(gui, gob.rc);
+                                        pf.enableAllWater(true);
+                                        pf.setHardMode(true);
+                                        pf.setDefaultDelta(4);
+                                        pf.setPhantom ( gob.rc, NHitBox.getByName ( "cupboard" ) );
+                                        pf.run();
+                                        break;
+                                    }
+                                    temp_dist = gui.map.player().rc.dist(gob.rc);
                                 }
-                                //NUtils.waitEvent(() -> gui.map.player().rc.dist(gob.rc) < 5, 10);
-                                /*PathFinder pf = new PathFinder(gui, gob.rc);
-                                pf.setWithAlarm(false);
-                                pf.run();*/
+                                if(NUtils.alarmFoe(NUtils.getGameUI())){
+                                    //log out
+                                }
                                 new SelectFlowerAction(gob, "Pick", SelectFlowerAction.Types.Gob).run(gui);
                                 if(!NUtils.waitEvent(() -> NUtils.getGob(gob.id) == null, 500)){
-                                    //we are stuck somehow, get outa with PF.
+                                    //we can reroute there with pf again
                                     continue;
-                                    //gui.map.wdgmsg("click", Coord.z, pos.floor(posres), 1, 0);
-//                                    double temp_dist = gui.map.player().rc.dist(pos);
-//                                    while( !(gui.map.player().rc.dist(pos) < 1) ){
-//                                        NUtils.alarmFoe(NUtils.getGameUI());
-//                                        Thread.sleep(500);
-//                                        if(gui.map.player().rc.dist(pos) == temp_dist){
-//                                            //we do not move
-//                                            PathFinder pf = new PathFinder(gui, gob.rc);
-//                                            pf.setWithAlarm(false);
-//                                            pf.run();
-//                                        }
-//                                        temp_dist = gui.map.player().rc.dist(pos);
-//                                    }
                                 }
                             }
                         }
                     }
-                    //comeback after we pick big cluster, after this step Finder is going to load next point from nomad file and go
                     gui.map.wdgmsg("click", Coord.z, pos.floor(posres), 1, 0);
-                    while( !(gui.map.player().rc.dist(pos) < 1) ){
-                        NUtils.alarmFoe(NUtils.getGameUI());
-                        Thread.sleep(500);
+                    double temp_dist = gui.map.player().rc.dist(pos);
+                    while( (gui.map.player().rc.dist(pos) >= 2) ){
+                        if(NUtils.alarmFoe(NUtils.getGameUI())){
 
-                        double temp_dist = gui.map.player().rc.dist(pos);
-                        while( !(gui.map.player().rc.dist(pos) < 1) ){
-                            NUtils.alarmFoe(NUtils.getGameUI());
-                            Thread.sleep(500);
-                            if(gui.map.player().rc.dist(pos) == temp_dist){
-                                //we do not move
-                                PathFinder pf = new PathFinder(gui, pos);
-                                pf.setWithAlarm(false);
-                                pf.run();
-                            }
-                            temp_dist = gui.map.player().rc.dist(pos);
                         }
+                        Thread.sleep(500);
+                        if(NUtils.alarmFoe(NUtils.getGameUI())){
+
+                        }
+                        if(gui.map.player().rc.dist(pos) == temp_dist){
+                            //we do not move
+                            PathFinder pf = new PathFinder(gui, pos);
+                            pf.enableAllWater(true);
+                            pf.setHardMode(true);
+                            pf.setDefaultDelta(4);
+                            pf.setPhantom ( pos, NHitBox.getByName ( "cupboard" ) );
+                            pf.run();
+                            break;
+                        }
+                        temp_dist = gui.map.player().rc.dist(pos);
                     }
                 }
 
                 if(NUtils.alarmFoe(gui)){
                     NUtils.logOut();
                 }
-
-//                Gob floatsam = Finder.findObject(new NAlias("flotsam"));
-//                if(floatsam != null){
-//                    //PathFinder pf = new PathFinder(gui, floatsam.rc);
-//
-//                    if(NUtils.alarmFoe(gui)){
-//                        NUtils.logOut();
-//                    }
-//
-//                    /*pf.setWithAlarm(true);
-//                    pf.run();*/
-//                    gui.map.wdgmsg("click", Coord.z, floatsam.rc.floor(posres), 1, 0);
-//                    if(NUtils.alarmFoe(gui)){
-//                        NUtils.logOut();
-//                    }
-//                    new SelectFlowerAction ( floatsam, "Pick" , SelectFlowerAction.Types.Gob).run ( gui );
-//                    NUtils.waitEvent(()->NUtils.getGob(floatsam.id)==null, 200);
-//                }
             }while(gui.map.player().rc.dist(finalPos) >= 5);
 
         }

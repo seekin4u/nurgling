@@ -1359,7 +1359,7 @@ public class NUtils {
             return true;
         } else {
             return !Finder.findObjectsInArea(
-                    new NAlias(new ArrayList<String>(Arrays.asList("/bear", "/wolf", "/lynx", "borka/body"))),
+                    new NAlias(new ArrayList<String>(Arrays.asList("/bear", "/wolf", "/lynx", "borka/body", "/walrus"))),
                     new NArea(gameUI.map.player().rc, 500)).isEmpty();
         }
     }
